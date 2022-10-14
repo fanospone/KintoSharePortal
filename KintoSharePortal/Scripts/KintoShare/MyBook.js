@@ -279,6 +279,7 @@ var Control = {
         $("#btsave").unbind().click(function () {
             Form.SubmitCheckList();
         });
+
         $("#btcheckout").unbind().click(function () {
             if (Form.CheckListValidation()) {
                 Form.SubmitCheckOut();

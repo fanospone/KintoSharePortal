@@ -330,6 +330,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap 4.0.0.min.css" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.min.js" />
     <Content Include="Content\bootstrap-theme.css" />

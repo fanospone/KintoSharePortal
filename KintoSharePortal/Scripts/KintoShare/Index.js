@@ -154,7 +154,8 @@ var Table = {
             "columns": [
                 { "data": "ID", "name": "ID", "autoWidth": true },
                 { "data": "carType", "name": "carType", "autoWidth": true },
-                { "data": "platNo", "title": "platNo", "name": "platNo", "autoWidth": true },
+                //{ "data": "platNo", "title": "platNo", "name": "platNo", "autoWidth": true },
+                { "data": "platNo", "name": "platNo", "autoWidth": true },
                 { "data": "capacity", "name": "capacity", "autoWidth": true },
                 { "data": "accessories", "name": "accessories", "autoWidth": true },
                 { "data": "status", "name": "status", "autoWidth": true },

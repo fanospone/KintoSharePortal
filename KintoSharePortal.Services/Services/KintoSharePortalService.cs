@@ -47,6 +47,31 @@ namespace KintoSharePortal.Services
             }
         }
 
+        public trxKintoSharePortalAddAsset SaveEdit(trxKintoSharePortalAddAsset data)
+        {
+            using (con)
+            {
+                try
+                {
+                    var assetRepo = new mstKintoSharePortalAssetRepository(_context);
+                    data.userID = HttpContext.Current.Session["userId"].ToString();
+                    con.Open();
+                    data = assetRepo.SaveEditAsset(data, con);
+                    con.Close();
+                    return (data);
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
         public trxKintoSharePortalBookSubmit SubmitBook(trxKintoSharePortalBookSubmit data)
         {
             try
@@ -124,6 +149,31 @@ namespace KintoSharePortal.Services
                 {
                     con.Close();
                     return strJson("Error occurred. Error details: " + ex.Message);
+                }
+            }
+        }
+
+        public trxKintoSharePortalAsset CheckAsset(int AssetID)
+        {
+            using (con)
+            {
+                try
+                {
+                    var assetRepo = new mstKintoSharePortalAssetRepository(_context);
+                    var listAsset = new trxKintoSharePortalAsset();
+                    con.Open();
+                    listAsset = assetRepo.CheckAsset(AssetID, con);
+                    con.Close();
+                    return listAsset;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
                 }
             }
         }
@@ -224,6 +274,7 @@ namespace KintoSharePortal.Services
                 }
             }
         }
+
         public trxKintoSharePortalBookSubmit BookingDelete(int Bookid, string BookingNo)
         {
             try
@@ -242,6 +293,27 @@ namespace KintoSharePortal.Services
             {
                 con.Dispose();
             }
+        }
+
+        public trxKintoSharePortalAsset DeleteAsset (int AssetID)
+        {
+            try
+            {
+                var AssetRepo = new mstKintoSharePortalAssetRepository(_context);
+                var CheckList = new trxKintoSharePortalAsset();
+                con.Open();
+                CheckList = AssetRepo.DeleteAsset(AssetID, con);
+                return CheckList;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Dispose();
+            }
+
         }
 
         public List<mstKintoSharePortalGetList> PICList(String DeptID)
@@ -292,6 +364,7 @@ namespace KintoSharePortal.Services
             }
                 
         }
+
         private List<mstKintoSharePortalDepartmentList> Json(string v)
         {
             throw new NotImplementedException();
@@ -354,6 +427,7 @@ namespace KintoSharePortal.Services
             }
                 
         }
+
         public mstKintoSharePortalChecklist SubmitCheckOut(mstKintoSharePortalChecklist data)
         {
             using (con)

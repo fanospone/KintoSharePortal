@@ -83,6 +83,22 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public JsonResult SaveEdit(trxKintoSharePortalAddAsset data)
+        {
+            try
+            {
+                KintoSharePortalService kins = new KintoSharePortalService();
+                kins.SaveEdit(data);
+
+                return Json("Data saved Successfully!");
+            }
+            catch (Exception ex)
+            {
+                return Json("Error occurred. Error details: " + ex.Message);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public ActionResult ListAsset(trxKintoSharePortalAsset post )
         {
 
@@ -264,6 +280,22 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public JsonResult DeleteAsset(int AssetID)
+        {
+            try
+            {
+                var ksp = new KintoSharePortalService();
+                var DeleteAsset = new trxKintoSharePortalAsset();
+                DeleteAsset = ksp.DeleteAsset(AssetID);
+                return Json("Data delete Successfully!");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public JsonResult SubmitChecklist(mstKintoSharePortalChecklist data)
         {
             try
@@ -386,6 +418,7 @@ namespace KintoSharePortal.Controllers
                 throw;
             }
         }
+
         [System.Web.Http.HttpPost]
         public ActionResult UserListReport(mstKintoSharePortalReport post)
         {
@@ -416,7 +449,6 @@ namespace KintoSharePortal.Controllers
                 throw;
             }
         }
-
 
         [System.Web.Http.HttpPost]
         public JsonResult ExportExcel()
@@ -546,6 +578,22 @@ namespace KintoSharePortal.Controllers
             catch (Exception ex)
             {
 
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        public JsonResult CheckAsset(int AssetID)
+        {
+            try
+            {
+                var ksp = new KintoSharePortalService();
+                var CheckAsset = new trxKintoSharePortalAsset();
+                CheckAsset = ksp.CheckAsset(AssetID);
+                return Json(CheckAsset, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
     }
