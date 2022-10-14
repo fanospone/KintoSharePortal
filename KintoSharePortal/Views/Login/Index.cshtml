@@ -1,0 +1,217 @@
+﻿@model KintoSharePortal.Models.UserModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Kinto Share Portal</title>
+    <link href="~/Content/bsb/css/icon.css" rel="stylesheet" />
+    <link href="~/Content/bsb/css/font.css" rel="stylesheet" />
+
+    @*<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">*@
+
+    <link rel="stylesheet" href="~/Content/bsb/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/bsb/css/style_new.css">
+    <!-- Favicon-->
+    @Styles.Render("~/bundles/bsb")
+</head>
+
+<body class="login-page" width: auto; background-repeat: no-repeat; background-size: cover;>
+
+    <div class="login-box" style="margin-top: 50%">
+        <div class="card" style="opacity: 0.95">
+            <div class="body">
+                <form>
+                    <div class="logo" style="margin-bottom: 10px; text-align: center">
+                        <img src="@Url.Content("~/Content/bsb/images/KINTO.jpeg")" style="width: 200px;"/>
+                    </div>
+                    <div class="msg" style="margin-bottom: 15px">Welcome to <strong>Kinto Share Portal</strong></div>
+                    <div class="input-group" style="margin-bottom: 15px">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="text" id="txtUsername" class="form-control" placeholder="Username" />
+                        </div>
+                        <label id="username-error" class="error" for="username" style="display: none;">This field is required.</label>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 15px">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" id="txtPassword" class="form-control" placeholder="Password" required />
+                        </div>
+                        <label id="password-error" class="error" for="password" style="display: none;">This field is required.</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4" style="margin-bottom: 10px">
+                            <button type="button" id="btnSignIn" class="btn btn-block bg-cyan waves-effect">SIGN IN</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Modal-->
+    <div id="partialModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+    @*<section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Login #05</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
+                    <div class="wrap">
+                        <div class="img" style="background-image: url(/Content/bsb/images/bg-1.jpg);"></div>
+                        <div class="login-wrap p-4 p-md-5">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h3 class="mb-4">Sign In</h3>
+                                </div>
+                                <div class="w-100">
+                                    <p class="social-media d-flex justify-content-end">
+                                        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+                                        <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <form action="#" class="signin-form">
+                                <div class="form-group mt-3">
+                                    <input type="text" class="form-control" required>
+                                    <label class="form-control-placeholder" for="username">Username</label>
+                                </div>
+                                <div class="form-group">
+                                    <input id="password-field" type="password" class="form-control" required>
+                                    <label class="form-control-placeholder" for="password">Password</label>
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3" style="color:tomato">Sign In</button>
+                                </div>
+                                <div class="form-group d-md-flex">
+                                    <div class="w-50 text-left">
+                                        <label class="checkbox-wrap checkbox-primary mb-0">
+                                            Remember Me
+                                            <input type="checkbox" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="w-50 text-md-right">
+                                        <a href="#">Forgot Password</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@
+</body>
+
+</html>
+
+@Scripts.Render("~/bundles/js")
+<script src="~/Scripts/GlobalConfig.js"></script>
+@*<script src="~/Content/bsb/js/jquery.min.js"></script>
+<script src="~/Content/bsb/js/popper.js"></script>
+<script src="~/Content/bsb/js/bootstrap.min.js"></script>
+<script src="~/Content/bsb/js/main.js"></script>*@
+<script type="text/javascript">
+    $(function () {
+        $("#btnSignIn").click(function () {
+            signIn();
+        });
+
+        $("#btnSubmitOTP").click(function () {
+            submitOTP();
+        });
+
+        $("#txtUsername").keypress(function (e) {
+            var key = e.which;
+            if (key == 13)
+                signIn();
+        });
+
+        $("#txtPassword").keypress(function (e) {
+            var key = e.which;
+            if (key == 13)
+                signIn();
+        });
+
+        function signIn() {
+            var username = $("#txtUsername").val();
+            var password = $("#txtPassword").val();
+
+            $('#username-error').hide();
+            if (username == '' || username == null) {
+                $('#username-error').show();
+                return false;
+            }
+
+            $('#password-error').hide();
+            if (password == '' || password == null) {
+                $('#password-error').show();
+                $('#spinner').removeClass("show");
+                return false;
+            }
+
+
+            var data = {
+                username: username,
+                password: password
+            }
+
+            var url = "";
+
+            if (ENVIRONMENT == "LOCAL")
+                url = BASE_URL_LOCAL;
+            else if (ENVIRONMENT == "DEV")
+                url = BASE_URL_DEV;
+            else
+                url = BASE_URL_PRD;
+
+            $.ajax({
+                type: "POST",
+                url: url + "/Login/CheckUser",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                success: function (response) {
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal("show");
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    });
+</script>
+

@@ -1,0 +1,445 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using KintoSharePortal.Domain.DA;
+using KintoSharePortal.Domain.Models;
+using System.Data;
+using System.Web;
+using KintoSharePortal.Domain.Repository;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Web.Mvc;
+
+namespace KintoSharePortal.Services
+{
+    public class KintoSharePortalService : BaseService
+    {
+        private DbContext _context;
+        private DateTime _dtNow;
+        private mstKintoSharePortalAssetRepository _mstKintoSharePortalAssetRepository;
+
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString);
+        
+        public trxKintoSharePortalAddAsset AddAsset(trxKintoSharePortalAddAsset data)
+        {
+            //var uow = _context.CreateUnitOfWork();
+            using (con)
+            {
+                try
+                {
+                    var assetRepo = new mstKintoSharePortalAssetRepository(_context);
+                    data.userID = HttpContext.Current.Session["userId"].ToString();
+
+                    //_mstKintoSharePortalAssetRepository = new mstKintoSharePortalAssetRepository(_context);
+                    con.Open();
+                    data = assetRepo.AddAsset(data, con);
+                    con.Close();
+                    return (data);
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return (data);
+                } 
+            }
+        }
+
+        public trxKintoSharePortalBookSubmit SubmitBook(trxKintoSharePortalBookSubmit data)
+        {
+            try
+            {
+                string BookNo = "";
+                var KSPHeader = new trxKintoSharePortalBookSubmit();
+
+                var BookReqRepo = new trxKintoSharePortalBookSubmitRepository(_context);
+                var GetBookNoRepo = new mstKintoSharePortalGetBookListRepository(_context);
+                    
+                KSPHeader = GetBookNoRepo.GetBookNo();
+                    
+                BookNo = KSPHeader == null ? "" : KSPHeader.BookingNo;
+
+                if (BookNo == "")
+                {
+                    BookNo = "0001";
+                }
+                else
+                {
+                    BookNo = BookNo.Substring(3, 4);
+                    int counter = int.Parse(BookNo) + 1;
+                    if (counter.ToString().Length == 1)
+                        BookNo = "000" + counter.ToString();
+                    else if (counter.ToString().Length == 2)
+                        BookNo = "00" + counter.ToString();
+                    else if (counter.ToString().Length == 3)
+                        BookNo = "0" + counter.ToString();
+                    else
+                        BookNo = counter.ToString();
+                }
+                string year = System.DateTime.Now.Year.ToString();
+                string month = System.DateTime.Now.Month.ToString();
+                data.BookingNo = "KSP" + BookNo + year + month ;
+
+                data.UserReq = HttpContext.Current.Session["userId"].ToString();
+                data.ApprovalStatus = "Waiting";
+                data.BookDate = DateTime.Now.ToString("MM-dd-yyyy");
+                    
+                BookReqRepo.SubmitBook(data);
+                
+                return (data);
+            }
+            catch(Exception ex)
+            {
+                return Json("Error occurred. Error details: " + ex.Message, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                con.Dispose();
+            }
+            
+        }
+
+        private trxKintoSharePortalBookSubmit Json(string v, JsonRequestBehavior allowGet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<trxKintoSharePortalAsset>LoadAsset(string WhereCond)
+        {
+            using (con)
+            {
+                try
+                {
+                    var assetRepo = new mstKintoSharePortalAssetRepository(_context);
+                    var listAsset = new List<trxKintoSharePortalAsset>();
+
+                    con.Open();
+                    listAsset = assetRepo.LoadAsset(WhereCond, con);
+                    con.Close();
+                    return listAsset;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return strJson("Error occurred. Error details: " + ex.Message);
+                }
+            }
+        }
+
+        public List<mstKintoSharePortalDepartmentList> DepartmentList()
+        {
+            using (con)
+            {
+                try 
+                {
+                    var departmentRepo = new mstKintoSharePortalDepartmentRepository(_context);
+                    var ListDepartrment = new List<mstKintoSharePortalDepartmentList>();
+                    var WhereCond = "";
+                    //con.Open();
+                    //ListDepartrment = departmentRepo.DepartmentList(WhereCond,con);
+                    //con.Close();
+                    con.Open();
+                    return departmentRepo.DepartmentList(WhereCond, con);
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public List<mstKintoSharePortalGetList> CarList()
+        {
+            using (con)
+            {
+                try
+                {
+                    var CarRepo = new mstKintoSharePortalGetListRepository(_context);
+                    var ListDepartrment = new List<mstKintoSharePortalGetList>();
+                    var WhereCond = "";
+                    con.Open();
+                    return CarRepo.CarList(WhereCond,con);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public mstKintoSharePortalGetList PlatNo(int CarId)
+        {
+            using (con)
+            {
+                try
+                { 
+                    var CarRepo = new mstKintoSharePortalGetListRepository(_context);
+                    var CarPlatNo = new mstKintoSharePortalGetList();
+                    con.Open();
+                    CarPlatNo = CarRepo.PlatNo(CarId, con);
+                    return CarPlatNo;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public trxKintoSharePortalBookSubmit ChecklistDetail(int Bookid , string BookingNo)
+        {
+            using (con)
+            {
+                try
+                {
+                    var ChecklistRepo = new mstKintoSharePortalGetBookListRepository(_context);
+                    var CheckList = new trxKintoSharePortalBookSubmit();
+                    con.Open();
+                    CheckList = ChecklistRepo.ChecklistDetail(Bookid, BookingNo, con);
+                    return CheckList;
+                }
+                catch(Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+        public trxKintoSharePortalBookSubmit BookingDelete(int Bookid, string BookingNo)
+        {
+            try
+            {
+                var DeleteBook = new mstKintoSharePortalGetBookListRepository(_context);
+                var CheckList = new trxKintoSharePortalBookSubmit();
+                con.Open();
+                CheckList = DeleteBook.DeleteBook(Bookid, BookingNo, con);
+                return CheckList;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                con.Dispose();
+            }
+        }
+
+        public List<mstKintoSharePortalGetList> PICList(String DeptID)
+        {
+            using (con)
+            {
+                try
+                {
+                    var PICRepo = new mstKintoSharePortalGetListRepository(_context);
+                    var ListPIC = new List<mstKintoSharePortalGetList>();
+                    con.Open();
+                    return PICRepo.PICList(DeptID,con);
+                    
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public List<trxKintoSharePortalBookSubmit> BookListIndex()
+        {
+            using (con)
+            {
+                try
+                {
+                    var BookRepo = new mstKintoSharePortalGetBookListRepository(_context);
+                    var listBookingIndex = new List<trxKintoSharePortalBookSubmit>();
+                    var WhereCond = "";
+                    con.Open();
+                    listBookingIndex = BookRepo.LoadBookIndex(WhereCond, con);
+                    con.Close();
+                    return listBookingIndex;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+                
+        }
+        private List<mstKintoSharePortalDepartmentList> Json(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<trxKintoSharePortalAsset> strJson(string v)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<mstKintoSharePortalReport> LoadBookingListReport(string WhereCond)
+        {
+            using (con)
+            {
+                try
+                {
+                    var BookListReportRepo = new mstKintoSharePortalReportRepository(_context);
+                    var listBooking = new List<mstKintoSharePortalReport>();
+                    //WhereCond = HttpContext.Current.Session["userId"].ToString();
+                    WhereCond = "";
+                    con.Open();
+                    listBooking = BookListReportRepo.BookListReport(WhereCond, con);
+                    con.Close();
+                    return listBooking;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public mstKintoSharePortalChecklist SubmitChecklist(mstKintoSharePortalChecklist data)
+        {
+            using (con)
+            {
+                var ChecklistRepo = new trxKintoSharePortalChecklistRepository(_context);
+                data.UserID = HttpContext.Current.Session["userId"].ToString();
+                try
+                {
+                    con.Open();
+                    ChecklistRepo.SubmitChecklist(data);
+                    con.Close();
+                    return (data);
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return (data);
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+                
+        }
+        public mstKintoSharePortalChecklist SubmitCheckOut(mstKintoSharePortalChecklist data)
+        {
+            using (con)
+            {
+                var CheckOutRepo = new trxKintoSharePortalChecklistRepository(_context);
+                data.UserID = HttpContext.Current.Session["userId"].ToString();
+                try
+                {
+                    con.Open();
+                    CheckOutRepo.SubmitCheckOut(data);
+                    con.Close();
+                    return (data);
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return (data);
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+
+        }
+
+        public List<mstKintoSharePortalApproval> LoadApprovalList(string WhereCond)
+        {
+            using (con)
+            {
+                try
+                {
+                    var ApprovalRepo = new mstKintoSharePortalApprovalRepository(_context);
+                    var listApproval = new List<mstKintoSharePortalApproval>();
+                    var Role = HttpContext.Current.Session["userRole"].ToString();
+                    con.Open();
+                    if (Role == "admin")
+                    {
+                        listApproval = ApprovalRepo.LoadApproval(WhereCond, con);
+                    }
+                    else
+                    {
+                        WhereCond = HttpContext.Current.Session["userId"].ToString(); ;
+                        listApproval = ApprovalRepo.LoadApproval(WhereCond, con);
+                    }
+                    con.Close();
+                    return listApproval;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public mstKintoSharePortalApproval ApprovalSubmit(string BookNo, string Status)
+        {
+            using (con)
+            {
+                try
+                {
+                    var ApprovalRepo = new mstKintoSharePortalApprovalRepository(_context);
+                    var ApprovalEnt = new mstKintoSharePortalApproval();
+                    con.Open();
+                    ApprovalRepo.SubmitApproval(BookNo, Status, con);
+                    return ApprovalEnt;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return JsonApproval("Error occurred. Error details: " + ex.Message);
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        private mstKintoSharePortalApproval JsonApproval(string v)
+        {
+            throw new NotImplementedException();
+        }
+    }   
+}
