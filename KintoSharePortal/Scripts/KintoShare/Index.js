@@ -88,21 +88,33 @@ document.addEventListener('DOMContentLoaded', function () {
         dayMaxEvents: true, // allow "more" link when too many events
         events: function (fetchInfo, successCallback, failureCallback) {
             $.ajax({
-                url: "/Home/IndexBooking",
+                url: url + "/Home/IndexBooking",
                 type: "GET",
                 datatype: "json"
             }).done(function (data, textStatus, jqXHR) {
                 var events = [];
+                /*if (data.ApprovalStatus == 'Waiting') {*/
                 $.each(data, function (key, value) {
-                    
+                    var color = "";
+                    if (value.ApprovalStatus == 'Waiting') {
+                        color = '#FFFF00';
+                    }
+                    else if (value.ApprovalStatus == 'Cancel') {
+                        color = '#FF4500';
+                    }
+                    else {
+                        color = '#66CDAA';
+                    }
                     events.push({
                         title: value.Cartype + " - " + value.ApprovalStatus,
                         start: value.Startdate,
-                        end: value.Enddate
+                        end: value.Enddate,
                         //start: '2022-09-22'
+                        color: color
                     });
                     console.log(value.Enddate);
                 });
+                //}
                 successCallback(events);
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -177,7 +189,7 @@ var Table = {
 var Request = {
     CallApi: function () {
         $.ajax({
-            url: "/Home/IndexBooking",
+            url: url + "/Home/IndexBooking",
             type: "GET",
             datatype: "JSON.stringify(response)"
             //datatype: "json"

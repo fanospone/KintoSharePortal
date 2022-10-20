@@ -93,7 +93,7 @@
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@HttpContext.Current.Session["userid"].ToString()</div>
-                    <div class="name"><strong>@HttpContext.Current.User.Identity.Name</strong></div>
+                    <div class="name"><strong>@HttpContext.Current.Session["username"].ToString()</strong></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">more_vert</i>
                         <ul class="dropdown-menu pull-right">
@@ -130,7 +130,7 @@
                             <span>HOME</span>
                         </a>
                     </li>
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requester")
                     {
                         <li>
                             <a href='@Url.Action("myBook", "Home")'>

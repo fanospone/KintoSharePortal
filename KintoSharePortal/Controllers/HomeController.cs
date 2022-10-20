@@ -232,8 +232,10 @@ namespace KintoSharePortal.Controllers
             try
             {
                 var bookkinto = new KintoSharePortalService();
+
                 string strWhereCond = "";
-                post.ShowAllBook = bookkinto.BookListIndex();
+
+                post.ShowAllBook = bookkinto.BookList(strWhereCond);
 
                 recordsTotal = post.ShowAllBook.Count();
                 var data = post.ShowAllBook.Skip(skip).Take(pageSize).ToList();
@@ -378,7 +380,8 @@ namespace KintoSharePortal.Controllers
             {
                 var ksp = new KintoSharePortalService();
                 var BookListIndex = new List<trxKintoSharePortalBookSubmit>();
-                BookListIndex = ksp.BookListIndex();
+                var WhereCond = "";
+                BookListIndex = ksp.BookListIndex(WhereCond);
                 return Json(BookListIndex, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)

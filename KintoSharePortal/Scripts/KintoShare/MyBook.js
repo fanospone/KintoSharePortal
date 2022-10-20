@@ -6,6 +6,9 @@ else if (ENVIRONMENT == "DEV")
     url = BASE_URL_DEV;
 else
     url = BASE_URL_PRD;
+
+var check = "";
+
 jQuery(document).ready(function () {
     $("#divttlcbody").hide();
     $("#divttlcClean").hide();
@@ -232,7 +235,7 @@ function showCancelMessage(id,bookNo) {
             $.ajax({
                 type: "POST",
                 //async: false,
-                url: "/Home/DeleteBook",
+                url: url + "/Home/DeleteBook",
                 data: { Bookid: id, BookingNo: bookNo },
                 dataType: "json",
                 success: function (msg) {
@@ -277,11 +280,15 @@ var Control = {
         });
 
         $("#btsave").unbind().click(function () {
-            Form.SubmitCheckList();
+            check = "in";
+            if (Form.CheckListValidation(check)) {
+                Form.SubmitCheckList();
+            }
         });
 
         $("#btcheckout").unbind().click(function () {
-            if (Form.CheckListValidation()) {
+            check = "out";
+            if (Form.CheckListValidation(check)) {
                 Form.SubmitCheckOut();
             }
         });
@@ -301,7 +308,7 @@ var Control = {
 
     BindingDept: function () {
         $.ajax({
-            url: "/Home/ListDept",
+            url: url + "/Home/ListDept",
             type: "GET"
         })
             .done(function (data, textStatus, jqXHR) {
@@ -325,7 +332,7 @@ var Control = {
 
     CarList: function () {
         $.ajax({
-            url: "/Home/ListCar",
+            url: url + "/Home/ListCar",
             type: "GET"
         })
             .done(function (data, textStatus, jqXHR) {
@@ -351,7 +358,7 @@ var Control = {
         let dollarUSLocale = Intl.NumberFormat('en-US');
 
         $.ajax({
-            url: "/Home/PlatNo",
+            url: url + "/Home/PlatNo",
             type: "GET",
             data: { CarId: CarId.value.trim() }
         })
@@ -369,7 +376,7 @@ var Control = {
 
     GetPIC: function (DeptID) {
         $.ajax({
-            url: "/Home/ListPIC",
+            url: url + "/Home/ListPIC",
             type: "GET",
             data: { DeptID: DeptID.value.trim()}
         })
@@ -416,7 +423,7 @@ var Form = {
         $.ajax({
             type: "POST",
             //async: false,
-            url: "/Home/SubmitBook",
+            url: url + "/Home/SubmitBook",
             data: Submitparam,
             dataType: "json",
             success: function (msg) {
@@ -448,14 +455,14 @@ var Form = {
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
-                "url": "/Home/BookingList",
+                "url": url + "/Home/BookingList",
                 "type": "POST",
                 "datatype": "json"
             },
             "columnDefs":
                 [
                     {
-                        "targets": [0, 9, 10, 11],
+                        "targets": [0, 7, 9, 10, 11],
                         "visible": false,
                         "searchable": false
                     }
@@ -475,8 +482,8 @@ var Form = {
                 { "data": "DateCrt", "name": "DateCrt", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting")
-                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckIn('" + row.ID + "','" + row.BookingNo + "'); > Check - In </a > "; //,'" + row.Cartype + "','" + row.Department + "','" + row.PlatNo + "','" + row.PIC + "','" + row.BookDate + "','" + row.ApprovalStatus + "','" + row.UserReq + "','" + row.Purpose + "','" + row.DateCrt + "'); > Check - In</a > ";
+                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting" && data.Role == "admin")
+                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckIn('" + row.ID + "','" + row.BookingNo + "'); >CHECK-IN</a > "; //,'" + row.Cartype + "','" + row.Department + "','" + row.PlatNo + "','" + row.PIC + "','" + row.BookDate + "','" + row.ApprovalStatus + "','" + row.UserReq + "','" + row.Purpose + "','" + row.DateCrt + "'); > Check - In</a > ";
                         
                         else 
                             return "";
@@ -484,8 +491,8 @@ var Form = {
                 },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting")
-                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckOut('" + row.ID + "','" + row.BookingNo + "'); >CheckOut</a>";
+                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting" && data.Role == "admin")
+                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckOut('" + row.ID + "','" + row.BookingNo + "'); >CHECK-OUT</a>";
                         else
                             return "";
                     }
@@ -539,7 +546,7 @@ var Form = {
         };
         console.log(param);
         $.ajax ({
-            url: "/Home/SubmitChecklist",
+            url: url + "/Home/SubmitChecklist",
             type: "POST",
             datatype: "json",
             data: param,
@@ -589,7 +596,7 @@ var Form = {
             Charge: chargefee
         };
         $.ajax({
-            url: "/Home/SubmitCheckOut",
+            url: url + "/Home/SubmitCheckOut",
             type: "POST",
             datatype: "json",
             data: param,
@@ -605,8 +612,9 @@ var Form = {
 
     CheckIn: function (Bookid, BookingNo) { //, Cartype,Department,PlatNo,PIC,BookDate,ApprovalStatus,UserReq,Purpose,ReqDate) {
         //$("#lblIDChecklist").val(Bookid);
+
         $.ajax({
-            url: "/Home/CheckListDetail",
+            url: url + "/Home/CheckListDetail",
             type: "POST",
             data: { Bookid: Bookid, BookingNo: BookingNo }
         }).done(function (data, textStatus, jqXHR) {
@@ -633,6 +641,10 @@ var Form = {
 
             $("#btcheckout").hide();
             $("#divbtncheckout").hide();
+
+            $("#divBody").hide();
+            $("#divClean").hide();
+            $("#divsmoke").hide();
         }).fail(function (xhr, msg) {
             alert("Proses Error " + msg);
         });
@@ -644,7 +656,7 @@ var Form = {
         $("#divmybooklist").hide();
         $("#pnlCheckList").show();
         $.ajax({
-            url: "/Home/CheckListDetail",
+            url: url + "/Home/CheckListDetail",
             type: "POST",
             data: { Bookid: Bookid, BookingNo: BookingNo }
         }).done(function (data, textStatus, jqXHR) {
@@ -671,6 +683,11 @@ var Form = {
 
             $("#btcheckout").show();
             $("#divbtncheckout").show();
+
+            $("#divBody").show();
+            $("#divClean").show();
+            $("#divsmoke").show();
+
             let dollarUSLocale = Intl.NumberFormat('en-US');
             var chargebody = 50000;
             var chargeSmoke = 1000000;
@@ -695,7 +712,7 @@ var Form = {
         }
         else if ($('#cartype option:selected').val() == 0) {
             $('#myModal').modal('show');
-            $('#modaltext').text("Please provide vacehile..");
+            $('#modaltext').text("Please provide vehicle..");
             result = false;
         }
         else if ($('#department option:selected').val() == 0) {
@@ -726,7 +743,7 @@ var Form = {
         return result;
     },
 
-    CheckListValidation: function () {
+    CheckListValidation: function (check) {
         var result = true;
         var bodyrepair = document.getElementById("txtbodyrepair").value;
         var cleaniness = document.getElementById("txtCleanliness").value;

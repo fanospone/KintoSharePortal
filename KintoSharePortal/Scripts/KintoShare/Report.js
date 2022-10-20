@@ -28,7 +28,7 @@ var Table = {
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
-                "url": "/Home/BookingListReport",
+                "url": url + "/Home/BookingListReport",
                 "type": "POST",
                 "datatype": "json",
                 "data" : params
@@ -72,7 +72,7 @@ var Table = {
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
-                "url": "/Home/UserListReport",
+                "url": url + "/Home/UserListReport",
                 "type": "POST",
                 "datatype": "json",
                 "data": params

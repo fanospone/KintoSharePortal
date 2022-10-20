@@ -39,7 +39,7 @@ function showCancelMessage(id) {
             $.ajax({
                 type: "POST",
                 //async: false,
-                url: "/Home/DeleteAsset",
+                url: url + "/Home/DeleteAsset",
                 data: { AssetID: id },
                 dataType: "json",
                 success: function (msg) {
@@ -218,7 +218,7 @@ var Form = {
             FeeWeekEnd: newfeeend,
         };
         $.ajax ({
-            url: "/Home/AddAsset",
+            url: url + "/Home/AddAsset",
             type: "POST",
             datatype: "json",
             data: params,
@@ -253,7 +253,7 @@ var Form = {
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,//[[5, 10, 25, 50], ['5', '10', '25', '50']],
             "ajax": {
-                "url": "/Home/ListAsset",
+                "url": url + "/Home/ListAsset",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -315,7 +315,7 @@ var Form = {
 
     Edit: function (ID) {
         $.ajax({
-            url: "/Home/CheckAsset",
+            url: url + "/Home/CheckAsset",
             type: "POST",
             data: { AssetID: ID }
         }).done(function (data, textStatus, jqXHR) {
@@ -362,7 +362,7 @@ var Form = {
             FeeWeekEnd: newfeeend,
         };
         $.ajax({
-            url: "/Home/SaveEdit",
+            url: url + "/Home/SaveEdit",
             type: "POST",
             datatype: "json",
             data: params,

@@ -339,7 +339,7 @@ namespace KintoSharePortal.Services
             }
         }
 
-        public List<trxKintoSharePortalBookSubmit> BookListIndex()
+        public List<trxKintoSharePortalBookSubmit> BookListIndex(string WhereCond)
         {
             using (con)
             {
@@ -347,7 +347,9 @@ namespace KintoSharePortal.Services
                 {
                     var BookRepo = new mstKintoSharePortalGetBookListRepository(_context);
                     var listBookingIndex = new List<trxKintoSharePortalBookSubmit>();
-                    var WhereCond = "";
+
+                        WhereCond = "";
+
                     con.Open();
                     listBookingIndex = BookRepo.LoadBookIndex(WhereCond, con);
                     con.Close();
@@ -365,6 +367,42 @@ namespace KintoSharePortal.Services
                 
         }
 
+        public List<trxKintoSharePortalBookSubmit> BookList(string WhereCond)
+        {
+            using (con)
+            {
+                try
+                {
+                    var BookRepo = new mstKintoSharePortalGetBookListRepository(_context);
+                    var listBookingIndex = new List<trxKintoSharePortalBookSubmit>();
+                    var useid = HttpContext.Current.Session["userId"].ToString();
+                    var role = HttpContext.Current.Session["userRole"].ToString();
+
+                    if (role == "admin")
+                    {
+                        WhereCond = "";
+                    }
+                    else
+                    {
+                        WhereCond = useid;
+                    }
+
+                    con.Open();
+                    listBookingIndex = BookRepo.LoadBook(WhereCond, con);
+                    con.Close();
+                    return listBookingIndex;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+
+        }
         private List<mstKintoSharePortalDepartmentList> Json(string v)
         {
             throw new NotImplementedException();

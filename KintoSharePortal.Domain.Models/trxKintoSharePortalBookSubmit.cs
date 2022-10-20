@@ -40,7 +40,7 @@ namespace KintoSharePortal.Domain.Models
         public decimal? CapexAmount { get; set; }
         public decimal? RevenueAmount { get; set; }
         public decimal? CompensationAmount { get; set; }
-
+        public string Role { get; set; }
         public List<trxKintoSharePortalBookSubmit> ShowAllBook { get; set; }
     }
 }

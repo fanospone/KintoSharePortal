@@ -52,7 +52,7 @@ var Form = {
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
-                "url": "/Home/ApprovalList",
+                "url": url + "/Home/ApprovalList",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -149,7 +149,7 @@ var Control = {
             console.log(Bookno);
             console.log(Approvalstatus);
             $.ajax({
-                url: "/Home/ApprovalSubmit",
+                url: url + "/Home/ApprovalSubmit",
                 type: "POST",
                 datatype: "json",
                 data: param ,
@@ -173,7 +173,7 @@ var Control = {
             console.log(Bookno);
             console.log(Approvalstatus);
             $.ajax({
-                url: "/Home/ApprovalSubmit",
+                url: url + "/Home/ApprovalSubmit",
                 type: "POST",
                 datatype: "json",
                 data: param,

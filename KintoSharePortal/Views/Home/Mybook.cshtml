@@ -35,7 +35,7 @@
                                         <tr>
                                             <th class="text-center">ID</th>
                                             <th class="text-center">BOOK NO.</th>
-                                            <th class="text-center">VACEHILE</th>
+                                            <th class="text-center">VEHICLE</th>
                                             <th class="text-center">PLAT NO.</th>
                                             <th class="text-center">DEPARTMENT</th>
                                             <th class="text-center">PIC</th>
@@ -78,7 +78,7 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b> Car Type</b>
+                                <b>CAR TYPE</b>
                             </p>
                             @*<input type="text" class="form-control" id="cartype" name="cartype">*@
                             <select class="form-control show-tick" id="cartype" name="cartype" onchange="Control.GetPlatNo(this)">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Department</b>
+                                <b>DEPARTMENT</b>
                             </p>
                             <select class="form-control show-tick" name="department" id="department" onchange="Control.GetPIC(this)">
                                 @*<option value="">Choose Department</option>*@
@@ -96,7 +96,7 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b> License Plat No.</b>
+                                <b>LICENSE PLAT NO.</b>
                             </p>
                             <input type="text" class="form-control" id="licenseplat" name="licenseplat" disabled="disabled">
                         </div>
@@ -112,13 +112,13 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b> Book Type</b>
+                                <b>BOOK TYPE</b>
                             </p>
                             <input type="text" class="form-control" id="booktype" name="booktype" value="DAILY" disabled>
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b> Purpose</b>
+                                <b>PURPOSE</b>
                             </p>
                             @*<input type="text" class="form-control" id="purpose" name="purpose">*@
                             <select class="form-control bootstrap-select show-tick" name="purpose" id="purpose">
@@ -130,13 +130,13 @@
                     </div>
                     <div class="row clearfix">
                         <div class="col-md-3">
-                            <h2 class="card-inside-title">Start Book Date</h2>
+                            <h2 class="card-inside-title">START BOOK DATE</h2>
                             <div class="pickup">
                                 <input id="datebookstart" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <h2 class="card-inside-title">End Book Date</h2>
+                            <h2 class="card-inside-title">END BOOK DATE</h2>
                             <div class="pickup">
                                 <input id="datebookend" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
                             </div>
@@ -153,7 +153,7 @@
                             </div>*@
                         <div class="col-lg-6">
                             <p>
-                                <b> Kinto Share Fee</b>
+                                <b>KINTO SHARE FEE</b>
                             </p>
                             <input type="text" class="form-control" id="kintosharefee" name="kintosharefee" disabled="disabled">
                         </div>
@@ -171,13 +171,13 @@
                         </div>
                         <div class="col-lg-3">
                             <p>
-                                <b> FEE WEEK DAY</b>
+                                <b>FEE WEEK DAY</b>
                             </p>
                             <label id="lblweekday"></label>
                         </div>
                         <div class="col-lg-3">
                             <p>
-                                <b> FEE WEEK END</b>
+                                <b>FEE WEEK END</b>
                             </p>
                             <label id="lblweekend"></label>
                         </div>
@@ -196,10 +196,10 @@
                                 </div>*@
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancelReq">Cancel</button>
+                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancelReq">CANCEL</button>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">Submit</button>
+                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>
                         </div>
                         @*<input type="button" value="Click" onclick="myDate()" />*@
                         @*<p id="myId"></p>*@
@@ -260,14 +260,14 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b> Car Type</b>
+                                <b>CAR TYPE</b>
                             </p>
                             @*<input type="text" class="form-control" id="cartype" name="cartype">*@
                             <label id="lblCarType" class="form-control" disable="true" />
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Department</b>
+                                <b>DEPARTMENT</b>
                             </p>
                             <label id="lblDepartment" class="form-control" disable="true" />
                         </div>
@@ -275,7 +275,7 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b>License Plat No.</b>
+                                <b>LICENSE PLAT NO.</b>
                             </p>
                             @*<input type="text" class="form-control" id="cartype" name="cartype">*@
                             <label id="lblPlatNo" class="form-control" disable="true" />
@@ -290,14 +290,14 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b>Book Type</b>
+                                <b>BOOK TYPE</b>
                             </p>
                             @*<input type="text" class="form-control" id="cartype" name="cartype">*@
                             <label id="lblBookType" class="form-control" disable="true" />
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Purpose</b>
+                                <b>PURPOSE</b>
                             </p>
                             <label id="lblpurpose" class="form-control" disable="true" />
                         </div>
@@ -305,13 +305,13 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b>Book Date</b>
+                                <b>BOOK DATE</b>
                             </p>
                             <label id="lblbookDate" class="form-control" disable="true" />
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Request</b>
+                                <b>REQUEST</b>
                             </p>
                             <label id="lblRequest" class="form-control" disable="true" />
                         </div>
@@ -319,13 +319,13 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b>Star Date</b>
+                                <b>START DATE</b>
                             </p>
                             <label id="lblStartDate" class="form-control" disable="true" />
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Status</b>
+                                <b>STATUS</b>
                             </p>
                             <label id="lblstatus" class="form-control" disable="true" />
                         </div>
@@ -333,13 +333,13 @@
                     <div class="row clearfix">
                         <div class="col-lg-6">
                             <p>
-                                <b>End Date</b>
+                                <b>END DATE</b>
                             </p>
                             <label id="lblEndDate" class="form-control" disable="true" />
                         </div>
                         <div class="col-lg-6">
                             <p>
-                                <b>Fuel</b>
+                                <b>FUEL</b>
                             </p>
                             <input name="rbfuel" type="radio" id="rb25" value="25" required />
                             <label for="rb25">0%-25%</label>
@@ -356,7 +356,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Front Fender</b>
+                                <b>FRONT FENDER</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -387,7 +387,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Dashboard</b>
+                                <b>DASHBOARD</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -411,7 +411,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Seat</b>
+                                <b>SEAT</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -432,7 +432,7 @@
                         </div>
                     </div>
 
-                    <h4><u>Bemper</u></h4>
+                    <h4><u>BUMPER</u></h4>
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
@@ -480,7 +480,7 @@
                         </div>
                     </div>
 
-                    <h4><u>Fender</u></h4>
+                    <h4><u>FENDER</u></h4>
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
@@ -578,7 +578,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Car Hood</b>
+                                <b>CAR HOOD</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -618,7 +618,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Service Book</b>
+                                <b>SERVICE BOOK</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -634,7 +634,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>VELG</b>
+                                <b>RIM</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -752,7 +752,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Jack</b>
+                                <b>JACK</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -768,7 +768,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Windshield</b>
+                                <b>WINDSHIELD</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -792,7 +792,7 @@
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
-                                <b>Car Glass Wrap Film</b>
+                                <b>TINTED WINDOW</b>
                             </p>
                         </div>
                         <div class="col-md-1">
@@ -869,7 +869,7 @@
                         <div class="col-md-2">
                             <p>
                                 <b>
-                                    Spare Tire
+                                    SPARE TIRE
                                 </b>
                             </p>
                         </div>
@@ -895,53 +895,57 @@
                         <div class="col-md-2">
                             <p>
                                 <b>
-                                    Body Repair
+                                    BODY REPAIR
                                 </b>
                             </p>
                         </div>
                         <div class="col-md-1">
                             <input type="text" class="form-control" name="txtbodyrepair" id="txtbodyrepair" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeBody();" />
                         </div>
-                        <div class="col-md-1">
-                            <label>/Panel</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Rp.</label>
-                            <label id="lblcbody"></label>
-                        </div>
-                        <div class="col-md-2" id="divttlcbody">
-                            <label>Total Rp.</label>
-                            <label id="lblttlChargeBody"></label>
+                        <div id="divBody">
+                            <div class="col-md-1">
+                                <label>/Panel</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Rp.</label>
+                                <label id="lblcbody"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcbody">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeBody"></label>
+                            </div>
                         </div>
                     </div>
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
                                 <b>
-                                    Cleanliness
+                                    CLEANLINESS
                                 </b>
                             </p>
                         </div>
                         <div class="col-md-1">
                             <input type="text" class="form-control" maxlength="2" name="txtCleanliness" id="txtCleanliness" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeClean();" />
                         </div>
-                        <div class="col-md-1">
-                            <label>/Panel</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Rp.</label>
-                            <label id="lblcclean"></label>
-                        </div>
-                        <div class="col-md-2" id="divttlcClean">
-                            <label>Total Rp.</label>
-                            <label id="lblttlChargeClean"></label>
+                        <div id="divClean">
+                            <div class="col-md-1">
+                                <label>/Panel</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Rp.</label>
+                                <label id="lblcclean"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcClean">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeClean"></label>
+                            </div>
                         </div>
                     </div>
                     <div class="row clearfix">
                         <div class="col-md-2">
                             <p>
                                 <b>
-                                    Smoke
+                                    SMOKE
                                 </b>
                             </p>
                         </div>
@@ -953,28 +957,30 @@
                             <input name="rbsmoke" type="radio" id="rbsmoken" value="N" onchange="CheckSmoke();" />
                             <label for="rbsmoken">No</label>
                         </div>
-                        <div class="col-md-2">
-                            <label>Rp.</label>
-                            <label id="lblsmoke"></label>
-                        </div>
-                        <div class="col-md-2" id="divttlcSmoke">
-                            <label>Total Rp.</label>
-                            <label id="lblttlChargeSmoke"></label>
-                        </div>
-                        <div class="col-md-2" id="divttlcSmoke">
-                            <label>= Charge Total Rp.</label>
-                            <label id="lblttlChargeAll"></label>
+                        <div id="divsmoke">
+                            <div class="col-md-2">
+                                <label>Rp.</label>
+                                <label id="lblsmoke"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcSmoke">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeSmoke"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcSmoke">
+                                <label>= Charge Total Rp.</label>
+                                <label id="lblttlChargeAll"></label>
+                            </div>
                         </div>
                     </div>
                     <div class="row clearfix">
                         <div class="col-md-4" id="divbtncheckout">
-                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btcheckout">Check-Out</button>
+                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btcheckout">CHECK-OUT</button>
                         </div>
                         <div class="col-md-4" id="divbtnsave">
-                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsave">Submit</button>
+                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsave">SUBMIT</button>
                         </div>
                         <div class="col-md-4">
-                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancel">Cancel</button>
+                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancel">CANCEL</button>
                         </div>
                     </div>
                 </form>
