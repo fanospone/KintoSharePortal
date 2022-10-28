@@ -51,6 +51,24 @@ namespace KintoSharePortal.Domain.Models
         public int? cleaniness { get; set; }
         public string smoke { get; set; }
 
+        public string BookingNo { get; set; }
+        public string Cartype { get; set; }
+        public string Department { get; set; }
+        public string PlatNo { get; set; }
+        public string PIC { get; set; }
+        public string BookType { get; set; }
+        public string Purpose { get; set; }
+        public string BookDate { get; set; }
+        public string UserReq { get; set; }
+        public string ApprovalStatus { get; set; }
+        public string Startdate { get; set; }
+        public string Enddate { get; set; }
+        public string Role { get; set; }
+        public string CheckInStatus { get; set; }
+        public string CheckOutStatus { get; set; }
+        public int? IsCheckIn { get; set; }
+        public int? IsCheckOut { get; set; }
+
         public List<mstKintoSharePortalChecklist> ShowAllApproval { get; set; }
     }
 }

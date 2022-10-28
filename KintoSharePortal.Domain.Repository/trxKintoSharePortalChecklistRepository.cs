@@ -24,11 +24,18 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pSubmitChecklist(data);
         }
+        public mstKintoSharePortalChecklist ChecklistDetail(int Bookid, string BookingNo, SqlConnection con)
+        {
+            return pChecklistDetail(Bookid, BookingNo, con);
+        }
+        public mstKintoSharePortalChecklist CheckOutlistDetail(int Bookid, string BookingNo, SqlConnection con)
+        {
+            return pCheckOutlistDetail(Bookid, BookingNo, con);
+        }
         public mstKintoSharePortalChecklist SubmitCheckOut(mstKintoSharePortalChecklist data)
         {
             return pSubmitCheckOut(data);
         }
-
         private mstKintoSharePortalChecklist pSubmitChecklist(mstKintoSharePortalChecklist data)
         {
             using (var command = con)
@@ -43,6 +50,34 @@ namespace KintoSharePortal.Domain.Repository
 
                 cmd.ExecuteNonQuery();
                 return data;
+            }
+        }
+        private mstKintoSharePortalChecklist pChecklistDetail(int Bookid, string BookingNo, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_CHECKIN";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@ID", Bookid));
+                cmd.Parameters.Add(cmd.CreateParameter("@BookNo", BookingNo));
+
+                return this.ReadTransaction(cmd).SingleOrDefault();
+            }
+        }
+        private mstKintoSharePortalChecklist pCheckOutlistDetail (int Bookid, string BookingNo, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_GETCHECKOUTDETAIL";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@Bookid", Bookid));
+                cmd.Parameters.Add(cmd.CreateParameter("@BookingNo", BookingNo));
+                return this.ReadTransaction(cmd).SingleOrDefault();
             }
         }
         private mstKintoSharePortalChecklist pSubmitCheckOut(mstKintoSharePortalChecklist data)

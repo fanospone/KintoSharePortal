@@ -41,6 +41,11 @@ namespace KintoSharePortal.Domain.Models
         public decimal? RevenueAmount { get; set; }
         public decimal? CompensationAmount { get; set; }
         public string Role { get; set; }
+        public int? Ischeckin { get; set; }
+        public int? Ischeckout { get; set; }
+        public string CheckInStatus { get; set; }
+        public string CheckOutStatus { get; set; }
+
         public List<trxKintoSharePortalBookSubmit> ShowAllBook { get; set; }
     }
 }

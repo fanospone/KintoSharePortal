@@ -48,7 +48,7 @@ var Form = {
         $("#tblApprovalHeader").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
@@ -154,10 +154,11 @@ var Control = {
                 datatype: "json",
                 data: param ,
                 success: function (result) {
-                    $("#pnlapprovalhead").show();
-                    $("#pnlapprovaldetail").hide();
-                    Table.Init("#tblApprovalHeader");
-                    Form.LoadApproval();
+                    //$("#pnlapprovalhead").show();
+                    //$("#pnlapprovaldetail").hide();
+                    //Table.Init("#tblApprovalHeader");
+                    //Form.LoadApproval();
+                    location.reload();
                 },
                 error: function (xhr, msg) {
                     alert("Proses Error " + msg);
@@ -178,9 +179,10 @@ var Control = {
                 datatype: "json",
                 data: param,
                 success: function (result) {
-                    $("#pnlapprovalhead").show();
-                    $("#pnlapprovaldetail").hide();
-                    Form.LoadApproval();
+                    //$("#pnlapprovalhead").show();
+                    //$("#pnlapprovaldetail").hide();
+                    //Form.LoadApproval();
+                    location.reload();
                 },
                 error: function (xhr, msg) {
                     alert("Proses Error " + msg);

@@ -29,17 +29,10 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pLoadBook(WhereCond, con);
         }
-
         public List<trxKintoSharePortalBookSubmit> LoadBookIndex(string WhereCond, SqlConnection con)
         {
             return pLoadBookIndex(WhereCond, con);
         }
-
-        public trxKintoSharePortalBookSubmit ChecklistDetail(int Bookid, string BookingNo, SqlConnection con)
-        {
-            return pChecklistDetail(Bookid, BookingNo, con);
-        }
-
         public trxKintoSharePortalBookSubmit DeleteBook(int Bookid, string BookingNo, SqlConnection con)
         {
             return pDeleteBook(Bookid, BookingNo, con);
@@ -91,22 +84,6 @@ namespace KintoSharePortal.Domain.Repository
                 return this.ReadTransaction(cmd).ToList();
             }
 
-        }
-
-        private trxKintoSharePortalBookSubmit pChecklistDetail (int Bookid, string BookingNo, SqlConnection con)
-        {
-            using (var command = con)
-            {
-                SqlCommand cmd = new SqlCommand("", con);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "spKINTOSHARE_CHECKIN";
-
-                cmd.Parameters.Add(cmd.CreateParameter("@ID", Bookid));
-                cmd.Parameters.Add(cmd.CreateParameter("@BookNo", BookingNo));
-                
-                return this.ReadTransaction(cmd).SingleOrDefault();
-            }
         }
 
         private trxKintoSharePortalBookSubmit pDeleteBook(int Bookid, string BookingNo, SqlConnection con)

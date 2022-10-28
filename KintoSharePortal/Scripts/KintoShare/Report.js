@@ -24,7 +24,7 @@ var Table = {
         $("#tblBookHeader").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
@@ -68,7 +68,7 @@ var Table = {
         $("#tblBookUser").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,
             "ajax": {
@@ -136,6 +136,6 @@ var Control = {
 
 var Export = {
     ToExcel: function () {
-        window.location.href = "/Home/ExportToExcelKinto?Reporttype=" + $('#reporttype').val() + "&Startdate=" + $("#Startdate").val() + "&Enddate=" + $("#Enddate").val();
+        window.location.href = url + "/Home/ExportToExcelKinto?Reporttype=" + $('#reporttype').val() + "&Startdate=" + $("#Startdate").val() + "&Enddate=" + $("#Enddate").val();
     },
 }

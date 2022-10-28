@@ -36,28 +36,28 @@ namespace KintoSharePortal.Controllers
 
             return View();
         }
-
+        //[System.Web.Http.Authorize]
         public ActionResult MyBook()
         {
             //ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        //[System.Web.Mvc.Authorize]
         public ActionResult Facilities ()
         {
             //ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        //[System.Web.Mvc.Authorize]
         public ActionResult Bookapproval()
         {
             //ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        //[System.Web.Mvc.Authorize] 
         public ActionResult Report()
         {
             //ViewBag.Message = "Your application description page.";
@@ -189,6 +189,15 @@ namespace KintoSharePortal.Controllers
         {
             try
             {
+                if (post.BookRepeat == "Y")
+                {
+                    post.Enddate = post.Startdate;
+                }
+                else
+                {
+                    post.DateFreq = "D";
+                }
+
                 KintoSharePortalService kins = new KintoSharePortalService();
                 kins.SubmitBook(post);
                 return Json("Data saved Successfully!");
@@ -236,7 +245,6 @@ namespace KintoSharePortal.Controllers
                 string strWhereCond = "";
 
                 post.ShowAllBook = bookkinto.BookList(strWhereCond);
-
                 recordsTotal = post.ShowAllBook.Count();
                 var data = post.ShowAllBook.Skip(skip).Take(pageSize).ToList();
 
@@ -254,11 +262,27 @@ namespace KintoSharePortal.Controllers
             try
             {
                 var ksp = new KintoSharePortalService();
-                var CheckListDetail = new trxKintoSharePortalBookSubmit();
+                var CheckListDetail = new mstKintoSharePortalChecklist();
                 CheckListDetail = ksp.ChecklistDetail(Bookid, BookingNo);
                 return Json(CheckListDetail, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        public JsonResult CheckOutDetail(int Bookid, string BookingNo)
+        {
+            try
+            {
+                var ksp = new KintoSharePortalService();
+                var CheckOutDetail = new mstKintoSharePortalChecklist();
+                CheckOutDetail = ksp.CheckOutDetail(Bookid, BookingNo);
+                return Json(CheckOutDetail, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
             {
                 throw;
             }
@@ -374,6 +398,22 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public ActionResult ApprovalCheckIn(string BookNumber, string StatusCheckIn)
+        {
+            try
+            {
+                var kins = new KintoSharePortalService();
+                kins.ApprovalCheckIn(BookNumber, StatusCheckIn);
+
+                return Json("Data saved Successfully!");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public ActionResult IndexBooking()
         {
             try
@@ -382,6 +422,7 @@ namespace KintoSharePortal.Controllers
                 var BookListIndex = new List<trxKintoSharePortalBookSubmit>();
                 var WhereCond = "";
                 BookListIndex = ksp.BookListIndex(WhereCond);
+                
                 return Json(BookListIndex, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)

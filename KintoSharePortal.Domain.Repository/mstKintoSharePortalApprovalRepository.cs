@@ -27,6 +27,10 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pSubmitApproval(BookNo, Status, con);
         }
+        public mstKintoSharePortalApproval SubmitApprovalCheckIn(string BookNumber, string Status, SqlConnection con)
+        {
+            return pSubmitApprovalCheckIn(BookNumber, Status, con);
+        }
         private List<mstKintoSharePortalApproval> pLoadApproval(string WhereCond, SqlConnection con)
         {
             using (var command = con)
@@ -50,6 +54,21 @@ namespace KintoSharePortal.Domain.Repository
 
                 cmd.Parameters.Add(cmd.CreateParameter("@Bookno", BookNo));
                 cmd.Parameters.Add(cmd.CreateParameter("@Status", Status));
+
+                //cmd.ExecuteNonQuery();
+                return this.ReadTransaction(cmd).SingleOrDefault();
+            }
+        }
+        private mstKintoSharePortalApproval pSubmitApprovalCheckIn(string BookNumber, string Status, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_CHECKINAPPROVAL";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@BookNo", BookNumber));
+                cmd.Parameters.Add(cmd.CreateParameter("@ApprovalStatus", Status));
 
                 //cmd.ExecuteNonQuery();
                 return this.ReadTransaction(cmd).SingleOrDefault();

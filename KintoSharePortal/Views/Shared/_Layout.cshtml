@@ -130,12 +130,12 @@
                             <span>HOME</span>
                         </a>
                     </li>
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requester")
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requestor")
                     {
                         <li>
                             <a href='@Url.Action("myBook", "Home")'>
                                 <i class="material-icons">book</i>
-                                <span>MY BOOK</span>
+                                <span>MYBOOKING</span>
                             </a>
                         </li>
                     }
@@ -148,7 +148,7 @@
                             </a>
                         </li>
                     }
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "divhead" || HttpContext.Current.Session["userRole"].ToString() == "admin")
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "approver" || HttpContext.Current.Session["userRole"].ToString() == "admin")
                     {
                         <li>
                             <a href='@Url.Action("BookApproval", "Home")'>
@@ -194,6 +194,7 @@
 
     @*<script src="~/Content/bsb/plugins/bootstrap/js/bootstrap.js"></script>*@
     @* <script type="text/javascript" src="~/Content/jquery.min.js"></script>*@
+    
     <script src="~/Scripts/jquery-ui.1.10.3.js"></script>
     <script src="~/Content/bsb/plugins/bootstrap-select/js/bootstrap-select.js"></script>
     <script src="~/Content/bsb/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>

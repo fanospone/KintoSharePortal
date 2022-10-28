@@ -90,7 +90,13 @@ namespace KintoSharePortal.Controllers
 
                 if (KS.ShowAllUser.Count > 0)
                     //HttpContext.Session["userRole"] = "admin";
-                    HttpContext.Session["userRole"] = KS.ShowAllUser[0].role;
+                    Session.Add("userRole", KS.ShowAllUser[0].role);
+                    //if (HttpContext.Sesssion["userRole"] == null)
+                    //{
+                       
+
+                    ////}
+                    //HttpContext.Session["userRole"] = KS.ShowAllUser[0].role;
 
                 else
                     HttpContext.Session["userRole"] = null;

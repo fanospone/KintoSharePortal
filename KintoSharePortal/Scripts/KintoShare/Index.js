@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         //start: '2022-09-22'
                         color: color
                     });
-                    console.log(value.Enddate);
+                    /*console.log(value.Enddate);*/
                 });
                 //}
                 successCallback(events);
@@ -132,9 +132,9 @@ var Table = {
         $("#tblAsset").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
-            "pageLength": 5,//[[5, 10, 25, 50], ['5', '10', '25', '50']],
+            "pageLength": 10,//[[5, 10, 25, 50], ['5', '10', '25', '50']],
             "ajax": {
                 "url": url + "/Home/ListAsset",
                 "type": "POST",

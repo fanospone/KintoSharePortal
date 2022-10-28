@@ -18,6 +18,9 @@ jQuery(document).ready(function () {
     $("#divmybooklist").show();
     $("#divdetail").hide();
     $("#pnlCheckList").hide();
+
+    $("#divfreq").hide();
+    $("#divbooktype").hide();
     Form.LoadHeader();
     Control.BindingDept();
     Control.CarList();
@@ -87,7 +90,8 @@ jQuery(document).ready(function () {
 });
 
 function myDate(StartDate, EndDate) {
-    var ttl = 0;
+    bookRpt = $("#bookrepeat option:selected").val();
+    let ttl = parseInt(0);
     let dollarUSLocale = Intl.NumberFormat('en-US');
     let daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let day = new Date(StartDate).getDay();
@@ -100,8 +104,7 @@ function myDate(StartDate, EndDate) {
     const firstDate = new Date(StartDate);
     const secondDate = new Date(EndDate);
 
-    for (var i = parseInt(ddStart); i <= parseInt(ddEnd); i++) {
-        console.log(daysArray[day]);
+    if (bookRpt == 'Y') {
         var StrDay = daysArray[day];
         var feeweekday = $('#lblweekday').text();
         var feeweekend = $('#lblweekend').text();
@@ -109,21 +112,38 @@ function myDate(StartDate, EndDate) {
         feeend = feeweekend.replace(/\,/g, '');
 
         if (StrDay !== 'Saturday' && StrDay !== 'Sunday') {
-            ttl = parseInt(ttl) + parseInt(feeday);
-            ttl++;
-            console.log(ttl);
-
+            ttl = parseInt(Math.round(feeday)) * 2;
         }
         else {
-            ttl = parseInt(ttl) + parseInt(feeend);
-            ttl++;
-            console.log(ttl);
+            ttl = parseInt(Math.round(feeend)) * 2;
         }
+    }
+    else {
+        for (var i = parseInt(ddStart); i <= parseInt(ddEnd); i++) {
+            //console.log(daysArray[day]);
+            var StrDay = daysArray[day];
+            var feeweekday = $('#lblweekday').text();
+            var feeweekend = $('#lblweekend').text();
+            feeday = feeweekday.replace(/\,/g, '');
+            feeend = feeweekend.replace(/\,/g, '');
 
-        if (day == 6)
-            day = 0;
-        else
-            day++;
+            if (StrDay !== 'Saturday' && StrDay !== 'Sunday') {
+                ttl = parseInt(ttl) + parseInt(feeday);
+                ttl++;
+                console.log(parseFloat(feeday));
+            }
+            else {
+                ttl = parseInt(ttl) + parseInt(feeend);
+                ttl++;
+                console.log(parseFloat(feeend));
+            }
+
+            if (day == 6)
+                day = 0;
+            else
+                day++;
+        }
+        ttl = parseInt(ttl) - 2;
     }
     const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     //document.getElementById("myId").innerHTML = diffDays;
@@ -243,12 +263,9 @@ function showCancelMessage(id,bookNo) {
                     location.reload();
                 }, error: function (xhr, msg) {
                     alert("Proses Error " + msg);
-                }, complete: function () {
-                    alert("Proses Complete");
-                    Form.LoadData();
                 }
             });
-            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            swal("Deleted!", "Your book has been deleted.", "success");
             //$.ajax({
             //    url: "/Home/DeleteBook",
             //    type: "POST",
@@ -260,7 +277,7 @@ function showCancelMessage(id,bookNo) {
             //    alert("Proses Error " + msg);
             //});
         } else {
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            swal("Cancelled", "Your book is safe :)", "error");
         }
     });
 }
@@ -304,6 +321,17 @@ var Control = {
             $("#divdetail").show();
             $("#pnlCheckList").hide();
         });
+
+        $("#btapprove").unbind().click(function () {
+            var Status = "Approve";
+            Form.ChecklistApproval(Status);
+        });
+
+        $("#btreturn").unbind().click(function () {
+            var Status = "Return";
+            Form.ChecklistApproval(Status);
+        });
+
     },
 
     BindingDept: function () {
@@ -315,10 +343,10 @@ var Control = {
                 //console.log(data);
                 /* if (Common.CheckError.List(data)) {*/
                 $("#department").append("<option value='0'>--Select Department--</option>");
-                    $.each(data, function (i, item) {
-                        //console.log(item);
-                        $("#department").append("<option value='" + item.DeptId + "'>" + item.DeptId + " - " + item.DeptName + "</option>");
-                    })
+                $.each(data, function (i, item) {
+                    //console.log(item);
+                    $("#department").append("<option value='" + item.DeptId + "'>" + item.DeptId + " - " + item.DeptName + "</option>");
+                })
                     //$("#department").select2({ placeholder: "Select Department", width: null });
                 //}
             })
@@ -366,6 +394,7 @@ var Control = {
                 $("#licenseplat").val(data.PlatNo);
                 $('#lblweekday').text(dollarUSLocale.format(data.FeeWeekDay));
                 $('#lblweekend').text(dollarUSLocale.format(data.FeeWeekEnd));
+                checkDate();
             })
             .fail(function (jqXHR, textStatus, errorThrown){
                 console.log(jqXHR);
@@ -383,6 +412,8 @@ var Control = {
             .done(function (data, textStatus, jqXHR) {
                 //console.log(data);
                 /* if (Common.CheckError.List(data)) {*/
+                document.getElementById('ddpic').options.length = 0;
+
                 $("#ddpic").append("<option value='0'>--Select PIC--</option>");
                 $.each(data, function (i, item) {
                     $("#ddpic").append("<option value='" + item.UserID + "'>" + item.UserID + " - " + item.UserName + "</option>");
@@ -397,12 +428,24 @@ var Control = {
                 //Common.Alert.Error(errorThrown);
             });
     },
+
+    Freq: function (BookRepeat) {
+        if (BookRepeat.value == 'Y') {
+            $("#divfreq").show();
+            checkDate();
+        }
+        else
+        {
+            $("#divfreq").hide();
+            checkDate();
+        }
+    },
 }
 
 var Form = {
     Submit: function () {
 
-        Form.Validation();
+        //Form.Validation();
 
         strfee = $('#kintosharefee').val();
         newfee = strfee.replace(/\,/g, '');
@@ -414,11 +457,13 @@ var Form = {
             PIC: $("#ddpic option:selected").text(),
             BookType: $('#booktype').val(),
             Purpose: $('#purpose').val(),
-            BookRepeat: $('#bookrepeat').val(),
+            //BookRepeat: $('#bookrepeat').val(),
             KintoShareFee: newfee, /*$('#kintosharefee').val(),*/
-            DateFreq: $('#datefreq').val(),
+            //DateFreq: $('#datefreq').val(),
             StartDate: $('#datebookstart').val(),
-            EndDate: $('#datebookend').val()
+            EndDate: $('#datebookend').val(),
+            BookRepeat: $("#bookrepeat option:selected").val(),
+            DateFreq: $("#bookfreq option:selected").val()
         };
         $.ajax({
             type: "POST",
@@ -449,24 +494,29 @@ var Form = {
     LoadHeader: function () {
 
         $("#tblBookHeader").DataTable({
+            "columnDefs":
+                [
+                    {
+                        "targets": [0, 7, 9, 10, 11],
+                        "visible": false
+                    },
+                    {
+                        "searchable": true,
+                        "targets": [1, 2]
+                    },
+                ],
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
-            "pageLength": 5,
+            "destroy": true,
+            "deferRender": true,
+            "pageLength": 10,
             "ajax": {
                 "url": url + "/Home/BookingList",
                 "type": "POST",
                 "datatype": "json"
             },
-            "columnDefs":
-                [
-                    {
-                        "targets": [0, 7, 9, 10, 11],
-                        "visible": false,
-                        "searchable": false
-                    }
-                ],
             "columns": [
                 { "data": "ID", "name": "ID", "autoWidth": true },
                 { "data": "BookingNo", "name": "BookingNo", "autoWidth": true },
@@ -482,17 +532,22 @@ var Form = {
                 { "data": "DateCrt", "name": "DateCrt", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting" && data.Role == "admin")
-                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckIn('" + row.ID + "','" + row.BookingNo + "'); >CHECK-IN</a > "; //,'" + row.Cartype + "','" + row.Department + "','" + row.PlatNo + "','" + row.PIC + "','" + row.BookDate + "','" + row.ApprovalStatus + "','" + row.UserReq + "','" + row.Purpose + "','" + row.DateCrt + "'); > Check - In</a > ";
-                        
+                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting")
+                            /*if (data.Ischeckin != 1)*/
+                                return "<a href='#' class='btn btn-danger' onclick=Form.CheckIn('" + row.ID + "','" + row.BookingNo + "'); >CHECK-IN</a > ";
+                            //else
+                            //    return "<h5>DONE</h5>"; //,'" + row.Cartype + "','" + row.Department + "','" + row.PlatNo + "','" + row.PIC + "','" + row.BookDate + "','" + row.ApprovalStatus + "','" + row.UserReq + "','" + row.Purpose + "','" + row.DateCrt + "'); > Check - In</a > ";
                         else 
                             return "";
                     }
                 },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting" && data.Role == "admin")
-                            return "<a href='#' class='btn btn-danger' onclick=Form.CheckOut('" + row.ID + "','" + row.BookingNo + "'); >CHECK-OUT</a>";
+                        if (data.CheckInStatus != "Return" && data.CheckInStatus != null && data.CheckInStatus != "Updated")
+                            /*if (data.Ischeckout != 1)*/
+                                return "<a href='#' class='btn btn-danger' onclick=Form.CheckOut('" + row.ID + "','" + row.BookingNo + "'); >CHECK-OUT</a>";
+                            //else
+                            //    return "<h5>DONE</h5>";
                         else
                             return "";
                     }
@@ -513,6 +568,7 @@ var Form = {
 
             },
         })
+
     },
 
     SubmitCheckList: function () {
@@ -542,7 +598,10 @@ var Form = {
             rbaudio: document.querySelector('input[name="rbaudio"]:checked').value, //$("#rbaudio").val(),
             rbac: document.querySelector('input[name="rbac"]:checked').value, //$("#rbac").val(),
             rbbancdg: document.querySelector('input[name="rbbancdg"]:checked').value, //$("#rbbancdg").val(),
-            rbfuel: document.querySelector('input[name="rbfuel"]:checked').value
+            rbfuel: document.querySelector('input[name="rbfuel"]:checked').value,
+            bodyrepair: document.getElementById("txtbodyrepair").value,
+            cleaniness: document.getElementById("txtCleanliness").value,
+            smoke: document.querySelector('input[name="rbsmoke"]:checked').value
         };
         console.log(param);
         $.ajax ({
@@ -621,23 +680,8 @@ var Form = {
             $("#divmybooklist").hide();
             $("#pnlCheckList").show();
 
-            document.getElementById('lblCarType').innerHTML = data.Cartype;
-            document.getElementById('lblDepartment').innerHTML = data.Department;
-            document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
-            document.getElementById('lblPIC').innerHTML = data.PIC;
-            document.getElementById('lblBookType').innerHTML = data.BookType;
-            document.getElementById('lblpurpose').innerHTML = data.Purpose;
-            document.getElementById('lblbookDate').innerHTML = data.BookDate;
-            document.getElementById('lblRequest').innerHTML = data.UserReq;
-            document.getElementById('lblStartDate').innerHTML = data.Startdate;
-            document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
-            document.getElementById('lblEndDate').innerHTML = data.Enddate;
-
-            document.getElementById('lblIDChecklist').innerHTML = Bookid;
-            document.getElementById('lblBookNo').innerHTML = BookingNo;
-
-            $("#btsave").show();
-            $("#divbtnsave").show();
+            $("#checkintitle").show();
+            $("#checkouttitle").hide();
 
             $("#btcheckout").hide();
             $("#divbtncheckout").hide();
@@ -645,6 +689,165 @@ var Form = {
             $("#divBody").hide();
             $("#divClean").hide();
             $("#divsmoke").hide();
+
+            $("#ChechkInStatus").show();
+
+            if (data.Role != 'admin') {
+                document.getElementById('lblCarType').innerHTML = data.Cartype;
+                document.getElementById('lblDepartment').innerHTML = data.Department;
+                document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
+                document.getElementById('lblPIC').innerHTML = data.PIC;
+                document.getElementById('lblBookType').innerHTML = data.BookType;
+                document.getElementById('lblpurpose').innerHTML = data.Purpose;
+                document.getElementById('lblbookDate').innerHTML = data.BookDate;
+                document.getElementById('lblRequest').innerHTML = data.UserReq;
+                document.getElementById('lblStartDate').innerHTML = data.Startdate;
+                document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
+                document.getElementById('lblEndDate').innerHTML = data.Enddate;
+
+                document.getElementById('lblIDChecklist').innerHTML = Bookid;
+                document.getElementById('lblBookNo').innerHTML = BookingNo;
+
+                document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is " + data.CheckInStatus;
+
+                $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
+                $("input[name=rbfuel]").prop('disabled', true);
+                $("input[name=rbff][value=" + data.rbff + "]").prop('checked', true);
+                $("input[name=rbff]").prop('disabled', true);
+                $("input[name=rbdash][value=" + data.rbdash + "]").prop('checked', true);
+                $("input[name=rbdash]").prop('disabled', true);
+                $("input[name=rbSeat][value=" + data.rbSeat + "]").prop('checked', true);
+                $("input[name=rbSeat]").prop('disabled', true);
+                $("input[name=rbbmprf][value=" + data.rbbmprf + "]").prop('checked', true);
+                $("input[name=rbbmprf]").prop('disabled', true);
+                $("input[name=rbbmpr][value=" + data.rbbmpr + "]").prop('checked', true);
+                $("input[name=rbbmpr]").prop('disabled', true);
+                $("input[name=rbfenderrf][value=" + data.rbfenderrf + "]").prop('checked', true);
+                $("input[name=rbfenderrf]").prop('disabled', true);
+                $("input[name=rbfenderlf][value=" + data.rbfenderlf + "]").prop('checked', true);
+                $("input[name=rbfenderlf]").prop('disabled', true);
+                $("input[name=rbfenderrb][value=" + data.rbfenderrb + "]").prop('checked', true);
+                $("input[name=rbfenderrb]").prop('disabled', true);
+                $("input[name=rbfenderlb][value=" + data.rbfenderlb + "]").prop('checked', true);
+                $("input[name=rbfenderlb]").prop('disabled', true);
+                $("input[name=rbkm][value=" + data.rbkm + "]").prop('checked', true);
+                $("input[name=rbkm]").prop('disabled', true);
+                $("input[name=rbstnk][value=" + data.rbstnk + "]").prop('checked', true);
+                $("input[name=rbstnk]").prop('disabled', true);
+                $("input[name=rbserviceBook][value=" + data.rbserviceBook + "]").prop('checked', true);
+                $("input[name=rbserviceBook]").prop('disabled', true);
+                $("input[name=rbvelg][value=" + data.rbvelg + "]").prop('checked', true);
+                $("input[name=rbvelg]").prop('disabled', true);
+                $("input[name=rbbanrf][value=" + data.rbbanrf + "]").prop('checked', true);
+                $("input[name=rbbanrf]").prop('disabled', true);
+                $("input[name=rbbanlf][value=" + data.rbbanlf + "]").prop('checked', true);
+                $("input[name=rbbanlf]").prop('disabled', true);
+                $("input[name=rbbanrb][value=" + data.rbbanrb + "]").prop('checked', true);
+                $("input[name=rbbanrb]").prop('disabled', true);
+                $("input[name=rbbanlb][value=" + data.rbbanlb + "]").prop('checked', true);
+                $("input[name=rbbanlb]").prop('disabled', true);
+                $("input[name=rbdongkrak][value=" + data.rbdongkrak + "]").prop('checked', true);
+                $("input[name=rbdongkrak]").prop('disabled', true);
+                $("input[name=rbkaca][value=" + data.rbkaca + "]").prop('checked', true);
+                $("input[name=rbkaca]").prop('disabled', true);
+                $("input[name=rbkf][value=" + data.rbkf + "]").prop('checked', true);
+                $("input[name=rbkf]").prop('disabled', true);
+                $("input[name=rbaudio][value=" + data.rbaudio + "]").prop('checked', true);
+                $("input[name=rbaudio]").prop('disabled', true);
+                $("input[name=rbac][value=" + data.rbac + "]").prop('checked', true);
+                $("input[name=rbac]").prop('disabled', true);
+                $("input[name=rbbancdg][value=" + data.rbbancdg + "]").prop('checked', true);
+                $("input[name=rbbancdg]").prop('disabled', true);
+                $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
+                $("input[name=rbsmoke]").prop('disabled', true);
+
+                document.getElementById('txtbodyrepair').value = data.bodyrepair;
+                document.getElementById('txtbodyrepair').disabled = true;
+                document.getElementById('txtCleanliness').value = data.cleaniness;
+                document.getElementById('txtCleanliness').disabled = true;
+
+                $("#btsave").hide();
+                $("#divbtnsave").hide();
+                console.log(data.CheckInStatus);
+                if (data.CheckInStatus == "Approve" || data.CheckInStatus == "Return" ) {
+                    $("#btapprove").hide();
+                    $("#divapprove").hide();
+
+                    $("#divreturn").hide();
+                    $("#btreturn").hide();
+                }
+                else if (data.IsCheckIn != 1) {
+                    $("#btapprove").hide();
+                    $("#divapprove").hide();
+
+                    $("#divreturn").hide();
+                    $("#btreturn").hide();
+                }
+                else {
+                    $("#btapprove").show();
+                    $("#divapprove").show();
+
+                    $("#divreturn").show();
+                    $("#btreturn").show();
+                }
+            }
+            else {
+                document.getElementById('lblCarType').innerHTML = data.Cartype;
+                document.getElementById('lblDepartment').innerHTML = data.Department;
+                document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
+                document.getElementById('lblPIC').innerHTML = data.PIC;
+                document.getElementById('lblBookType').innerHTML = data.BookType;
+                document.getElementById('lblpurpose').innerHTML = data.Purpose;
+                document.getElementById('lblbookDate').innerHTML = data.BookDate;
+                document.getElementById('lblRequest').innerHTML = data.UserReq;
+                document.getElementById('lblStartDate').innerHTML = data.Startdate;
+                document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
+                document.getElementById('lblEndDate').innerHTML = data.Enddate;
+
+                document.getElementById('lblIDChecklist').innerHTML = Bookid;
+                document.getElementById('lblBookNo').innerHTML = BookingNo;
+
+                document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is "+ data.CheckInStatus;
+
+                $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
+                $("input[name=rbff][value=" + data.rbff + "]").prop('checked', true);
+                $("input[name=rbdash][value=" + data.rbdash + "]").prop('checked', true);
+                $("input[name=rbSeat][value=" + data.rbSeat + "]").prop('checked', true);
+                $("input[name=rbbmprf][value=" + data.rbbmprf + "]").prop('checked', true);
+                $("input[name=rbbmpr][value=" + data.rbbmpr + "]").prop('checked', true);
+                $("input[name=rbfenderrf][value=" + data.rbfenderrf + "]").prop('checked', true);
+                $("input[name=rbfenderlf][value=" + data.rbfenderlf + "]").prop('checked', true);
+                $("input[name=rbfenderrb][value=" + data.rbfenderrb + "]").prop('checked', true);
+                $("input[name=rbfenderlb][value=" + data.rbfenderlb + "]").prop('checked', true);
+                $("input[name=rbkm][value=" + data.rbkm + "]").prop('checked', true);
+                $("input[name=rbstnk][value=" + data.rbstnk + "]").prop('checked', true);
+                $("input[name=rbserviceBook][value=" + data.rbserviceBook + "]").prop('checked', true);
+                $("input[name=rbvelg][value=" + data.rbvelg + "]").prop('checked', true);
+                $("input[name=rbbanrf][value=" + data.rbbanrf + "]").prop('checked', true);
+                $("input[name=rbbanlf][value=" + data.rbbanlf + "]").prop('checked', true);
+                $("input[name=rbbanrb][value=" + data.rbbanrb + "]").prop('checked', true);
+                $("input[name=rbbanlb][value=" + data.rbbanlb + "]").prop('checked', true);
+                $("input[name=rbdongkrak][value=" + data.rbdongkrak + "]").prop('checked', true);
+                $("input[name=rbkaca][value=" + data.rbkaca + "]").prop('checked', true);
+                $("input[name=rbkf][value=" + data.rbkf + "]").prop('checked', true);
+                $("input[name=rbaudio][value=" + data.rbaudio + "]").prop('checked', true);
+                $("input[name=rbac][value=" + data.rbac + "]").prop('checked', true);
+                $("input[name=rbbancdg][value=" + data.rbbancdg + "]").prop('checked', true);
+                $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
+
+                document.getElementById('txtbodyrepair').value = data.bodyrepair;
+                document.getElementById('txtCleanliness').value = data.cleaniness;
+
+                $("#btsave").show();
+                $("#divbtnsave").show();
+
+                $("#btapprove").hide();
+                $("#divapprove").hide();
+
+                $("#divreturn").hide();
+                $("#btreturn").hide();
+
+            }
         }).fail(function (xhr, msg) {
             alert("Proses Error " + msg);
         });
@@ -656,37 +859,157 @@ var Form = {
         $("#divmybooklist").hide();
         $("#pnlCheckList").show();
         $.ajax({
-            url: url + "/Home/CheckListDetail",
+            url: url + "/Home/CheckOutDetail",
             type: "POST",
             data: { Bookid: Bookid, BookingNo: BookingNo }
         }).done(function (data, textStatus, jqXHR) {
             $("#divmybooklist").hide();
             $("#pnlCheckList").show();
 
-            document.getElementById('lblCarType').innerHTML = data.Cartype;
-            document.getElementById('lblDepartment').innerHTML = data.Department;
-            document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
-            document.getElementById('lblPIC').innerHTML = data.PIC;
-            document.getElementById('lblBookType').innerHTML = data.BookType;
-            document.getElementById('lblpurpose').innerHTML = data.Purpose;
-            document.getElementById('lblbookDate').innerHTML = data.BookDate;
-            document.getElementById('lblRequest').innerHTML = data.UserReq;
-            document.getElementById('lblStartDate').innerHTML = data.Startdate;
-            document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
-            document.getElementById('lblEndDate').innerHTML = data.Enddate;
-
-            document.getElementById('lblIDChecklist').innerHTML = Bookid;
-            document.getElementById('lblBookNo').innerHTML = BookingNo;
+            $("#checkintitle").hide();
+            $("#checkouttitle").show();
 
             $("#btsave").hide();
             $("#divbtnsave").hide();
 
-            $("#btcheckout").show();
-            $("#divbtncheckout").show();
-
             $("#divBody").show();
             $("#divClean").show();
             $("#divsmoke").show();
+            $("#ChechkInStatus").hide();
+
+            if (data.Role != 'admin') {
+
+                $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
+                $("input[name=rbfuel]").prop('disabled', true);
+                $("input[name=rbff][value=" + data.rbff + "]").prop('checked', true);
+                $("input[name=rbff]").prop('disabled', true);
+                $("input[name=rbdash][value=" + data.rbdash + "]").prop('checked', true);
+                $("input[name=rbdash]").prop('disabled', true);
+                $("input[name=rbSeat][value=" + data.rbSeat + "]").prop('checked', true);
+                $("input[name=rbSeat]").prop('disabled', true);
+                $("input[name=rbbmprf][value=" + data.rbbmprf + "]").prop('checked', true);
+                $("input[name=rbbmprf]").prop('disabled', true);
+                $("input[name=rbbmpr][value=" + data.rbbmpr + "]").prop('checked', true);
+                $("input[name=rbbmpr]").prop('disabled', true);
+                $("input[name=rbfenderrf][value=" + data.rbfenderrf + "]").prop('checked', true);
+                $("input[name=rbfenderrf]").prop('disabled', true);
+                $("input[name=rbfenderlf][value=" + data.rbfenderlf + "]").prop('checked', true);
+                $("input[name=rbfenderlf]").prop('disabled', true);
+                $("input[name=rbfenderrb][value=" + data.rbfenderrb + "]").prop('checked', true);
+                $("input[name=rbfenderrb]").prop('disabled', true);
+                $("input[name=rbfenderlb][value=" + data.rbfenderlb + "]").prop('checked', true);
+                $("input[name=rbfenderlb]").prop('disabled', true);
+                $("input[name=rbkm][value=" + data.rbkm + "]").prop('checked', true);
+                $("input[name=rbkm]").prop('disabled', true);
+                $("input[name=rbstnk][value=" + data.rbstnk + "]").prop('checked', true);
+                $("input[name=rbstnk]").prop('disabled', true);
+                $("input[name=rbserviceBook][value=" + data.rbserviceBook + "]").prop('checked', true);
+                $("input[name=rbserviceBook]").prop('disabled', true);
+                $("input[name=rbvelg][value=" + data.rbvelg + "]").prop('checked', true);
+                $("input[name=rbvelg]").prop('disabled', true);
+                $("input[name=rbbanrf][value=" + data.rbbanrf + "]").prop('checked', true);
+                $("input[name=rbbanrf]").prop('disabled', true);
+                $("input[name=rbbanlf][value=" + data.rbbanlf + "]").prop('checked', true);
+                $("input[name=rbbanlf]").prop('disabled', true);
+                $("input[name=rbbanrb][value=" + data.rbbanrb + "]").prop('checked', true);
+                $("input[name=rbbanrb]").prop('disabled', true);
+                $("input[name=rbbanlb][value=" + data.rbbanlb + "]").prop('checked', true);
+                $("input[name=rbbanlb]").prop('disabled', true);
+                $("input[name=rbdongkrak][value=" + data.rbdongkrak + "]").prop('checked', true);
+                $("input[name=rbdongkrak]").prop('disabled', true);
+                $("input[name=rbkaca][value=" + data.rbkaca + "]").prop('checked', true);
+                $("input[name=rbkaca]").prop('disabled', true);
+                $("input[name=rbkf][value=" + data.rbkf + "]").prop('checked', true);
+                $("input[name=rbkf]").prop('disabled', true);
+                $("input[name=rbaudio][value=" + data.rbaudio + "]").prop('checked', true);
+                $("input[name=rbaudio]").prop('disabled', true);
+                $("input[name=rbac][value=" + data.rbac + "]").prop('checked', true);
+                $("input[name=rbac]").prop('disabled', true);
+                $("input[name=rbbancdg][value=" + data.rbbancdg + "]").prop('checked', true);
+                $("input[name=rbbancdg]").prop('disabled', true);
+                $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
+                $("input[name=rbsmoke]").prop('disabled', true);
+
+                document.getElementById('txtbodyrepair').value = data.bodyrepair;
+                document.getElementById('txtbodyrepair').disabled = true;
+                document.getElementById('txtCleanliness').value = data.cleaniness;
+                document.getElementById('txtCleanliness').disabled = true;
+
+                //$("#lblCarType").val(data.Cartype);
+                document.getElementById('lblCarType').innerHTML = data.Cartype;
+                document.getElementById('lblDepartment').innerHTML = data.Department;
+                document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
+                document.getElementById('lblPIC').innerHTML = data.PIC;
+                document.getElementById('lblBookType').innerHTML = data.BookType;
+                document.getElementById('lblpurpose').innerHTML = data.Purpose;
+                document.getElementById('lblbookDate').innerHTML = data.BookDate;
+                document.getElementById('lblRequest').innerHTML = data.UserReq;
+                document.getElementById('lblStartDate').innerHTML = data.Startdate;
+                document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
+                document.getElementById('lblEndDate').innerHTML = data.Enddate;
+
+                document.getElementById('lblIDChecklist').innerHTML = Bookid;
+                document.getElementById('lblBookNo').innerHTML = BookingNo;
+
+                $("#btcheckout").hide();
+                $("#divbtncheckout").hide();
+
+                $("#btapprove").hide();
+                $("#divapprove").hide();
+
+                $("#divreturn").hide();
+                $("#btreturn").hide();
+            }
+            else
+            {
+                $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
+                $("input[name=rbff][value=" + data.rbff + "]").prop('checked', true);
+                $("input[name=rbdash][value=" + data.rbdash + "]").prop('checked', true);
+                $("input[name=rbSeat][value=" + data.rbSeat + "]").prop('checked', true);
+                $("input[name=rbbmprf][value=" + data.rbbmprf + "]").prop('checked', true);
+                $("input[name=rbbmpr][value=" + data.rbbmpr + "]").prop('checked', true);
+                $("input[name=rbfenderrf][value=" + data.rbfenderrf + "]").prop('checked', true);
+                $("input[name=rbfenderlf][value=" + data.rbfenderlf + "]").prop('checked', true);
+                $("input[name=rbfenderrb][value=" + data.rbfenderrb + "]").prop('checked', true);
+                $("input[name=rbfenderlb][value=" + data.rbfenderlb + "]").prop('checked', true);
+                $("input[name=rbkm][value=" + data.rbkm + "]").prop('checked', true);
+                $("input[name=rbstnk][value=" + data.rbstnk + "]").prop('checked', true);
+                $("input[name=rbserviceBook][value=" + data.rbserviceBook + "]").prop('checked', true);
+                $("input[name=rbvelg][value=" + data.rbvelg + "]").prop('checked', true);
+                $("input[name=rbbanrf][value=" + data.rbbanrf + "]").prop('checked', true);
+                $("input[name=rbbanlf][value=" + data.rbbanlf + "]").prop('checked', true);
+                $("input[name=rbbanrb][value=" + data.rbbanrb + "]").prop('checked', true);
+                $("input[name=rbbanlb][value=" + data.rbbanlb + "]").prop('checked', true);
+                $("input[name=rbdongkrak][value=" + data.rbdongkrak + "]").prop('checked', true);
+                $("input[name=rbkaca][value=" + data.rbkaca + "]").prop('checked', true);
+                $("input[name=rbkf][value=" + data.rbkf + "]").prop('checked', true);
+                $("input[name=rbaudio][value=" + data.rbaudio + "]").prop('checked', true);
+                $("input[name=rbac][value=" + data.rbac + "]").prop('checked', true);
+                $("input[name=rbbancdg][value=" + data.rbbancdg + "]").prop('checked', true);
+                $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
+
+                document.getElementById('txtbodyrepair').value = data.bodyrepair;
+                document.getElementById('txtCleanliness').value = data.cleaniness;
+                //document.getElementById('lblttlChargeAll').innerHTML = data.Charge;
+
+                document.getElementById('lblCarType').innerHTML = data.Cartype;
+                document.getElementById('lblDepartment').innerHTML = data.Department;
+                document.getElementById('lblPlatNo').innerHTML = data.PlatNo;
+                document.getElementById('lblPIC').innerHTML = data.PIC;
+                document.getElementById('lblBookType').innerHTML = data.BookType;
+                document.getElementById('lblpurpose').innerHTML = data.Purpose;
+                document.getElementById('lblbookDate').innerHTML = data.BookDate;
+                document.getElementById('lblRequest').innerHTML = data.UserReq;
+                document.getElementById('lblStartDate').innerHTML = data.Startdate;
+                document.getElementById('lblstatus').innerHTML = data.ApprovalStatus;
+                document.getElementById('lblEndDate').innerHTML = data.Enddate;
+
+                document.getElementById('lblIDChecklist').innerHTML = Bookid;
+                document.getElementById('lblBookNo').innerHTML = BookingNo;
+
+                $("#btcheckout").show();
+                $("#divbtncheckout").show();
+            }
 
             let dollarUSLocale = Intl.NumberFormat('en-US');
             var chargebody = 50000;
@@ -695,13 +1018,17 @@ var Form = {
             document.getElementById('lblcclean').innerHTML = dollarUSLocale.format(chargebody);
             document.getElementById('lblsmoke').innerHTML = dollarUSLocale.format(chargeSmoke);
 
+            checkChargeBody();
+            checkChargeClean();
+            CheckSmoke();
+
         }).fail(function (xhr, msg) {   
             alert("Proses Error " + msg);
         });
     },
 
     Validation: function () {
-        var lblbookDate = $("#datebook").val();
+        var lblbookDate = $("#datebook").val(); 
         var booktype = document.getElementById("booktype").value;
         var result = true;
         
@@ -712,7 +1039,7 @@ var Form = {
         }
         else if ($('#cartype option:selected').val() == 0) {
             $('#myModal').modal('show');
-            $('#modaltext').text("Please provide vehicle..");
+            $('#modaltext').text("Please provide asset..");
             result = false;
         }
         else if ($('#department option:selected').val() == 0) {
@@ -912,5 +1239,23 @@ var Form = {
             result = false;
         }
         return result;
+    },
+
+    ChecklistApproval: function (StatusCheckIn) {
+        var BookNumber = $('#lblBookNo').text();
+        console.log(StatusCheckIn);
+        console.log(BookNumber);
+        $.ajax({
+            url: url + "/Home/ApprovalCheckIn",
+            type: "POST",
+            datatype: "json",
+            data: { BookNumber: BookNumber, StatusCheckIn: StatusCheckIn},
+            success: function (result) {
+                location.reload();
+            },
+            error: function (xhr, msg) {
+                alert("Proses Error " + msg);
+            }
+        })
     },
 }

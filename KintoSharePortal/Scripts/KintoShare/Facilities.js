@@ -17,6 +17,16 @@ jQuery(document).ready(function () {
 });
 
 function showpnladdasset() {
+    document.getElementById('cartype').value = "";
+    document.getElementById('platno').value = "";
+    document.getElementById('accessories').value = "";
+    document.getElementById('capacity').value = "";
+    document.getElementById('chasisno').value = "";
+    document.getElementById('engineno').value = "";
+    document.getElementById('feeweekday').value = "";
+    document.getElementById('feeweekend').value = "";
+    $("input[type=radio][name=carstat]").prop('checked', false);
+
     $("#divassetaction").show();
     $("#lblAddasset").show();
     $("#lblEditasset").hide();
@@ -52,9 +62,9 @@ function showCancelMessage(id) {
                     Form.LoadData();
                 }
             });
-            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            swal("Deleted!", "Your asset has been deleted.", "success");
         } else {
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            swal("Cancelled", "Your asset is safe :)", "error");
         }
     });
 }
@@ -78,11 +88,13 @@ var Control = {
             }
         });
 
-        $("btaddasset").unbind().click(function () {
+        $("#btaddasset").unbind().click(function () {
             $("#divassetaction").show();
             $("#divheaderasset").hide();
             $("#btsave").show();
             $("#btSaveEdit").hide();
+            $("#lblEditasset").hide();
+            $("#lblAddasset").show();
         });
 
         $("#btcancel").unbind().click(function () {
@@ -249,7 +261,7 @@ var Form = {
         $("#tblAsset").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
-            "filter": true, // this is for disable filter (search box)  
+            "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
             "pageLength": 5,//[[5, 10, 25, 50], ['5', '10', '25', '50']],
             "ajax": {
@@ -319,7 +331,8 @@ var Form = {
             type: "POST",
             data: { AssetID: ID }
         }).done(function (data, textStatus, jqXHR) {
-
+            $("#lblEditasset").show();
+            $("#lblAddasset").hide();
             $("#divassetaction").show();
             $("#divheaderasset").hide();
             $("#btsave").hide();
@@ -367,17 +380,19 @@ var Form = {
             datatype: "json",
             data: params,
             success: function (result) {
-                document.getElementById('cartype').value = null;
-                document.getElementById('platno').value = null;
-                document.getElementById('capacity').value = null;
-                document.getElementById('accessories').value = null;
-                document.getElementById('chasisno').value = null;
-                document.getElementById('engineno').value = null;
-                document.getElementById('feeweekday').value = null;
-                document.getElementById('feeweekend').value = null;
+                //document.getElementById('cartype').value = null;
+                //document.getElementById('platno').value = null;
+                //document.getElementById('capacity').value = null;
+                //document.getElementById('accessories').value = null;
+                //document.getElementById('chasisno').value = null;
+                //document.getElementById('engineno').value = null;
+                //document.getElementById('feeweekday').value = null;
+                //document.getElementById('feeweekend').value = null;
 
-                $("#divassetaction").hide();
-                Form.LoadData();
+                //$("#divassetaction").hide();
+                //Form.LoadData();
+                alert("Data has been save");
+                location.reload();
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);

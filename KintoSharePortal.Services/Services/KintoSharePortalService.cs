@@ -11,6 +11,7 @@ using KintoSharePortal.Domain.Repository;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Web.Mvc;
+using System.Globalization;
 
 namespace KintoSharePortal.Services
 {
@@ -110,7 +111,7 @@ namespace KintoSharePortal.Services
                 data.UserReq = HttpContext.Current.Session["userId"].ToString();
                 data.ApprovalStatus = "Waiting";
                 data.BookDate = DateTime.Now.ToString("MM-dd-yyyy");
-                    
+
                 BookReqRepo.SubmitBook(data);
                 
                 return (data);
@@ -252,19 +253,44 @@ namespace KintoSharePortal.Services
             }
         }
 
-        public trxKintoSharePortalBookSubmit ChecklistDetail(int Bookid , string BookingNo)
+        public mstKintoSharePortalChecklist ChecklistDetail(int Bookid , string BookingNo)
         {
             using (con)
             {
                 try
                 {
-                    var ChecklistRepo = new mstKintoSharePortalGetBookListRepository(_context);
-                    var CheckList = new trxKintoSharePortalBookSubmit();
+                    var ChecklistRepo = new trxKintoSharePortalChecklistRepository(_context);
+                    var CheckList = new mstKintoSharePortalChecklist();
                     con.Open();
                     CheckList = ChecklistRepo.ChecklistDetail(Bookid, BookingNo, con);
+                    CheckList.Role = HttpContext.Current.Session["userRole"].ToString();
                     return CheckList;
                 }
                 catch(Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public mstKintoSharePortalChecklist CheckOutDetail(int Bookid, string BookingNo)
+        {
+            using (con)
+            {
+                try
+                {
+                    var ChecklistRepo = new trxKintoSharePortalChecklistRepository(_context);
+                    var CheckOutList = new mstKintoSharePortalChecklist();
+                    con.Open();
+                    CheckOutList = ChecklistRepo.CheckOutlistDetail(Bookid, BookingNo, con);
+                    CheckOutList.Role = HttpContext.Current.Session["userRole"].ToString();
+                    return CheckOutList;
+                }
+                catch (Exception ex)
                 {
                     throw;
                 }
@@ -352,6 +378,56 @@ namespace KintoSharePortal.Services
 
                     con.Open();
                     listBookingIndex = BookRepo.LoadBookIndex(WhereCond, con);
+                    var lbi = new trxKintoSharePortalBookSubmit();
+                    var data = new List<trxKintoSharePortalBookSubmit>();
+                    foreach (var item in listBookingIndex.Where(i => i.BookRepeat == "Y"))
+                    {
+                        data.Add(new trxKintoSharePortalBookSubmit
+                        {
+                            ID = item.ID,
+                            BookingNo = item.BookingNo,
+                            Cartype = item.Cartype,
+                            Department = item.Department,
+                            PlatNo = item.PlatNo,
+                            PIC = item.PIC,
+                            BookType = item.BookType,
+                            Purpose = item.Purpose,
+                            BookRepeat = item.BookRepeat,
+                            DateFreq = item.DateFreq,
+                            BookDate = item.BookDate,
+                            UserReq = item.UserReq,
+                            ApprovalStatus = item.ApprovalStatus,
+                            DateCrt = item.DateCrt,
+                            Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
+                            Startdate = (DateTime.ParseExact(item.Startdate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
+                            Role = item.Role
+                        });
+                        //data.Add(lbi);
+                    }
+                    foreach(var item in data)
+                    {
+                        listBookingIndex.Add(new trxKintoSharePortalBookSubmit
+                        {
+                            ID = item.ID,
+                            BookingNo = item.BookingNo,
+                            Cartype = item.Cartype,
+                            Department = item.Department,
+                            PlatNo = item.PlatNo,
+                            PIC = item.PIC,
+                            BookType = item.BookType,
+                            Purpose = item.Purpose,
+                            BookRepeat = item.BookRepeat,
+                            DateFreq = item.DateFreq,
+                            BookDate = item.BookDate,
+                            UserReq = item.UserReq,
+                            ApprovalStatus = item.ApprovalStatus,
+                            DateCrt = item.DateCrt,
+                            Startdate = item.Startdate,
+                            Enddate = item.Enddate,
+                            Role = item.Role
+                        });
+                    }
+
                     con.Close();
                     return listBookingIndex;
                 }
@@ -535,6 +611,30 @@ namespace KintoSharePortal.Services
                     var ApprovalEnt = new mstKintoSharePortalApproval();
                     con.Open();
                     ApprovalRepo.SubmitApproval(BookNo, Status, con);
+                    return ApprovalEnt;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return JsonApproval("Error occurred. Error details: " + ex.Message);
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
+
+        public mstKintoSharePortalApproval ApprovalCheckIn(string BookNumber, string Status)
+        {
+            using (con)
+            {
+                try
+                {
+                    var ApprovalRepo = new mstKintoSharePortalApprovalRepository(_context);
+                    var ApprovalEnt = new mstKintoSharePortalApproval();
+                    con.Open();
+                    ApprovalRepo.SubmitApprovalCheckIn(BookNumber, Status, con);
                     return ApprovalEnt;
                 }
                 catch (Exception ex)
