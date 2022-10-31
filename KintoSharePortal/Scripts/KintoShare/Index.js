@@ -106,13 +106,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         color = '#66CDAA';
                     }
                     events.push({
-                        title: value.Cartype + " - " + value.ApprovalStatus,
+                        title: value.Cartype + " - " + value.BookingNo,
                         start: value.Startdate,
                         end: value.Enddate,
+                        //description: value.BookingNo,
                         //start: '2022-09-22'
                         color: color
                     });
-                    /*console.log(value.Enddate);*/
+                    //console.log(value.BookingNo);
                 });
                 //}
                 successCallback(events);
@@ -121,7 +122,43 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(textStatus);
                 console.log(errorThrown);
             });
-        }
+        },
+        //eventClick: function (calEvent, jsEvent, view) {
+        //    var title = prompt('Event Title:', calEvent.title, { buttons: { Ok: true, Cancel: false } });
+
+        //    if (title) {
+        //        calEvent.title = title;
+        //        calendar.fullCalendar('updateEvent', calEvent);
+        //    }
+        //},
+        eventClick: function (arg) {
+            console.log(arg.event.title);
+            const input = arg.event.title;
+            const [car, bookno] = input.split(' - ');
+
+            $.ajax({
+                url: url + "/Home/DateBookDetail",
+                type: "POST",
+                data: { BookingNo: bookno }
+            }).done(function (data, textStatus, jqXHR) {
+                $('#modalTitle').text(bookno);
+                //$('#modalBody').text(car);
+                document.getElementById('lblcar').innerHTML = car;
+                document.getElementById('lblplatno').innerHTML = data.PlatNo ;
+                document.getElementById('lblPIC').innerHTML = data.PIC ;
+                document.getElementById('lbldept').innerHTML = data.Department ;
+                $('#calendarModal').modal('show');
+                //console.log(car);
+                //console.log(bookno);
+            }).fail(function (xhr, msg) {
+                alert("Proses Error " + msg);
+            });
+        },
+        dateClick: function (info) {
+            //alert('clicked ' + info.dateStr);
+            window.location.href = url + "/Home/Mybook";
+            window.localStorage.setItem('click', true);
+        },
     });
 
     calendar.render();

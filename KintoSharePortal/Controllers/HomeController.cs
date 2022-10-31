@@ -210,6 +210,22 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public JsonResult DateBookDetail (string BookingNo)
+        {
+            try
+            {
+                var ksp = new KintoSharePortalService();
+                var DateDetail = new trxKintoSharePortalBookSubmit();
+                DateDetail = ksp.DateDetail(BookingNo);
+                return Json(DateDetail, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public JsonResult PlatNo(int CarId)
         {
             try
@@ -404,6 +420,22 @@ namespace KintoSharePortal.Controllers
             {
                 var kins = new KintoSharePortalService();
                 kins.ApprovalCheckIn(BookNumber, StatusCheckIn);
+
+                return Json("Data saved Successfully!");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult ApprovalCheckOut(string BookNumber, string StatusCheckOut)
+        {
+            try
+            {
+                var kins = new KintoSharePortalService();
+                kins.ApprovalCheckOut(BookNumber, StatusCheckOut);
 
                 return Json("Data saved Successfully!");
             }

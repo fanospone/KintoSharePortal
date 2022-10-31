@@ -8,6 +8,12 @@ else
     url = BASE_URL_PRD;
 
 var check = "";
+window.addEventListener('DOMContentLoaded', function () {
+    if (window.localStorage.getItem('click')) {
+        window.localStorage.removeItem('click');
+        document.getElementById("btbook").click();
+    }
+});
 
 jQuery(document).ready(function () {
     $("#divttlcbody").hide();
@@ -332,6 +338,21 @@ var Control = {
             Form.ChecklistApproval(Status);
         });
 
+        $("#btapproveCheckOut").unbind().click(function () {
+            var Status = "Approve";
+            Form.ApprovalCheckOut(Status);
+        });
+
+        $("#btreturnCheckOut").unbind().click(function () {
+            var Status = "Return";
+            Form.ApprovalCheckOut(Status);
+        });
+
+        $("#btreject").unbind().click(function () {
+            var Status = "Reject";
+            Form.ApprovalCheckOut(Status);
+        });
+
     },
 
     BindingDept: function () {
@@ -555,7 +576,7 @@ var Form = {
                 {
                     data: null, render: function (data, type, row) {
                         if (data.ApprovalStatus == "Waiting")
-                            return "<a href='#' class='btn btn-danger' onclick=showCancelMessage('" + row.ID + "','" + row.BookingNo + "');>Cancel</a>";
+                            return "<a href='#' class='btn btn-danger' onclick=showCancelMessage('" + row.ID + "','" + row.BookingNo + "');>CANCEL</a>";
                         else
                             return "";
                     }
@@ -692,6 +713,9 @@ var Form = {
 
             $("#ChechkInStatus").show();
 
+            $("#divapproveCheckOut").hide();
+            $("#divreturnCheckOut").hide();
+
             if (data.Role != 'admin') {
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
                 document.getElementById('lblDepartment').innerHTML = data.Department;
@@ -708,7 +732,12 @@ var Form = {
                 document.getElementById('lblIDChecklist').innerHTML = Bookid;
                 document.getElementById('lblBookNo').innerHTML = BookingNo;
 
-                document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is " + data.CheckInStatus;
+                if (data.CheckInStatus != null) {
+                    document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is " + data.CheckInStatus;
+                }
+                else {
+                    document.getElementById('ChechkInStatus').innerHTML = "";
+                }
 
                 $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
                 $("input[name=rbfuel]").prop('disabled', true);
@@ -768,7 +797,7 @@ var Form = {
 
                 $("#btsave").hide();
                 $("#divbtnsave").hide();
-                console.log(data.CheckInStatus);
+                //console.log(data.CheckInStatus);
                 if (data.CheckInStatus == "Approve" || data.CheckInStatus == "Return" ) {
                     $("#btapprove").hide();
                     $("#divapprove").hide();
@@ -790,6 +819,13 @@ var Form = {
                     $("#divreturn").show();
                     $("#btreturn").show();
                 }
+
+                if (data.CheckInStatus == "Reject") {
+                    $("#divreject").hide();
+                }
+                else {
+                    $("#divreject").show();
+                }
             }
             else {
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -807,7 +843,12 @@ var Form = {
                 document.getElementById('lblIDChecklist').innerHTML = Bookid;
                 document.getElementById('lblBookNo').innerHTML = BookingNo;
 
-                document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is "+ data.CheckInStatus;
+                if (data.CheckInStatus != null) {
+                    document.getElementById('ChechkInStatus').innerHTML = "This Approval Checklist is " + data.CheckInStatus;
+                }
+                else {
+                    document.getElementById('ChechkInStatus').innerHTML = "";
+                }
 
                 $("input[name=rbfuel][value=" + data.rbfuel + "]").prop('checked', true);
                 $("input[name=rbff][value=" + data.rbff + "]").prop('checked', true);
@@ -847,6 +888,9 @@ var Form = {
                 $("#divreturn").hide();
                 $("#btreturn").hide();
 
+                $("#divreject").hide();
+               
+
             }
         }).fail(function (xhr, msg) {
             alert("Proses Error " + msg);
@@ -858,6 +902,7 @@ var Form = {
         $("#lblIDChecklist").val(Bookid, BookingNo);
         $("#divmybooklist").hide();
         $("#pnlCheckList").show();
+        $("#divreject").hide();
         $.ajax({
             url: url + "/Home/CheckOutDetail",
             type: "POST",
@@ -876,6 +921,12 @@ var Form = {
             $("#divClean").show();
             $("#divsmoke").show();
             $("#ChechkInStatus").hide();
+
+            $("#btapprove").hide();
+            $("#divapprove").hide();
+
+            $("#divreturn").hide();
+            $("#btreturn").hide();
 
             if (data.Role != 'admin') {
 
@@ -954,11 +1005,18 @@ var Form = {
                 $("#btcheckout").hide();
                 $("#divbtncheckout").hide();
 
-                $("#btapprove").hide();
-                $("#divapprove").hide();
-
-                $("#divreturn").hide();
-                $("#btreturn").hide();
+                if (data.CheckOutStatus == "Approve" || data.CheckOutStatus == "Return") {
+                    $("#divapproveCheckOut").hide();
+                    $("#divreturnCheckOut").hide();
+                }
+                else if (data.IsCheckOut != 1) {
+                    $("#divapproveCheckOut").hide();
+                    $("#divreturnCheckOut").hide();
+                }
+                else {
+                    $("#divapproveCheckOut").show();
+                    $("#divreturnCheckOut").show();
+                }
             }
             else
             {
@@ -1009,6 +1067,9 @@ var Form = {
 
                 $("#btcheckout").show();
                 $("#divbtncheckout").show();
+
+                $("#divapproveCheckOut").hide();
+                $("#divreturnCheckOut").hide();
             }
 
             let dollarUSLocale = Intl.NumberFormat('en-US');
@@ -1243,13 +1304,29 @@ var Form = {
 
     ChecklistApproval: function (StatusCheckIn) {
         var BookNumber = $('#lblBookNo').text();
-        console.log(StatusCheckIn);
-        console.log(BookNumber);
+        //console.log(StatusCheckIn);
+        //console.log(BookNumber);
         $.ajax({
             url: url + "/Home/ApprovalCheckIn",
             type: "POST",
             datatype: "json",
             data: { BookNumber: BookNumber, StatusCheckIn: StatusCheckIn},
+            success: function (result) {
+                location.reload();
+            },
+            error: function (xhr, msg) {
+                alert("Proses Error " + msg);
+            }
+        })
+    },
+
+    ApprovalCheckOut: function (StatusCheckOut) {
+        var BookNumber = $('#lblBookNo').text();
+        $.ajax({
+            url: url + "/Home/ApprovalCheckOut",
+            type: "POST",
+            datatype: "json",
+            data: { BookNumber: BookNumber, StatusCheckOut: StatusCheckOut },
             success: function (result) {
                 location.reload();
             },
