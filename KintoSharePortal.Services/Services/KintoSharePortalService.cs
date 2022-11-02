@@ -82,7 +82,43 @@ namespace KintoSharePortal.Services
 
                 var BookReqRepo = new trxKintoSharePortalBookSubmitRepository(_context);
                 var GetBookNoRepo = new mstKintoSharePortalGetBookListRepository(_context);
-                    
+                var CheckBook = new mstKintoSharePortalGetBookListRepository(_context);
+                var ListBook = new List<trxKintoSharePortalBookSubmit>();
+
+                if (data.BookRepeat == "Y")
+                {
+                    //data.Enddate = (DateTime.ParseExact(data.Startdate, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(7)).ToString("MM/dd/yyyy");
+                    using (con)
+                    {
+                        var car = data.Cartype;
+                        var startDate = data.Startdate;
+                        var endDate = data.Enddate;
+                        con.Open();
+                        ListBook = CheckBook.ListBookRepeat(car, startDate, endDate, con);
+                        if (ListBook.Count > 0)
+                        {
+                        throw new InvalidOperationException("Asset has booked with other PIC in same date. Please choise other Asset/date");
+                        //ValidationMessages.AddModelError("BookingNo", "Asset has booked with other PIC in same date. Please choise other Asset/date");
+                        }
+                    }
+                }
+                else
+                {
+                    using (con)
+                    {
+                        var car = data.Cartype;
+                        var startDate = data.Startdate;
+                        var endDate = data.Enddate;
+                        con.Open();
+                        ListBook = CheckBook.ListAssetDate(car, startDate, endDate);
+                        if (ListBook.Count > 0)
+                        {
+                            throw new InvalidOperationException("Asset has booked with other PIC in same date. Please choise other Asset/date");
+                        }
+                    }
+                       
+                }
+
                 KSPHeader = GetBookNoRepo.GetBookNo();
                     
                 BookNo = KSPHeader == null ? "" : KSPHeader.BookingNo;
@@ -122,13 +158,13 @@ namespace KintoSharePortal.Services
             }
             catch(Exception ex)
             {
-                return Json("Error occurred. Error details: " + ex.Message, JsonRequestBehavior.AllowGet);
+                throw new NotImplementedException(ex.Message);
+                //return Json("Error occurred. Error details: " + ex.Message, JsonRequestBehavior.AllowGet);
             }
             finally
             {
                 con.Dispose();
             }
-            
         }
 
         private trxKintoSharePortalBookSubmit Json(string v, JsonRequestBehavior allowGet)
@@ -280,6 +316,7 @@ namespace KintoSharePortal.Services
                 }
             }
         }
+
         public trxKintoSharePortalBookSubmit DateDetail(string BookingNo)
         {
             using (con)

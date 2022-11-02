@@ -13,6 +13,7 @@ using System.IO;
 using System.Web.UI;
 using System.Data;
 using KintoSharePortal.Helper;
+using System.Globalization;
 
 namespace KintoSharePortal.Controllers
 {           
@@ -187,11 +188,12 @@ namespace KintoSharePortal.Controllers
         [System.Web.Http.HttpPost]
         public JsonResult SubmitBook (trxKintoSharePortalBookSubmit post)
         {
+            var model = new ErrorModel { Success = false };
             try
             {
                 if (post.BookRepeat == "Y")
                 {
-                    post.Enddate = post.Startdate;
+                    post.Enddate = (DateTime.ParseExact(post.Startdate, "MM/dd/yyyy", CultureInfo.InvariantCulture).AddDays(7)).ToString("MM/dd/yyyy");
                 }
                 else
                 {
@@ -200,11 +202,16 @@ namespace KintoSharePortal.Controllers
 
                 KintoSharePortalService kins = new KintoSharePortalService();
                 kins.SubmitBook(post);
-                return Json("Data saved Successfully!");
+                model.Success = true;
+                return Json(model);
             }
             catch(Exception ex)
             {
-                throw;
+                model.Reason = ex.Message;
+                return Json(model);
+                //return Json("Error" + ex.Message, JsonRequestBehavior.AllowGet);
+                //throw new NotImplementedException(ex.Message);
+                //throw ex;
             }
 
         }
@@ -480,6 +487,22 @@ namespace KintoSharePortal.Controllers
                 var bookkinto = new KintoSharePortalServiceReport();
 
                 string strWhereCond = "";
+                if (post.Startdate != null) 
+                {
+                    if(post.Enddate != null)
+                    {
+                        strWhereCond = "BOOK_DATE between '" + post.Startdate + "' AND '" + post.Enddate + "'";
+                    }
+                    else
+                    {
+                        strWhereCond = "";
+                    }
+                }
+                else
+                {
+                    strWhereCond = "";
+                }
+
                 var BookList = new List<mstKintoSharePortalReport>();
 
                 BookList = bookkinto.LoadBookingListReport(strWhereCond);
@@ -512,6 +535,15 @@ namespace KintoSharePortal.Controllers
                 var ReportService = new KintoSharePortalServiceReport();
 
                 string strWhereCond = "";
+                if ((post.Startdate != null || post.Startdate != "") && (post.Enddate != null || post.Enddate != ""))
+                {
+                    strWhereCond = "BOOK_DATE between " + post.Startdate + "AND" + post.Enddate;
+                }
+                else
+                {
+                    strWhereCond = "";
+                }
+
                 List<mstKintoSharePortalReport>  UserListReport = new List<mstKintoSharePortalReport>();
                 UserListReport = ReportService.UserListReport(strWhereCond);
 
@@ -671,6 +703,12 @@ namespace KintoSharePortal.Controllers
             {
                 throw;
             }
+        }
+
+        public class ErrorModel
+        {
+            public bool Success { get; set; }
+            public string Reason { get; set; }
         }
     }
 }

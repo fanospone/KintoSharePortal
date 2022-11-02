@@ -8,14 +8,25 @@ else
     url = BASE_URL_PRD;
 
 var check = "";
+var Dateparam;
 window.addEventListener('DOMContentLoaded', function () {
     if (window.localStorage.getItem('click')) {
+        var url = new URL(window.location)
+        var paramdate = url.searchParams.get("date");
+        var date = moment(paramdate, 'YYYY-MM-DD')
+
+        console.log(date.format('MM/DD/YYYY'));
+        $("#datebookstart").val(date.format('MM/DD/YYYY'));
+
         window.localStorage.removeItem('click');
         document.getElementById("btbook").click();
+        checkDate();
     }
 });
 
 jQuery(document).ready(function () {
+
+
     $("#divttlcbody").hide();
     $("#divttlcClean").hide();
     $("#divttlcSmoke").hide();
@@ -110,6 +121,19 @@ function myDate(StartDate, EndDate) {
     const firstDate = new Date(StartDate);
     const secondDate = new Date(EndDate);
 
+    if (ddStart > ddEnd) {
+        var t2 = String(new Date(EndDate).getTime());
+        var t1 = String(new Date(StartDate).getTime());
+        var RangeDate = Math.floor(((t2 - t1) / (24 * 3600 * 1000)) + 1);
+        var ChangeddEnd = ddEnd;
+        ddStart = ChangeddEnd;
+        ddEnd = RangeDate;
+        if (RangeDate == 1) {
+            ttl = ttl + parseInt(1)
+        }
+        console.log(RangeDate);
+    }
+
     if (bookRpt == 'Y') {
         var StrDay = daysArray[day];
         var feeweekday = $('#lblweekday').text();
@@ -151,6 +175,9 @@ function myDate(StartDate, EndDate) {
         }
         ttl = parseInt(ttl) - 2;
     }
+    if (ttl == -2) {
+        ttl = 0;
+    }
     const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
     //document.getElementById("myId").innerHTML = diffDays;
     $("#kintosharefee").val(dollarUSLocale.format(ttl));
@@ -181,7 +208,9 @@ function checkChargeBody() {
     chargeCleanfee = chargeClean.replace(/\,/g, '');
     chargeBody = $('#lblttlChargeBody').text();
     chargeBodyfee = chargeBody.replace(/\,/g, '');
-    TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee)
+    chargeFuel = $('#lblttlChargeFuel').text();
+    chargeFuelfee = chargeBody.replace(/\,/g, '');
+    TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(chargeFuelfee)
     document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
 }
 
@@ -189,29 +218,83 @@ function checkChargeClean() {
     let dollarUSLocale = Intl.NumberFormat('en-US');
     $("#divttlcClean").show();
     var ttlClean = 0;
-    var valpanel = $("#txtCleanliness").val();
-
+    var valclean = document.querySelector('input[name="rbclean"]:checked').value;/*$("#txtCleanliness").val();*/
     cclean = $('#lblcclean').text();
     ccleanfee = cclean.replace(/\,/g, '');
+    if (valclean == "N") {
+        ttlClean = 1* parseInt(ccleanfee)
+        document.getElementById('lblttlChargeClean').innerHTML = dollarUSLocale.format(ttlClean);
 
-    ttlClean = parseInt(valpanel) * parseInt(ccleanfee)
-    document.getElementById('lblttlChargeClean').innerHTML = dollarUSLocale.format(ttlClean);
+        chargeSmoke = $('#lblttlChargeSmoke').text();
+        chargeSmokefee = chargeSmoke.replace(/\,/g, '');
+        chargeClean = $('#lblttlChargeClean').text();
+        chargeCleanfee = chargeClean.replace(/\,/g, '');
+        chargeBody = $('#lblttlChargeBody').text();
+        chargeBodyfee = chargeBody.replace(/\,/g, '');
+        chargeFuel = $('#lblttlChargeFuel').text();
+        chargeFuelfee = chargeBody.replace(/\,/g, '');
+        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(chargeFuelfee)
+        document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
+    }
+    else {
+        ttlClean = 0 * parseInt(ccleanfee)
+        document.getElementById('lblttlChargeClean').innerHTML = dollarUSLocale.format(ttlClean);
 
+        chargeSmoke = $('#lblttlChargeSmoke').text();
+        chargeSmokefee = chargeSmoke.replace(/\,/g, '');
+        chargeClean = $('#lblttlChargeClean').text();
+        chargeCleanfee = chargeClean.replace(/\,/g, '');
+        chargeBody = $('#lblttlChargeBody').text();
+        chargeBodyfee = chargeBody.replace(/\,/g, '');
+        chargeFuel = $('#lblttlChargeFuel').text();
+        chargeFuelfee = chargeBody.replace(/\,/g, '');
+        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(chargeFuelfee)
+        document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
+    }
+}
+
+function checkChargeFuel() {
+    let dollarUSLocale = Intl.NumberFormat('en-US');
+    $("#divFuel").show();
+
+    cfuel = $('#lblcFuel').text();
+    cfuelfee = cfuel.replace(/\,/g, '');
+
+    valfuel = document.querySelector('input[name="rbfuel"]:checked').value;
+    valfuelCharge = 0;
+    if (valfuel == '25') {
+        valfuelCharge = 1 * parseInt(cfuelfee);
+        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    }
+    else if (valfuel == '50') {
+        valfuelCharge = 2 * parseInt(cfuelfee);
+        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    }
+    else if (valfuel == '75') {
+        valfuelCharge = 3 * parseInt(cfuelfee);
+        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    }
+    else {
+        valfuelCharge = 4 * parseInt(cfuelfee);
+        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    }
     chargeSmoke = $('#lblttlChargeSmoke').text();
     chargeSmokefee = chargeSmoke.replace(/\,/g, '');
     chargeClean = $('#lblttlChargeClean').text();
     chargeCleanfee = chargeClean.replace(/\,/g, '');
     chargeBody = $('#lblttlChargeBody').text();
     chargeBodyfee = chargeBody.replace(/\,/g, '');
-    TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee)
+    TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(valfuelCharge)
     document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
 }
 
-function CheckSmoke() {
+function checkSmoke() {
     let dollarUSLocale = Intl.NumberFormat('en-US');
     $("#divttlcSmoke").show();
-    smokec = document.querySelector('input[name="rbsmoke"]:checked').value;
-    if (smokec == "Y") {
+
+    valsmoke = document.querySelector('input[name="rbsmoke"]:checked').value;
+
+    if (valsmoke == "Y") {
         csmoke = $('#lblsmoke').text();
         csmokefee = csmoke.replace(/\,/g, '');
         ttlsmoke = 1 * parseInt(csmokefee)
@@ -223,7 +306,9 @@ function CheckSmoke() {
         chargeCleanfee = chargeClean.replace(/\,/g, '');
         chargeBody = $('#lblttlChargeBody').text();
         chargeBodyfee = chargeBody.replace(/\,/g, '');
-        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee)
+        chargeFuel = $('#lblttlChargeFuel').text();
+        chargeFuelfee = chargeBody.replace(/\,/g, '');
+        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(chargeFuelfee)
         document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
     }
     else {
@@ -238,7 +323,9 @@ function CheckSmoke() {
         chargeCleanfee = chargeClean.replace(/\,/g, '');
         chargeBody = $('#lblttlChargeBody').text();
         chargeBodyfee = chargeBody.replace(/\,/g, '');
-        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee)
+        chargeFuel = $('#lblttlChargeFuel').text();
+        chargeFuelfee = chargeBody.replace(/\,/g, '');
+        TtlChargeAll = parseInt(chargeSmokefee) + parseInt(chargeCleanfee) + parseInt(chargeBodyfee) + parseInt(chargeFuelfee)
         document.getElementById('lblttlChargeAll').innerHTML = dollarUSLocale.format(TtlChargeAll);
 
     }
@@ -292,6 +379,7 @@ var Control = {
     Button: function () {
         $("#btsubmitReq").unbind().click(function () {
             if (Form.Validation()) {
+                $('#btsubmitReq').prop('disabled', true);
                 Form.Submit();
             }
         });
@@ -326,6 +414,7 @@ var Control = {
             $("#divmybooklist").hide();
             $("#divdetail").show();
             $("#pnlCheckList").hide();
+            $('#btsubmitReq').prop('disabled',false);
         });
 
         $("#btapprove").unbind().click(function () {
@@ -493,22 +582,32 @@ var Form = {
             data: Submitparam,
             dataType: "json",
             success: function (msg) {
-                alert("Data has been save");
-                $('#divmybooklist').show();
-                $('#divdetail').hide();
-                $('#pnlCheckList').hide();
-                location.reload();
-                Form.LoadData();
+                if (msg.Success) {
+                    alert("Data has been save");
+                    $('#divmybooklist').show();
+                    $('#divdetail').hide();
+                    $('#pnlCheckList').hide();
+                    location.reload();
+                    Form.LoadData();
+                }
+                else {
+                    $('#myModal').modal('show');
+                    $('#modaltext').text("Proses Error " + msg.Reason);
+                }
+                
             }, error: function (xhr, msg) {
-                alert("Proses Error " + msg);
-            }, complete: function () {
-                alert("Proses sudah selesai");
-                $('#divmybooklist').show();
-                $('#divdetail').hide();
-                $('#pnlCheckList').hide();
-                location.reload();
-                Form.LoadData();
+                //alert("Proses Error " + msg);
+                $('#myModal').modal('show');
+                $('#modaltext').text("Proses Error " + msg);
             }
+            //, complete: function () {
+            //    alert("Proses sudah selesai");
+            //    $('#divmybooklist').show();
+            //    $('#divdetail').hide();
+            //    $('#pnlCheckList').hide();
+            //    location.reload();
+            //    Form.LoadData();
+            //}
         });
     },
 
@@ -547,7 +646,15 @@ var Form = {
                 { "data": "PIC", "name": "PIC", "autoWidth": true },
                 { "data": "BookDate", "name": "BookDate", "autoWidth": true },
                 { "data": "DateFreq", "name": "DateFreq", "autoWidth": true },
-                { "data": "ApprovalStatus", "name": "ApprovalStatus", "autoWidth": true },
+                {
+                    /*"data": "ApprovalStatus", "name": "ApprovalStatus", "autoWidth": true*/
+                    "data": "ApprovalStatus",
+                    render: function (data, type, full) {
+                        if (data == 'Cancel')
+                            return 'Reject';
+                        return data;
+                    }
+                },
                 { "data": "UserReq", "name": "UserReq", "autoWidth": true },
                 { "data": "Purpose", "name": "Purpose", "autoWidth": true },
                 { "data": "DateCrt", "name": "DateCrt", "autoWidth": true },
@@ -575,7 +682,7 @@ var Form = {
                 },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus == "Waiting")
+                        if (data.ApprovalStatus == "Waiting" && data.Ischeckin == null )
                             return "<a href='#' class='btn btn-danger' onclick=showCancelMessage('" + row.ID + "','" + row.BookingNo + "');>CANCEL</a>";
                         else
                             return "";
@@ -621,7 +728,7 @@ var Form = {
             rbbancdg: document.querySelector('input[name="rbbancdg"]:checked').value, //$("#rbbancdg").val(),
             rbfuel: document.querySelector('input[name="rbfuel"]:checked').value,
             bodyrepair: document.getElementById("txtbodyrepair").value,
-            cleaniness: document.getElementById("txtCleanliness").value,
+            cleaniness: document.querySelector('input[name="rbclean"]:checked').value,/*document.getElementById("txtCleanliness").value,*/
             smoke: document.querySelector('input[name="rbsmoke"]:checked').value
         };
         console.log(param);
@@ -671,7 +778,7 @@ var Form = {
             rbbancdg: document.querySelector('input[name="rbbancdg"]:checked').value, //$("#rbbancdg").val(),
             rbfuel: document.querySelector('input[name="rbfuel"]:checked').value,
             bodyrepair : document.getElementById("txtbodyrepair").value,
-            cleaniness: document.getElementById("txtCleanliness").value,
+            cleaniness: document.querySelector('input[name="rbclean"]:checked').value,/* document.getElementById("txtCleanliness").value,*/
             smoke: document.querySelector('input[name="rbsmoke"]:checked').value,
             Charge: chargefee
         };
@@ -715,6 +822,18 @@ var Form = {
 
             $("#divapproveCheckOut").hide();
             $("#divreturnCheckOut").hide();
+
+            $("#divFuel").hide();
+
+            //if (data.cleaniness != '0') {
+            //    data.cleaniness = "Y"
+            //}
+            //else if (data.cleaniness == "Y") {
+            //    data.cleaniness = "Y"
+            //}
+            //else {
+            //    data.cleaniness = "N"
+            //}
 
             if (data.Role != 'admin') {
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -792,8 +911,10 @@ var Form = {
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
                 document.getElementById('txtbodyrepair').disabled = true;
-                document.getElementById('txtCleanliness').value = data.cleaniness;
-                document.getElementById('txtCleanliness').disabled = true;
+                $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
+                $("input[name=rbclean]").prop('disabled', true);
+                //document.getElementById('txtCleanliness').value = data.cleaniness;
+                //document.getElementById('txtCleanliness').disabled = true;
 
                 $("#btsave").hide();
                 $("#divbtnsave").hide();
@@ -877,7 +998,8 @@ var Form = {
                 $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
-                document.getElementById('txtCleanliness').value = data.cleaniness;
+                //document.getElementById('txtCleanliness').value = data.cleaniness;
+                $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
 
                 $("#btsave").show();
                 $("#divbtnsave").show();
@@ -927,6 +1049,16 @@ var Form = {
 
             $("#divreturn").hide();
             $("#btreturn").hide();
+
+            //if (data.cleaniness != '0') {
+            //    data.cleaniness = "Y"
+            //}
+            //else if (data.cleaniness == "Y") {
+            //    data.cleaniness = "Y"
+            //}
+            //else {
+            //    data.cleaniness = "N"
+            //}
 
             if (data.Role != 'admin') {
 
@@ -983,8 +1115,10 @@ var Form = {
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
                 document.getElementById('txtbodyrepair').disabled = true;
-                document.getElementById('txtCleanliness').value = data.cleaniness;
-                document.getElementById('txtCleanliness').disabled = true;
+                $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
+                $("input[name=rbclean]").prop('disabled', true);
+                //document.getElementById('txtCleanliness').value = data.cleaniness;
+                //document.getElementById('txtCleanliness').disabled = true;
 
                 //$("#lblCarType").val(data.Cartype);
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -1047,7 +1181,8 @@ var Form = {
                 $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
-                document.getElementById('txtCleanliness').value = data.cleaniness;
+                $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
+                //document.getElementById('txtCleanliness').value = data.cleaniness;
                 //document.getElementById('lblttlChargeAll').innerHTML = data.Charge;
 
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -1073,15 +1208,18 @@ var Form = {
             }
 
             let dollarUSLocale = Intl.NumberFormat('en-US');
-            var chargebody = 50000;
+            var chargebody = 300000;
             var chargeSmoke = 1000000;
+            var chargeFuel = 50000;
             document.getElementById('lblcbody').innerHTML = dollarUSLocale.format(chargebody);
             document.getElementById('lblcclean').innerHTML = dollarUSLocale.format(chargebody);
             document.getElementById('lblsmoke').innerHTML = dollarUSLocale.format(chargeSmoke);
+            document.getElementById('lblcFuel').innerHTML = dollarUSLocale.format(chargeFuel);
 
             checkChargeBody();
             checkChargeClean();
-            CheckSmoke();
+            checkSmoke();
+            checkChargeFuel();
 
         }).fail(function (xhr, msg) {   
             alert("Proses Error " + msg);
@@ -1134,7 +1272,7 @@ var Form = {
     CheckListValidation: function (check) {
         var result = true;
         var bodyrepair = document.getElementById("txtbodyrepair").value;
-        var cleaniness = document.getElementById("txtCleanliness").value;
+        var cleaniness = document.querySelector('input[name="rbclean"]:checked'); /*document.getElementById("txtCleanliness").value;*/
         //var bodyrepair = $('#txtbodyrepair').text;
         //var cleaniness = $('#txtCleanliness').text;
 

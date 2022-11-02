@@ -46,7 +46,16 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pBookListIndex(con);
         }
+        
+        public List<trxKintoSharePortalBookSubmit> ListBookRepeat(string car, string startDate, string endDate, SqlConnection con)
+        {
+            return pListBookRepeat(car, startDate, endDate, con);
+        }
 
+        public List<trxKintoSharePortalBookSubmit> ListAssetDate(string car, string startDate, string endDate)
+        {
+            return pListAssetDate(car, startDate, endDate, con);
+        }
         private trxKintoSharePortalBookSubmit pGetBookNo()
         {
             var trxGetPlatNo = new mstKintoSharePortalGetList();
@@ -129,5 +138,34 @@ namespace KintoSharePortal.Domain.Repository
             }
         }
 
+        private List<trxKintoSharePortalBookSubmit> pListBookRepeat(string car, string startDate, string endDate, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_CHECKBOOKREPEAT";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@Cartype", car));
+                cmd.Parameters.Add(cmd.CreateParameter("@StartDate", startDate));
+                cmd.Parameters.Add(cmd.CreateParameter("@EndDate", endDate));
+                return this.ReadTransaction(cmd).ToList();
+            }
+        }
+        private List<trxKintoSharePortalBookSubmit> pListAssetDate(string car, string startDate, string endDate, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_CHECKBOOKASSETDATE";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@Cartype", car));
+                cmd.Parameters.Add(cmd.CreateParameter("@StartDate", startDate));
+                cmd.Parameters.Add(cmd.CreateParameter("@EndDate", endDate));
+
+                return this.ReadTransaction(cmd).ToList();
+            }
+        }
     }
 }

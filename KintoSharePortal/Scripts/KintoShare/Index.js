@@ -155,9 +155,22 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         },
         dateClick: function (info) {
+
             //alert('clicked ' + info.dateStr);
-            window.location.href = url + "/Home/Mybook";
-            window.localStorage.setItem('click', true);
+            var dateclicked = info.dateStr;
+            var todayDate = new Date();
+            var dd = String(todayDate.getDate()).padStart(2, '0');
+            var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+            var yyyy = todayDate.getFullYear();
+            Todayclick = yyyy + '-' + mm + '-' + dd;
+            if (Todayclick > dateclicked) {
+                $('#myModal').modal('show');
+                $('#modaltext').text("The date is past");
+            }
+            else {
+                window.location.href = url + "/Home/Mybook?date=" + dateclicked;
+                window.localStorage.setItem('click', true);
+            }
         },
     });
 

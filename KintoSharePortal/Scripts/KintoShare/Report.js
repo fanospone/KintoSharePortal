@@ -10,12 +10,13 @@ else
 jQuery(document).ready(function () {
     Table.Load();
     Control.Button();
+    //Control.ReportType();
     $('#divReportUser').hide();
-
 });
 
 var Table = {
     Load: function () {
+        //Table.Init("#tblBookHeader");
         params = {
             Reporttype: $("#reporttype").val(),
             Startdate: $("#Startdate").val(),
@@ -26,12 +27,13 @@ var Table = {
             "serverSide": true, // for process server side  
             "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
+            "destroy": true,
             "pageLength": 5,
             "ajax": {
                 "url": url + "/Home/BookingListReport",
                 "type": "POST",
                 "datatype": "json",
-                "data" : params
+                "data": params
             },
             "columnDefs":
                 [
@@ -42,40 +44,48 @@ var Table = {
                     }
                 ],
             "columns": [
-                { "data": "ID", "name": "ID", "autoWidth": true },
-                { "data": "BookingNo", "name": "BookingNo", "autoWidth": true },
-                { "data": "Cartype", "name": "Cartype", "autoWidth": true },
-                { "data": "PlatNo", "name": "PlatNo", "autoWidth": true },
-                { "data": "Department", "name": "Department", "autoWidth": true },
-                { "data": "PIC", "name": "PIC", "autoWidth": true },
-                { "data": "BookDate", "name": "BookDate", "autoWidth": true },
-                { "data": "DateFreq", "name": "DateFreq", "autoWidth": true },
-                { "data": "ApprovalStatus", "name": "ApprovalStatus", "autoWidth": true },
-                { "data": "UserReq", "name": "UserReq", "autoWidth": true },
-                { "data": "Purpose", "name": "Purpose", "autoWidth": true },
-                { "data": "DateCrt", "name": "DateCrt", "autoWidth": true },
-                { "data": "KintoShareFee", "name": "KintoShareFee", "autoWidth": true, render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ') },
+                { "data": "ID", "name": "ID" },
+                { "data": "BookingNo", "name": "BookingNo" },
+                { "data": "Cartype", "name": "Cartype" },
+                { "data": "PlatNo", "name": "PlatNo" },
+                { "data": "Department", "name": "Department" },
+                { "data": "PIC", "name": "PIC" },
+                { "data": "BookDate", "name": "BookDate" },
+                { "data": "DateFreq", "name": "DateFreq" },
+                { "data": "ApprovalStatus", "name": "ApprovalStatus" },
+                { "data": "UserReq", "name": "UserReq" },
+                { "data": "Purpose", "name": "Purpose" },
+                { "data": "DateCrt", "name": "DateCrt" },
+                { "data": "KintoShareFee", "name": "KintoShareFee", render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ') },
             ],
             "scrollY": 300, /* Enable vertical scroll to allow fixed columns */
             "scrollX": true, /* Enable horizontal scroll to allow fixed columns */
             "scrollCollapse": true,
-            "fnDrawCallback": function () {
+            //"fnDrawCallback": function () {
 
-            },
-        })
+            //},
+        });
     },
+
     LoadUserReport: function () {
+        /*Table.Init("#tblBookUser");*/
+        paramUser = {
+            Reporttype: $("#reporttype").val(),
+            Startdate: $("#Startdate").val(),
+            Enddate: $("#Enddate").val()
+        };
         $("#tblBookUser").DataTable({
             "processing": true, // for show progress bar  
             "serverSide": true, // for process server side  
             "filter": false, // this is for disable filter (search box)  
             "orderMulti": false, // for disable multiple column at once  
+            "destroy": true,
             "pageLength": 5,
             "ajax": {
                 "url": url + "/Home/UserListReport",
                 "type": "POST",
                 "datatype": "json",
-                "data": params
+                "data": paramUser
             },
             "columnDefs":
                 [
@@ -100,28 +110,95 @@ var Table = {
             "scrollY": 300, /* Enable vertical scroll to allow fixed columns */
             "scrollX": true, /* Enable horizontal scroll to allow fixed columns */
             "scrollCollapse": true,
-            "fnDrawCallback": function () {
+            //"fnDrawCallback": function () {
 
-            },
+            //},
         })
 
+    },
+
+    //Init: function (id) {
+    //    $(id).dataTable({
+    //        "filter": false,
+    //        "destroy": true,
+    //        "data": [],
+    //    });
+
+    //    $(window).resize(function () {
+    //        $(id).DataTable().columns.adjust().draw();
+    //    });
+    //},
+}
+
+var Form = {
+    Validation: function () {
+        var result = true;
+        var todayDate = new Date();
+        var dd = String(todayDate.getDate()).padStart(2, '0');
+        var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+        var yyyy = todayDate.getFullYear();
+        Today = mm + '-' + dd + '-' + yyyy;
+        var stDate = document.getElementById('Startdate').value; /*new Date($("#Startdate").val());*/
+        var edDate = document.getElementById('Enddate').value;/*new Date($("#Enddate").val());*/
+
+        console.log(todayDate);
+        console.log(stDate);
+        console.log(edDate);
+
+        if ((stDate == "" || stDate == null)) {
+            $('#myModal').modal('show');
+            $('#modaltext').text("Please provide start date");
+            result = false;
+        }
+        else if ((edDate == "" || edDate == null)) {
+            $('#myModal').modal('show');
+            $('#modaltext').text("Please provide end date");
+            result = false;
+        }
+        else if (stDate > edDate) {
+            $('#myModal').modal('show');
+            $('#modaltext').text("Start date must be smaller than End date");
+            result = false;
+        }
+        //else if (Today < stDate) {
+        //    $('#myModal').modal('show');
+        //    $('#modaltext').text("Start date must be smaller than today");
+        //    result = false;
+        //}
+        return result;
     }
 }
 
 var Control = {
     Button: function () {
         $("#btExportExcel").unbind().click(function () {
-            //$("#tblBookHeader").hide();
-            Export.ToExcel();
+            if (Form.Validation()) {
+                Export.ToExcel();
+            }
         });
-        //$("#btExportExcelNew").unbind().click(function () {
-        //    //$("#tblBookHeader").hide();
-        //    Export.ToExcelNew();
-        //});
+
+        $("#btnsearch").unbind().click(function () {
+            ReportTypeSearch = $("#reporttype option:selected").text();
+            if (ReportTypeSearch == "Asset") {
+                if (Form.Validation()) {
+                    $("#divReportUser").hide();
+                    $("#content").show();
+                    Table.Load();
+                }
+            }
+            else {
+                if (Form.Validation()) {
+                    $("#divReportUser").show();
+                    $("#content").hide();
+                    Table.LoadUserReport();
+                }
+            }
+        });
     },
+
     ReportType: function () {
         ReportType = $("#reporttype option:selected").text();
-        if (ReportType == 'Asset') {
+        if (ReportType == "Asset") {
             $("#divReportUser").hide();
             $("#content").show();
             Table.Load();

@@ -48,7 +48,7 @@ namespace KintoSharePortal.Domain.Models
         public decimal? KintoShareFee { get; set; }
         public decimal? Charge { get; set; }
         public int? bodyrepair { get; set; }
-        public int? cleaniness { get; set; }
+        public string cleaniness { get; set; }
         public string smoke { get; set; }
 
         public string BookingNo { get; set; }

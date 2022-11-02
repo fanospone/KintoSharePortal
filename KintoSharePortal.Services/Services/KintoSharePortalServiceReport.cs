@@ -31,7 +31,11 @@ namespace KintoSharePortal.Services
                     var BookListReportRepo = new mstKintoSharePortalReportRepository(_context);
                     var listBooking = new List<mstKintoSharePortalReport>();
                     //WhereCond = HttpContext.Current.Session["userId"].ToString();
-                    WhereCond = "";
+                    if (WhereCond == "")
+                    {
+                        WhereCond = "";
+                    }
+
                     con.Open();
                     listBooking = BookListReportRepo.BookListReport(WhereCond, con);
                     con.Close();
@@ -58,7 +62,10 @@ namespace KintoSharePortal.Services
                     var UserListReportRepo = new mstKintoSharePortalReportRepository(_context);
                     var UserList = new List<mstKintoSharePortalReport>();
                     //WhereCond = HttpContext.Current.Session["userId"].ToString();
-                    WhereCond = "";
+                    if (WhereCond == "")
+                    {
+                        WhereCond = "";
+                    }
                     con.Open();
                     UserList = UserListReportRepo.UserReport(WhereCond, con);
                     con.Close();
