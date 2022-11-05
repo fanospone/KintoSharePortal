@@ -50,7 +50,7 @@ namespace KintoSharePortal.Domain.Models
         public int? bodyrepair { get; set; }
         public string cleaniness { get; set; }
         public string smoke { get; set; }
-
+        public string parking { get; set; }
         public string BookingNo { get; set; }
         public string Cartype { get; set; }
         public string Department { get; set; }
@@ -68,7 +68,7 @@ namespace KintoSharePortal.Domain.Models
         public string CheckOutStatus { get; set; }
         public int? IsCheckIn { get; set; }
         public int? IsCheckOut { get; set; }
-
+        public string fuelCI { get; set; }
         public List<mstKintoSharePortalChecklist> ShowAllApproval { get; set; }
     }
 }

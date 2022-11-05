@@ -13,10 +13,39 @@ else if (ENVIRONMENT == "DEV")
 else
     url = BASE_URL_PRD;
 
+$("#datebook").datepicker();
+
+//a simple date formatting function
+function dateFormat(inputDate, format) {
+    //parse the input date
+    const date = new Date(inputDate);
+
+    //extract the parts of the date
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    //replace the month
+    format = format.replace("MM", month.toString().padStart(2, "0"));
+
+    //replace the year
+    if (format.indexOf("yyyy") > -1) {
+        format = format.replace("yyyy", year.toString());
+    } else if (format.indexOf("yy") > -1) {
+        format = format.replace("yy", year.toString().substr(2, 2));
+    }
+
+    //replace the day
+    format = format.replace("dd", day.toString().padStart(2, "0"));
+
+    return format;
+}
 
 document.addEventListener('DOMContentLoaded', function () {
+    Form.CarList();
+    Form.GetPIC();
     Table.Load();
-
+    Control.Button();
 
     var calendarEl = document.getElementById('calendar');
 
@@ -123,14 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(errorThrown);
             });
         },
-        //eventClick: function (calEvent, jsEvent, view) {
-        //    var title = prompt('Event Title:', calEvent.title, { buttons: { Ok: true, Cancel: false } });
-
-        //    if (title) {
-        //        calEvent.title = title;
-        //        calendar.fullCalendar('updateEvent', calEvent);
-        //    }
-        //},
         eventClick: function (arg) {
             console.log(arg.event.title);
             const input = arg.event.title;
@@ -165,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Todayclick = yyyy + '-' + mm + '-' + dd;
             if (Todayclick > dateclicked) {
                 $('#myModal').modal('show');
-                $('#modaltext').text("The date is past");
+                $('#modaltext').text("Cannot book past date.");
             }
             else {
                 window.location.href = url + "/Home/Mybook?date=" + dateclicked;
@@ -173,9 +194,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
     });
-
     calendar.render();
 });
+
+var Control = {
+    Button: function () {
+        $("#btsearch").unbind().click(function () {
+            Request.Search();
+        });
+    }
+}
 
 var Table = {
     Load: function () {
@@ -220,7 +248,14 @@ var Table = {
                 { "data": "platNo", "name": "platNo", "autoWidth": true },
                 { "data": "capacity", "name": "capacity", "autoWidth": true },
                 { "data": "accessories", "name": "accessories", "autoWidth": true },
-                { "data": "status", "name": "status", "autoWidth": true },
+                {
+                    "data": "status",
+                    render: function (data, type, full) {
+                        if (data == 'NOTAVAILABLE')
+                            return 'NOT AVAILABLE';
+                        return data;
+                    }
+                },
                 { "data": "chasisNo", "name": "chasisNo", "autoWidth": true },
                 { "data": "engineNo", "name": "engineNo", "title": "engineNo", "autoWidth": true },
                 { "data": "feeweekday", "name": "feeweekday", "autoWidth": true, render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ') },
@@ -234,6 +269,44 @@ var Table = {
             },
         })
     }
+}
+
+var Form = {
+    CarList: function () {
+        $.ajax({
+            url: url + "/Home/ListCar",
+            type: "GET"
+        })
+            .done(function (data, textStatus, jqXHR) {
+                $("#ddasset").append("<option value='0'>ALL ASSET</option>");
+                $.each(data, function (i, item) {
+                    $("#ddasset").append("<option value='" + item.CarId + "'>" + item.CarName + "</option>");
+                })
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert("Failed get asset list! please check your connection");
+            });
+    },
+    GetPIC: function () {
+        $.ajax({
+            url: url + "/Home/ListPIC",
+            type: "GET",
+            data: { DeptID: "" }
+        })
+            .done(function (data, textStatus, jqXHR) {
+                document.getElementById('dduser').options.length = 0;
+                $("#dduser").append("<option value='0'>ALL USER</option>");
+                $.each(data, function (i, item) {
+                    $("#dduser").append("<option value='" + item.UserID + "'>" + item.UserName + "</option>");
+                })
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                //Common.Alert.Error(errorThrown);
+            });
+    },
 }
 
 var Request = {
@@ -259,5 +332,89 @@ var Request = {
             console.log(textStatus);
             console.log(errorThrown);
         });
-    }
+    },
+
+    Search: function () {
+        paramCalendar = {
+            Startdate: $('#datebook').val(),
+            PIC: $("#dduser option:selected").text(),
+            Cartype: $("#ddasset option:selected").text()
+        };
+        console.log(dateFormat($('#datebook').val(), 'yyyy-MM-dd'));
+        $.ajax({
+            url: url + "/Home/SearchIndex",
+            type: "GET",
+            data: paramCalendar
+        }).done(function (data, textStatus, jqXHR) {
+            var calendarReload = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarReload, {
+                //initialDate: '2020-09-12',
+                initialDate: dateFormat($('#datebook').val(), 'yyyy-MM-dd'),
+                editable: true,
+                selectable: true,
+                businessHours: true,
+                dayMaxEvents: true, // allow "more" link when too many events
+                events: function (fetchInfo, successCallback, failureCallback) {
+                    var events = [];
+                    $.each(data, function (key, value) {
+                        var color = "";
+                        if (value.ApprovalStatus == 'Waiting') {
+                            color = '#FFFF00';
+                        }
+                        else if (value.ApprovalStatus == 'Cancel') {
+                            color = '#FF4500';
+                        }
+                        else {
+                            color = '#66CDAA';
+                        }
+                        events.push({
+                            title: value.Cartype + " - " + value.BookingNo,
+                            start: value.Startdate,
+                            end: value.Enddate,
+                            color: color
+                        });
+                    });
+                    successCallback(events);
+                },
+                eventClick: function (arg) {
+                    console.log(arg.event.title);
+                    const input = arg.event.title;
+                    const [car, bookno] = input.split(' - ');
+                    $.ajax({
+                        url: url + "/Home/DateBookDetail",
+                        type: "POST",
+                        data: { BookingNo: bookno }
+                    }).done(function (data, textStatus, jqXHR) {
+                        $('#modalTitle').text(bookno);
+                        document.getElementById('lblcar').innerHTML = car;
+                        document.getElementById('lblplatno').innerHTML = data.PlatNo;
+                        document.getElementById('lblPIC').innerHTML = data.PIC;
+                        document.getElementById('lbldept').innerHTML = data.Department;
+                        $('#calendarModal').modal('show');
+                    }).fail(function (xhr, msg) {
+                        alert("Proses Error " + msg);
+                    });
+                },
+                dateClick: function (info) {
+                    var dateclicked = info.dateStr;
+                    var todayDate = new Date();
+                    var dd = String(todayDate.getDate()).padStart(2, '0');
+                    var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                    var yyyy = todayDate.getFullYear();
+                    Todayclick = yyyy + '-' + mm + '-' + dd;
+                    if (Todayclick > dateclicked) {
+                        $('#myModal').modal('show');
+                        $('#modaltext').text("Cannot book past date.");
+                    }
+                    else {
+                        window.location.href = url + "/Home/Mybook?date=" + dateclicked;
+                        window.localStorage.setItem('click', true);
+                    }
+                },
+            });
+            calendar.render();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert("Error search request!!!");
+        });
+    },
 }

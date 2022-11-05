@@ -261,23 +261,43 @@ function checkChargeFuel() {
     cfuelfee = cfuel.replace(/\,/g, '');
 
     valfuel = document.querySelector('input[name="rbfuel"]:checked').value;
+    valfuelCI = $('#hideFuelVal').text();
     valfuelCharge = 0;
-    if (valfuel == '25') {
-        valfuelCharge = 1 * parseInt(cfuelfee);
-        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
-    }
-    else if (valfuel == '50') {
-        valfuelCharge = 2 * parseInt(cfuelfee);
-        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
-    }
-    else if (valfuel == '75') {
-        valfuelCharge = 3 * parseInt(cfuelfee);
-        document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    //if (valfuel == '25') {
+    //    valfuelCharge = 1 * parseInt(cfuelfee);
+    //    document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    //}
+    //else if (valfuel == '50') {
+    //    valfuelCharge = 2 * parseInt(cfuelfee);
+    //    document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    //}
+    //else if (valfuel == '75') {
+    //    valfuelCharge = 3 * parseInt(cfuelfee);
+    //    document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    //}
+    //else {
+    //    valfuelCharge = 4 * parseInt(cfuelfee);
+    //    document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+    //}
+    if (valfuel < valfuelCI) {
+        if (valfuelCI == "100" && valfuel == "75" || valfuelCI == "75" && valfuel == "50" || valfuelCI == "50" && valfuel == "25") {
+            valfuelCharge = 1 * parseInt(cfuelfee);
+            document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+        }
+        else if (valfuelCI == "100" && valfuel == "50" || valfuelCI == "75" && valfuel == "25") {
+            valfuelCharge = 2 * parseInt(cfuelfee);
+            document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+        }
+        else if (valfuelCI == "100" && valfuel == "25") {
+            valfuelCharge = 3 * parseInt(cfuelfee);
+            document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
+        }
     }
     else {
-        valfuelCharge = 4 * parseInt(cfuelfee);
+        valfuelCharge = 0;
         document.getElementById('lblttlChargeFuel').innerHTML = dollarUSLocale.format(valfuelCharge);
     }
+
     chargeSmoke = $('#lblttlChargeSmoke').text();
     chargeSmokefee = chargeSmoke.replace(/\,/g, '');
     chargeClean = $('#lblttlChargeClean').text();
@@ -352,7 +372,7 @@ function showCancelMessage(id,bookNo) {
                 data: { Bookid: id, BookingNo: bookNo },
                 dataType: "json",
                 success: function (msg) {
-                    alert("Data has been save");
+                    alert("Data has been delete");
                     location.reload();
                 }, error: function (xhr, msg) {
                     alert("Proses Error " + msg);
@@ -379,7 +399,10 @@ var Control = {
     Button: function () {
         $("#btsubmitReq").unbind().click(function () {
             if (Form.Validation()) {
-                $('#btsubmitReq').prop('disabled', true);
+                $("#btcancelReq").prop('disabled', true);
+                $("#btsubmitReq").prop("disabled", true);
+                $("#btsubmitReq").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+                //$('#btsubmitReq').prop('disabled', true);
                 Form.Submit();
             }
         });
@@ -393,6 +416,8 @@ var Control = {
         $("#btsave").unbind().click(function () {
             check = "in";
             if (Form.CheckListValidation(check)) {
+                $("#btsave").prop("disabled", true);
+                $("#btsave").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
                 Form.SubmitCheckList();
             }
         });
@@ -400,7 +425,10 @@ var Control = {
         $("#btcheckout").unbind().click(function () {
             check = "out";
             if (Form.CheckListValidation(check)) {
+                $("#btcheckout").prop("disabled", true);
+                $("#btcheckout").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
                 Form.SubmitCheckOut();
+
             }
         });
 
@@ -597,6 +625,8 @@ var Form = {
                 
             }, error: function (xhr, msg) {
                 //alert("Proses Error " + msg);
+                $("#btsubmitReq").prop("disabled", false);
+                $("#btsubmitReq").html('<button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>');
                 $('#myModal').modal('show');
                 $('#modaltext').text("Proses Error " + msg);
             }
@@ -650,8 +680,8 @@ var Form = {
                     /*"data": "ApprovalStatus", "name": "ApprovalStatus", "autoWidth": true*/
                     "data": "ApprovalStatus",
                     render: function (data, type, full) {
-                        if (data == 'Cancel')
-                            return 'Reject';
+                        if (data == 'CANCEL')
+                            return 'REJECT';
                         return data;
                     }
                 },
@@ -660,7 +690,7 @@ var Form = {
                 { "data": "DateCrt", "name": "DateCrt", "autoWidth": true },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus != "Cancel" && data.ApprovalStatus != "Waiting")
+                        if (data.ApprovalStatus == "APPROVE")
                             /*if (data.Ischeckin != 1)*/
                                 return "<a href='#' class='btn btn-danger' onclick=Form.CheckIn('" + row.ID + "','" + row.BookingNo + "'); >CHECK-IN</a > ";
                             //else
@@ -682,7 +712,7 @@ var Form = {
                 },
                 {
                     data: null, render: function (data, type, row) {
-                        if (data.ApprovalStatus == "Waiting" && data.Ischeckin == null )
+                        if (data.ApprovalStatus == "WAITING" && data.Ischeckin == null || data.ApprovalStatus == "APPROVE" && data.Ischeckin == null)
                             return "<a href='#' class='btn btn-danger' onclick=showCancelMessage('" + row.ID + "','" + row.BookingNo + "');>CANCEL</a>";
                         else
                             return "";
@@ -729,7 +759,8 @@ var Form = {
             rbfuel: document.querySelector('input[name="rbfuel"]:checked').value,
             bodyrepair: document.getElementById("txtbodyrepair").value,
             cleaniness: document.querySelector('input[name="rbclean"]:checked').value,/*document.getElementById("txtCleanliness").value,*/
-            smoke: document.querySelector('input[name="rbsmoke"]:checked').value
+            smoke: document.querySelector('input[name="rbsmoke"]:checked').value,
+            parking: document.getElementById("txrparking").value
         };
         console.log(param);
         $.ajax ({
@@ -741,6 +772,8 @@ var Form = {
                 location.reload();
             },
             error: function (xhr, msg) {
+                $("#btsave").prop("disabled", false);
+                $("#btsave").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
                 alert("Proses Error " + msg);
             }
         })
@@ -780,7 +813,8 @@ var Form = {
             bodyrepair : document.getElementById("txtbodyrepair").value,
             cleaniness: document.querySelector('input[name="rbclean"]:checked').value,/* document.getElementById("txtCleanliness").value,*/
             smoke: document.querySelector('input[name="rbsmoke"]:checked').value,
-            Charge: chargefee
+            Charge: chargefee,
+            parking: document.getElementById("txrparking").value
         };
         $.ajax({
             url: url + "/Home/SubmitCheckOut",
@@ -791,7 +825,10 @@ var Form = {
                 location.reload();
             },
             error: function (xhr, msg) {
+                $("#btcheckout").prop("disabled", false);
+                $("#btcheckout").html('<button type="button" class="btn bg-teal waves-effect" id="btcheckout">CHECK-OUT</button>');
                 alert("Proses Error " + msg);
+
             }
         })
 
@@ -799,7 +836,7 @@ var Form = {
 
     CheckIn: function (Bookid, BookingNo) { //, Cartype,Department,PlatNo,PIC,BookDate,ApprovalStatus,UserReq,Purpose,ReqDate) {
         //$("#lblIDChecklist").val(Bookid);
-
+        $("#divFuelBeforeCO").hide();
         $.ajax({
             url: url + "/Home/CheckListDetail",
             type: "POST",
@@ -913,8 +950,8 @@ var Form = {
                 document.getElementById('txtbodyrepair').disabled = true;
                 $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
                 $("input[name=rbclean]").prop('disabled', true);
-                //document.getElementById('txtCleanliness').value = data.cleaniness;
-                //document.getElementById('txtCleanliness').disabled = true;
+                document.getElementById('txrparking').value = data.parking;
+                document.getElementById('txrparking').disabled = true;
 
                 $("#btsave").hide();
                 $("#divbtnsave").hide();
@@ -998,7 +1035,7 @@ var Form = {
                 $("input[name=rbsmoke][value=" + data.smoke + "]").prop('checked', true);
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
-                //document.getElementById('txtCleanliness').value = data.cleaniness;
+                document.getElementById('txrparking').value = data.parking;
                 $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
 
                 $("#btsave").show();
@@ -1021,6 +1058,7 @@ var Form = {
     },
 
     CheckOut: function (Bookid, BookingNo) {
+        $("#divFuelBeforeCO").show();
         $("#lblIDChecklist").val(Bookid, BookingNo);
         $("#divmybooklist").hide();
         $("#pnlCheckList").show();
@@ -1117,8 +1155,8 @@ var Form = {
                 document.getElementById('txtbodyrepair').disabled = true;
                 $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
                 $("input[name=rbclean]").prop('disabled', true);
-                //document.getElementById('txtCleanliness').value = data.cleaniness;
-                //document.getElementById('txtCleanliness').disabled = true;
+                document.getElementById('txrparking').value = data.parking;
+                document.getElementById('txrparking').disabled = true;
 
                 //$("#lblCarType").val(data.Cartype);
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -1135,6 +1173,20 @@ var Form = {
 
                 document.getElementById('lblIDChecklist').innerHTML = Bookid;
                 document.getElementById('lblBookNo').innerHTML = BookingNo;
+
+                document.getElementById('hideFuelVal').innerHTML = data.fuelCI;
+                if (data.fuelCI == "25") {
+                    document.getElementById('lblFuelCI').innerHTML = "0%-25%";
+                }
+                else if (data.fuelCI == "50") {
+                    document.getElementById('lblFuelCI').innerHTML = "25%-50%";
+                }
+                else if (data.fuelCI == "75") {
+                    document.getElementById('lblFuelCI').innerHTML = "50%-75%";
+                }
+                else {
+                    document.getElementById('lblFuelCI').innerHTML = "75%-100%";
+                }
 
                 $("#btcheckout").hide();
                 $("#divbtncheckout").hide();
@@ -1182,7 +1234,7 @@ var Form = {
 
                 document.getElementById('txtbodyrepair').value = data.bodyrepair;
                 $("input[name=rbclean][value=" + data.cleaniness + "]").prop('checked', true);
-                //document.getElementById('txtCleanliness').value = data.cleaniness;
+                document.getElementById('txrparking').value = data.parking;
                 //document.getElementById('lblttlChargeAll').innerHTML = data.Charge;
 
                 document.getElementById('lblCarType').innerHTML = data.Cartype;
@@ -1200,8 +1252,28 @@ var Form = {
                 document.getElementById('lblIDChecklist').innerHTML = Bookid;
                 document.getElementById('lblBookNo').innerHTML = BookingNo;
 
-                $("#btcheckout").show();
-                $("#divbtncheckout").show();
+                document.getElementById('hideFuelVal').innerHTML = data.fuelCI;
+                if (data.fuelCI == "25") {
+                    document.getElementById('lblFuelCI').innerHTML = "0%-25%";
+                }
+                else if (data.fuelCI == "50") {
+                    document.getElementById('lblFuelCI').innerHTML = "25%-50%";
+                }
+                else if (data.fuelCI == "75") {
+                    document.getElementById('lblFuelCI').innerHTML = "50%-75%";
+                }
+                else {
+                    document.getElementById('lblFuelCI').innerHTML = "75%-100%";
+                }
+
+                if (data.CheckOutStatus == "Approve" || data.CheckOutStatus == "Return") {
+                    $("#btcheckout").show();
+                    $("#divbtncheckout").show();
+                }
+                else {
+                    $("#btcheckout").hide();
+                    $("#divbtncheckout").hide();
+                }
 
                 $("#divapproveCheckOut").hide();
                 $("#divreturnCheckOut").hide();
@@ -1227,13 +1299,31 @@ var Form = {
     },
 
     Validation: function () {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var today = mm + '/' + dd + '/' + yyyy;
+
         var lblbookDate = $("#datebook").val(); 
         var booktype = document.getElementById("booktype").value;
+        var dateStart = $("#datebookstart").val();
+        var dateEnd = $("#datebookend").val();
         var result = true;
         
         if (lblbookDate == "") {
             $('#myModal').modal('show');
             $('#modaltext').text("Please provide date book..");
+            result = false;
+        }
+        else if (dateStart > dateEnd) {
+            $('#myModal').modal('show');
+            $('#modaltext').text("Start date greater than End date. Please provide the date");
+            result = false;
+        }
+        else if (dateStart < today && dateEnd < today) {
+            $('#myModal').modal('show');
+            $('#modaltext').text("Cannot book past date");
             result = false;
         }
         else if ($('#cartype option:selected').val() == 0) {
@@ -1266,6 +1356,7 @@ var Form = {
             $('#modaltext').text("This is Book repeat or not? please provide");
             result = false;
         }
+        
         return result;
     },
 

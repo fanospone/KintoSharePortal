@@ -97,7 +97,8 @@ namespace KintoSharePortal.Services
                         ListBook = CheckBook.ListBookRepeat(car, startDate, endDate, con);
                         if (ListBook.Count > 0)
                         {
-                        throw new InvalidOperationException("Asset has booked with other PIC in same date. Please choise other Asset/date");
+                            con.Dispose();
+                            throw new InvalidOperationException("Process Error: Asset has been booked by another PIC.");
                         //ValidationMessages.AddModelError("BookingNo", "Asset has booked with other PIC in same date. Please choise other Asset/date");
                         }
                     }
@@ -110,16 +111,22 @@ namespace KintoSharePortal.Services
                         var startDate = data.Startdate;
                         var endDate = data.Enddate;
                         con.Open();
-                        ListBook = CheckBook.ListAssetDate(car, startDate, endDate);
+                        ListBook = CheckBook.ListAssetDate(car, startDate, endDate,con);
                         if (ListBook.Count > 0)
                         {
-                            throw new InvalidOperationException("Asset has booked with other PIC in same date. Please choise other Asset/date");
+                            con.Dispose();
+                            throw new InvalidOperationException("Process Error: Asset has been booked by another PIC.");
                         }
                     }
                        
                 }
-
-                KSPHeader = GetBookNoRepo.GetBookNo();
+                
+                //using (con)
+                //{
+                //    con.Open();
+                    KSPHeader = GetBookNoRepo.GetBookNo();
+                    //con.Dispose();
+                //}
                     
                 BookNo = KSPHeader == null ? "" : KSPHeader.BookingNo;
 
@@ -364,6 +371,50 @@ namespace KintoSharePortal.Services
             }
         }
 
+        public List<trxKintoSharePortalBookSubmit> GetListSearch(trxKintoSharePortalBookSubmit data)
+        {
+            using (con)
+            {
+                try
+                {
+                    var WhereCond = "";
+                    if (data.PIC != null && data.PIC != "")
+                    {
+                        WhereCond = " b.PIC like '%" + data.PIC + "%' AND";
+
+                    }
+                    else if (data.Cartype != null && data.Cartype != "")
+                    {   
+                        if ( WhereCond != null && WhereCond != "")
+                        {
+                            WhereCond += " b.CAR_TYPE = '" + data.Cartype + "' AND";
+                        }
+                        else
+                        {
+                            WhereCond = " b.CAR_TYPE = '" + data.Cartype + "' AND";
+                        }
+                    }
+                    else
+                    {
+                        WhereCond = "";
+                    }
+                    WhereCond = !string.IsNullOrWhiteSpace(WhereCond) ? WhereCond.Substring(0, WhereCond.Length - 4) : "";
+
+                    var SearchRepo = new trxKintoSharePortalBookSubmitRepository(_context);
+                    var ListSearch = new List<trxKintoSharePortalBookSubmit>();
+                    con.Open();
+                    return SearchRepo.SearchList(WhereCond, con);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
         public trxKintoSharePortalBookSubmit BookingDelete(int Bookid, string BookingNo)
         {
             try
@@ -461,7 +512,7 @@ namespace KintoSharePortal.Services
                             UserReq = item.UserReq,
                             ApprovalStatus = item.ApprovalStatus,
                             DateCrt = item.DateCrt,
-                            Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
+                            Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),/*(DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),*/
                             Startdate = (DateTime.ParseExact(item.Startdate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
                             Role = item.Role
                         });

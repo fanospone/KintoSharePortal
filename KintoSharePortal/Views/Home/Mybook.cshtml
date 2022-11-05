@@ -8,6 +8,7 @@
 <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/Content/responsive.bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
+<link href="~/Content/bsb/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 <script src="~/Scripts/GlobalConfig.js"></script>
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
@@ -55,7 +56,7 @@
                         </div>
                         <div class="row clearfix">
                             <div class="col-lg-12">
-                                <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btbook">Book Vechile</button>
+                                <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btbook">BOOK ASSET</button>
                             </div>
                         </div>
                     }
@@ -125,8 +126,8 @@
                             @*<input type="text" class="form-control" id="purpose" name="purpose">*@
                             <select class="form-control bootstrap-select show-tick" name="purpose" id="purpose">
                                 <option value="">Please choose</option>
-                                <option value="Personal">Personal</option>
-                                <option value="Office">Office</option>
+                                @*<option value="Personal">Personal</option>*@
+                                <option value="OFFICE">OFFICE</option>
                             </select>
                         </div>
                     </div>
@@ -151,82 +152,82 @@
                             </div>
                         </div>
                     </div>
-                        <div class="row clearfix">
-                            <div class="col-md-3">
-                                <h2 class="card-inside-title">START BOOK DATE</h2>
+                    <div class="row clearfix">
+                        <div class="col-md-3">
+                            <h2 class="card-inside-title">START BOOK DATE</h2>
+                            <div class="pickup">
+                                <input id="datebookstart" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h2 class="card-inside-title">END BOOK DATE</h2>
+                            <div class="pickup">
+                                <input id="datebookend" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
+                            </div>
+                        </div>
+                        @*<div class="col-lg-6">
+                                <p>
+                                    <b> Book Repeat</b>
+                                </p>
+                                <select class="form-control bootstrap-select show-tick" name="bookrepeat" id="bookrepeat">
+                                    <option value="">Please choose</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>*@
+                        <div class="col-lg-6">
+                            <p>
+                                <b>KINTO SHARE FEE</b>
+                            </p>
+                            <input type="text" class="form-control" id="kintosharefee" name="kintosharefee" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            @*<p>
+                                    <b> Repeat Frequency</b>
+                                </p>
+                                <select class="form-control bootstrap-select show-tick" name="datefreq" id="datefreq">
+                                    <option value="">Please choose</option>
+                                    <option value="D">Daily</option>
+                                    <option value="W">Weekly</option>
+                                </select>*@
+                        </div>
+                        <div class="col-lg-3">
+                            <p>
+                                <b>FEE WEEK DAY</b>
+                            </p>
+                            <label id="lblweekday"></label>
+                        </div>
+                        <div class="col-lg-3">
+                            <p>
+                                <b>FEE WEEK END</b>
+                            </p>
+                            <label id="lblweekend"></label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-3">
+                            @*<h2 class="card-inside-title">Start Book Date</h2>
                                 <div class="pickup">
                                     <input id="datebookstart" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <h2 class="card-inside-title">END BOOK DATE</h2>
+                                </div>*@
+                        </div>
+                        <div class="col-md-4">
+                            @*<h2 class="card-inside-title">End Book Date</h2>
                                 <div class="pickup">
                                     <input id="datebookend" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
-                                </div>
-                            </div>
-                            @*<div class="col-lg-6">
-                <p>
-                    <b> Book Repeat</b>
-                </p>
-                <select class="form-control bootstrap-select show-tick" name="bookrepeat" id="bookrepeat">
-                    <option value="">Please choose</option>
-                    <option value="Y">Yes</option>
-                    <option value="N">No</option>
-                </select>
-            </div>*@
-                            <div class="col-lg-6">
-                                <p>
-                                    <b>KINTO SHARE FEE</b>
-                                </p>
-                                <input type="text" class="form-control" id="kintosharefee" name="kintosharefee" disabled="disabled">
-                            </div>
+                                </div>*@
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-lg-6">
-                                @*<p>
-                    <b> Repeat Frequency</b>
-                </p>
-                <select class="form-control bootstrap-select show-tick" name="datefreq" id="datefreq">
-                    <option value="">Please choose</option>
-                    <option value="D">Daily</option>
-                    <option value="W">Weekly</option>
-                </select>*@
-                            </div>
-                            <div class="col-lg-3">
-                                <p>
-                                    <b>FEE WEEK DAY</b>
-                                </p>
-                                <label id="lblweekday"></label>
-                            </div>
-                            <div class="col-lg-3">
-                                <p>
-                                    <b>FEE WEEK END</b>
-                                </p>
-                                <label id="lblweekend"></label>
-                            </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancelReq">CANCEL</button>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-3">
-                                @*<h2 class="card-inside-title">Start Book Date</h2>
-                <div class="pickup">
-                    <input id="datebookstart" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
-                </div>*@
-                            </div>
-                            <div class="col-md-4">
-                                @*<h2 class="card-inside-title">End Book Date</h2>
-                <div class="pickup">
-                    <input id="datebookend" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text" onchange="checkDate();">
-                </div>*@
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancelReq">CANCEL</button>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>
-                            </div>
-                            @*<input type="button" value="Click" onclick="myDate()" />*@
-                            @*<p id="myId"></p>*@
+                        <div class="col-md-2">
+                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>
                         </div>
+                        @*<input type="button" value="Click" onclick="myDate()" />*@
+                        @*<p id="myId"></p>*@
+                    </div>
                 </form>
             </div>
         </div>
@@ -366,697 +367,731 @@
                             </p>
                             <input name="rbfuel" type="radio" id="rb25" value="25" onchange="checkChargeFuel();" />
                             <label for="rb25">0%-25%</label>
-                            <input name="rbfuel" type="radio" id="rb50" value="50" onchange="checkChargeFuel();"/>
+                            <input name="rbfuel" type="radio" id="rb50" value="50" onchange="checkChargeFuel();" />
                             <label for="rb50">25%-50%</label>
-                            <input name="rbfuel" type="radio" id="rb75" value="75" onchange="checkChargeFuel();"/>
+                            <input name="rbfuel" type="radio" id="rb75" value="75" onchange="checkChargeFuel();" />
                             <label for="rb75">50%-75%</label>
-                            <input name="rbfuel" type="radio" id="rb100" value="100" onchange="checkChargeFuel();"/>
+                            <input name="rbfuel" type="radio" id="rb100" value="100" onchange="checkChargeFuel();" />
                             <label for="rb100">75%-100%</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix" id="divFuelBeforeCO">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="col-md-5">
+                                <label>Range bar fuel Check-In : </label>
+                            </div>
+                            <div class="col-md-2">
+                                <label id="lblFuelCI"></label>
+                                <label id="hideFuelVal" hidden></label>
+                            </div>
                         </div>
                     </div>
                     <div class="row clearfix">
                         <div class="col-lg-6">
-
+                            
                         </div>
                         <div class="col-lg-6">
                             <div id="divFuel">
                                 <div class="col-md-1">
                                     <label>/bar</label>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label>Rp.</label>
                                     <label id="lblcFuel"></label>
                                 </div>
-                                <div class="col-md-2" id="divttlcClean">
+                                <div class="col-md-4" id="divttlcClean">
                                     <label>Total Rp.</label>
                                     <label id="lblttlChargeFuel"></label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                        <div id="checkintitle"><h2> CHECK-IN HANDOVER CHECKLIST</h2></div>
-                        <div id="checkouttitle"><h2> CHECK-OUT HANDOVER CHECKLIST</h2></div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>FRONT FENDER</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbff" type="radio" id="rbffr" value="R" />
-                                <label for="rbffr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbff" type="radio" id="rbffc" value="C" />
-                                <label for="rbffc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbff" type="radio" id="rbffb" value="B" />
-                                <label for="rbffb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbff" type="radio" id="rbffbs" value="BS" />
-                                <label for="rbffbs">BS</label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <p>
-                                    <b>NB: R = Rusak, C = Cukup, B = Bagus, BS = Bagus Sekali.</b>
-                                </p>
-                            </div>
-
+                    <div id="checkintitle"><h2> CHECK-IN HANDOVER CHECKLIST</h2></div>
+                    <div id="checkouttitle"><h2> CHECK-OUT HANDOVER CHECKLIST</h2></div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>FRONT FENDER</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbff" type="radio" id="rbffr" value="R" />
+                            <label for="rbffr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbff" type="radio" id="rbffc" value="C" />
+                            <label for="rbffc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbff" type="radio" id="rbffb" value="B" />
+                            <label for="rbffb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbff" type="radio" id="rbffbs" value="BS" />
+                            <label for="rbffbs">BS</label>
                         </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>DASHBOARD</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbdash" type="radio" id="rbdashr" value="R" />
-                                <label for="rbdashr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbdash" type="radio" id="rbdashc" value="C" />
-                                <label for="rbdashc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbdash" type="radio" id="rbdashb" value="B" />
-                                <label for="rbdashb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbdash" type="radio" id="rbdashbs" value="BS" />
-                                <label for="rbdashbs">BS</label>
-                            </div>
-
+                        <div class="col-md-6">
+                            <p>
+                                <b>NB: R = Rusak, C = Cukup, B = Bagus, BS = Bagus Sekali.</b>
+                            </p>
                         </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>SEAT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbSeat" type="radio" id="rbSeatr" value="R" />
-                                <label for="rbSeatr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbSeat" type="radio" id="rbSeatc" value="C" />
-                                <label for="rbSeatc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbSeat" type="radio" id="rbSeatb" value="B" />
-                                <label for="rbSeatb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbSeat" type="radio" id="rbSeatbs" value="BS" />
-                                <label for="rbSeatbs">BS</label>
-                            </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>DASHBOARD</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbdash" type="radio" id="rbdashr" value="R" />
+                            <label for="rbdashr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbdash" type="radio" id="rbdashc" value="C" />
+                            <label for="rbdashc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbdash" type="radio" id="rbdashb" value="B" />
+                            <label for="rbdashb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbdash" type="radio" id="rbdashbs" value="BS" />
+                            <label for="rbdashbs">BS</label>
                         </div>
 
-                        <h4><u>BUMPER</u></h4>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>FRONT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmprf" type="radio" id="rbbmpfrr" value="R" />
-                                <label for="rbbmpfrr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmprf" type="radio" id="rbbmpfrc" value="C" />
-                                <label for="rbbmpfrc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmprf" type="radio" id="rbbmpfrb" value="B" />
-                                <label for="rbbmpfrb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmprf" type="radio" id="rbbmpfrbs" value="BS" />
-                                <label for="rbbmpfrbs">BS</label>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>BACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmpr" type="radio" id="rbbmprr" value="R" />
-                                <label for="rbbmprr">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmpr" type="radio" id="rbbmprc" value="C" />
-                                <label for="rbbmprc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmpr" type="radio" id="rbbmprb" value="B" />
-                                <label for="rbbmprb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbmpr" type="radio" id="rbbmprbs" value="BS" />
-                                <label for="rbbmprbs">BS</label>
-                            </div>
-                        </div>
+                    </div>
 
-                        <h4><u>FENDER</u></h4>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>RIGHT-FRONT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrf" type="radio" id="rbfenderrfr" value="R" />
-                                <label for="rbfenderrfr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrf" type="radio" id="rbfenderrfc" value="C" />
-                                <label for="rbfenderrfc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrf" type="radio" id="rbfenderrfb" value="B" />
-                                <label for="rbfenderrfb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrf" type="radio" id="rbfenderrfbs" value="BS" />
-                                <label for="rbfenderrfbs">BS</label>
-                            </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>SEAT</b>
+                            </p>
                         </div>
-                        <div class="row clearfix">
+                        <div class="col-md-1">
+                            <input name="rbSeat" type="radio" id="rbSeatr" value="R" />
+                            <label for="rbSeatr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbSeat" type="radio" id="rbSeatc" value="C" />
+                            <label for="rbSeatc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbSeat" type="radio" id="rbSeatb" value="B" />
+                            <label for="rbSeatb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbSeat" type="radio" id="rbSeatbs" value="BS" />
+                            <label for="rbSeatbs">BS</label>
+                        </div>
+                    </div>
 
-                            <div class="col-md-2">
-                                <p>
-                                    <b>LEFT-FRONT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlf" type="radio" id="rbfenderlfr" value="R" />
-                                <label for="rbfenderlfr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlf" type="radio" id="rbfenderlfc" value="C" />
-                                <label for="rbfenderlfc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlf" type="radio" id="rbfenderlfb" value="B" />
-                                <label for="rbfenderlfb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlf" type="radio" id="rbfenderlfbs" value="BS" />
-                                <label for="rbfenderlfbs">BS</label>
-                            </div>
+                    <h4><u>BUMPER</u></h4>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>FRONT</b>
+                            </p>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>RIGHT-BACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrb" type="radio" id="rbfenderrbr" value="R" />
-                                <label for="rbfenderrbr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrb" type="radio" id="rbfenderrbc" value="C" />
-                                <label for="rbfenderrbc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrb" type="radio" id="rbfenderrbb" value="B" />
-                                <label for="rbfenderrbb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderrb" type="radio" id="rbfenderrbbs" value="BS" />
-                                <label for="rbfenderrbbs">BS</label>
-                            </div>
+                        <div class="col-md-1">
+                            <input name="rbbmprf" type="radio" id="rbbmpfrr" value="R" />
+                            <label for="rbbmpfrr">R</label>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>LEFT-BACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlb" type="radio" id="rbfenderlbr" value="R" />
-                                <label for="rbfenderlbr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlb" type="radio" id="rbfenderlbc" value="C" />
-                                <label for="rbfenderlbc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlb" type="radio" id="rbfenderlbb" value="B" />
-                                <label for="rbfenderlbb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbfenderlb" type="radio" id="rbfenderlbbs" value="BS" />
-                                <label for="rbfenderlbbs">BS</label>
-                            </div>
+                        <div class="col-md-1">
+                            <input name="rbbmprf" type="radio" id="rbbmpfrc" value="C" />
+                            <label for="rbbmpfrc">C</label>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbbmprf" type="radio" id="rbbmpfrb" value="B" />
+                            <label for="rbbmpfrb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbmprf" type="radio" id="rbbmpfrbs" value="BS" />
+                            <label for="rbbmpfrbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>BACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbmpr" type="radio" id="rbbmprr" value="R" />
+                            <label for="rbbmprr">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbmpr" type="radio" id="rbbmprc" value="C" />
+                            <label for="rbbmprc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbmpr" type="radio" id="rbbmprb" value="B" />
+                            <label for="rbbmprb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbmpr" type="radio" id="rbbmprbs" value="BS" />
+                            <label for="rbbmprbs">BS</label>
+                        </div>
+                    </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>CAR HOOD</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkm" type="radio" id="rbkmr" value="R" />
-                                <label for="rbkmr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkm" type="radio" id="rbkmc" value="C" />
-                                <label for="rbkmc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkm" type="radio" id="rbkmb" value="B" />
-                                <label for="rbkmb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkm" type="radio" id="rbkmbs" value="BS" />
-                                <label for="rbkmbs">BS</label>
-                            </div>
+                    <h4><u>FENDER</u></h4>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>RIGHT-FRONT</b>
+                            </p>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrf" type="radio" id="rbfenderrfr" value="R" />
+                            <label for="rbfenderrfr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrf" type="radio" id="rbfenderrfc" value="C" />
+                            <label for="rbfenderrfc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrf" type="radio" id="rbfenderrfb" value="B" />
+                            <label for="rbfenderrfb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrf" type="radio" id="rbfenderrfbs" value="BS" />
+                            <label for="rbfenderrfbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>STNK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbstnk" type="radio" id="rbstnky" value="Y" />
-                                <label for="rbstnky">Yes</label>
-                            </div>
-                            <div class="col-md-2">
-                                <input name="rbstnk" type="radio" id="rbstnkn" value="N" />
-                                <label for="rbstnkn">No</label>
-                            </div>
+                        <div class="col-md-2">
+                            <p>
+                                <b>LEFT-FRONT</b>
+                            </p>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlf" type="radio" id="rbfenderlfr" value="R" />
+                            <label for="rbfenderlfr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlf" type="radio" id="rbfenderlfc" value="C" />
+                            <label for="rbfenderlfc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlf" type="radio" id="rbfenderlfb" value="B" />
+                            <label for="rbfenderlfb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlf" type="radio" id="rbfenderlfbs" value="BS" />
+                            <label for="rbfenderlfbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>RIGHT-BACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrb" type="radio" id="rbfenderrbr" value="R" />
+                            <label for="rbfenderrbr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrb" type="radio" id="rbfenderrbc" value="C" />
+                            <label for="rbfenderrbc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrb" type="radio" id="rbfenderrbb" value="B" />
+                            <label for="rbfenderrbb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderrb" type="radio" id="rbfenderrbbs" value="BS" />
+                            <label for="rbfenderrbbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>LEFT-BACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlb" type="radio" id="rbfenderlbr" value="R" />
+                            <label for="rbfenderlbr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlb" type="radio" id="rbfenderlbc" value="C" />
+                            <label for="rbfenderlbc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlb" type="radio" id="rbfenderlbb" value="B" />
+                            <label for="rbfenderlbb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbfenderlb" type="radio" id="rbfenderlbbs" value="BS" />
+                            <label for="rbfenderlbbs">BS</label>
+                        </div>
+                    </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>SERVICE BOOK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbserviceBook" type="radio" id="rbserviceBooky" value="Y" />
-                                <label for="rbserviceBooky">Ada</label>
-                            </div>
-                            <div class="col-md-2">
-                                <input name="rbserviceBook" type="radio" id="rbserviceBookn" value="N" />
-                                <label for="rbserviceBookn">Tidak Ada</label>
-                            </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>CAR HOOD</b>
+                            </p>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbkm" type="radio" id="rbkmr" value="R" />
+                            <label for="rbkmr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkm" type="radio" id="rbkmc" value="C" />
+                            <label for="rbkmc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkm" type="radio" id="rbkmb" value="B" />
+                            <label for="rbkmb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkm" type="radio" id="rbkmbs" value="BS" />
+                            <label for="rbkmbs">BS</label>
+                        </div>
+                    </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>RIM</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbvelg" type="radio" id="rbvelgr" value="R" />
-                                <label for="rbvelgr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbvelg" type="radio" id="rbvelgc" value="C" />
-                                <label for="rbvelgc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbvelg" type="radio" id="rbvelgb" value="B" />
-                                <label for="rbvelgb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbvelg" type="radio" id="rbvelgbs" value="BS" />
-                                <label for="rbvelgbs">BS</label>
-                            </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>STNK</b>
+                            </p>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbstnk" type="radio" id="rbstnky" value="Y" />
+                            <label for="rbstnky">Yes</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input name="rbstnk" type="radio" id="rbstnkn" value="N" />
+                            <label for="rbstnkn">No</label>
+                        </div>
+                    </div>
 
-                        <h4><u>TIRE</u></h4>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>RIGHT-FRONT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrf" type="radio" id="rbbanrfr" value="R" />
-                                <label for="rbbanrfr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrf" type="radio" id="rbbanrfc" value="C" />
-                                <label for="rbbanrfc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrf" type="radio" id="rbbanrfb" value="B" />
-                                <label for="rbbanrfb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrf" type="radio" id="rbbanrfbs" value="BS" />
-                                <label for="rbbanrfbs">BS</label>
-                            </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>SERVICE BOOK</b>
+                            </p>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>LEFT-FRONT</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlf" type="radio" id="rbbanlfr" value="R" />
-                                <label for="rbbanlfr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlf" type="radio" id="rbbanlfc" value="C" />
-                                <label for="rbbanlfc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlf" type="radio" id="rbbanlfb" value="B" />
-                                <label for="rbbanlfb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlf" type="radio" id="rbbanlfbs" value="BS" />
-                                <label for="rbbanlfbs">BS</label>
-                            </div>
+                        <div class="col-md-1">
+                            <input name="rbserviceBook" type="radio" id="rbserviceBooky" value="Y" />
+                            <label for="rbserviceBooky">Ada</label>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>RIGHT-BACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrb" type="radio" id="rbbanrbr" value="R" />
-                                <label for="rbbanrbr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrb" type="radio" id="rbbanrbc" value="C" />
-                                <label for="rbbanrbc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrb" type="radio" id="rbbanrbb" value="B" />
-                                <label for="rbbanrbb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanrb" type="radio" id="rbbanrbbs" value="BS" />
-                                <label for="rbbanrbbs">BS</label>
-                            </div>
+                        <div class="col-md-2">
+                            <input name="rbserviceBook" type="radio" id="rbserviceBookn" value="N" />
+                            <label for="rbserviceBookn">Tidak Ada</label>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>LEFT-BACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlb" type="radio" id="rbbanlbr" value="R" />
-                                <label for="rbbanlbr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlb" type="radio" id="rbbanlbc" value="C" />
-                                <label for="rbbanlbc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlb" type="radio" id="rbbanlbb" value="B" />
-                                <label for="rbbanlbb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbanlb" type="radio" id="rbbanlbbs" value="BS" />
-                                <label for="rbbanlbbs">BS</label>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>JACK</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbdongkrak" type="radio" id="rbdongkraky" value="Y" />
-                                <label for="rbdongkraky">Ada</label>
-                            </div>
-                            <div class="col-md-2">
-                                <input name="rbdongkrak" type="radio" id="rbdongkrakn" value="N" />
-                                <label for="rbdongkrakn">Tidak Ada</label>
-                            </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>RIM</b>
+                            </p>
                         </div>
-
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>WINDSHIELD</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkaca" type="radio" id="rbkacar" value="R" />
-                                <label for="rbkacar">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkaca" type="radio" id="rbkacac" value="C" />
-                                <label for="rbkacac">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkaca" type="radio" id="rbkacab" value="B" />
-                                <label for="rbkacab">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkaca" type="radio" id="rbkacabs" value="BS" />
-                                <label for="rbkacabs">BS</label>
-                            </div>
+                        <div class="col-md-1">
+                            <input name="rbvelg" type="radio" id="rbvelgr" value="R" />
+                            <label for="rbvelgr">R</label>
                         </div>
-
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>TINTED WINDOW</b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkf" type="radio" id="rbkfr" value="R" />
-                                <label for="rbkfr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkf" type="radio" id="rbkfc" value="C" />
-                                <label for="rbkfc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkf" type="radio" id="rbkfb" value="B" />
-                                <label for="rbkfb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbkf" type="radio" id="rbkfbs" value="BS" />
-                                <label for="rbkfbs">BS</label>
-                            </div>
+                        <div class="col-md-1">
+                            <input name="rbvelg" type="radio" id="rbvelgc" value="C" />
+                            <label for="rbvelgc">C</label>
                         </div>
+                        <div class="col-md-1">
+                            <input name="rbvelg" type="radio" id="rbvelgb" value="B" />
+                            <label for="rbvelgb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbvelg" type="radio" id="rbvelgbs" value="BS" />
+                            <label for="rbvelgbs">BS</label>
+                        </div>
+                    </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
+                    <h4><u>TIRE</u></h4>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>RIGHT-FRONT</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrf" type="radio" id="rbbanrfr" value="R" />
+                            <label for="rbbanrfr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrf" type="radio" id="rbbanrfc" value="C" />
+                            <label for="rbbanrfc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrf" type="radio" id="rbbanrfb" value="B" />
+                            <label for="rbbanrfb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrf" type="radio" id="rbbanrfbs" value="BS" />
+                            <label for="rbbanrfbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>LEFT-FRONT</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlf" type="radio" id="rbbanlfr" value="R" />
+                            <label for="rbbanlfr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlf" type="radio" id="rbbanlfc" value="C" />
+                            <label for="rbbanlfc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlf" type="radio" id="rbbanlfb" value="B" />
+                            <label for="rbbanlfb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlf" type="radio" id="rbbanlfbs" value="BS" />
+                            <label for="rbbanlfbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>RIGHT-BACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrb" type="radio" id="rbbanrbr" value="R" />
+                            <label for="rbbanrbr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrb" type="radio" id="rbbanrbc" value="C" />
+                            <label for="rbbanrbc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrb" type="radio" id="rbbanrbb" value="B" />
+                            <label for="rbbanrbb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanrb" type="radio" id="rbbanrbbs" value="BS" />
+                            <label for="rbbanrbbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>LEFT-BACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlb" type="radio" id="rbbanlbr" value="R" />
+                            <label for="rbbanlbr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlb" type="radio" id="rbbanlbc" value="C" />
+                            <label for="rbbanlbc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlb" type="radio" id="rbbanlbb" value="B" />
+                            <label for="rbbanlbb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbanlb" type="radio" id="rbbanlbbs" value="BS" />
+                            <label for="rbbanlbbs">BS</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>JACK</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbdongkrak" type="radio" id="rbdongkraky" value="Y" />
+                            <label for="rbdongkraky">Ada</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input name="rbdongkrak" type="radio" id="rbdongkrakn" value="N" />
+                            <label for="rbdongkrakn">Tidak Ada</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>WINDSHIELD</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkaca" type="radio" id="rbkacar" value="R" />
+                            <label for="rbkacar">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkaca" type="radio" id="rbkacac" value="C" />
+                            <label for="rbkacac">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkaca" type="radio" id="rbkacab" value="B" />
+                            <label for="rbkacab">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkaca" type="radio" id="rbkacabs" value="BS" />
+                            <label for="rbkacabs">BS</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>TINTED WINDOW</b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkf" type="radio" id="rbkfr" value="R" />
+                            <label for="rbkfr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkf" type="radio" id="rbkfc" value="C" />
+                            <label for="rbkfc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkf" type="radio" id="rbkfb" value="B" />
+                            <label for="rbkfb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbkf" type="radio" id="rbkfbs" value="BS" />
+                            <label for="rbkfbs">BS</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>
+                                    AUDIO / TAPE
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbaudio" type="radio" id="rbaudior" value="R" />
+                            <label for="rbaudior">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbaudio" type="radio" id="rbaudioc" value="C" />
+                            <label for="rbaudioc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbaudio" type="radio" id="rbaudiob" value="B" />
+                            <label for="rbaudiob">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbaudio" type="radio" id="rbaudiobs" value="BS" />
+                            <label for="rbaudiobs">BS</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>
+                                    AC
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbac" type="radio" id="rbacr" value="R" />
+                            <label for="rbacr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbac" type="radio" id="rbacc" value="C" />
+                            <label for="rbacc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbac" type="radio" id="rbacb" value="B" />
+                            <label for="rbacb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbac" type="radio" id="rbacbs" value="BS" />
+                            <label for="rbacbs">BS</label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>
+                                    SPARE TIRE
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbancdg" type="radio" id="rbbancdgr" value="R" />
+                            <label for="rbbancdgr">R</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbancdg" type="radio" id="rbbancdgc" value="C" />
+                            <label for="rbbancdgc">C</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbancdg" type="radio" id="rbbancdgb" value="B" />
+                            <label for="rbbancdgb">B</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbbancdg" type="radio" id="rbbancdgbs" value="BS" />
+                            <label for="rbbancdgbs">BS</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
                                 <p>
                                     <b>
-                                        AUDIO / TAPE
+                                        PARKING
                                     </b>
                                 </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbaudio" type="radio" id="rbaudior" value="R" />
-                                <label for="rbaudior">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbaudio" type="radio" id="rbaudioc" value="C" />
-                                <label for="rbaudioc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbaudio" type="radio" id="rbaudiob" value="B" />
-                                <label for="rbaudiob">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbaudio" type="radio" id="rbaudiobs" value="BS" />
-                                <label for="rbaudiobs">BS</label>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Parking" id="txrparking" name="txrparking" />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>
-                                        AC
-                                    </b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbac" type="radio" id="rbacr" value="R" />
-                                <label for="rbacr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbac" type="radio" id="rbacc" value="C" />
-                                <label for="rbacc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbac" type="radio" id="rbacb" value="B" />
-                                <label for="rbacb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbac" type="radio" id="rbacbs" value="BS" />
-                                <label for="rbacbs">BS</label>
-                            </div>
-                        </div>
-
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>
-                                        SPARE TIRE
-                                    </b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbancdg" type="radio" id="rbbancdgr" value="R" />
-                                <label for="rbbancdgr">R</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbancdg" type="radio" id="rbbancdgc" value="C" />
-                                <label for="rbbancdgc">C</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbancdg" type="radio" id="rbbancdgb" value="B" />
-                                <label for="rbbancdgb">B</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbbancdg" type="radio" id="rbbancdgbs" value="BS" />
-                                <label for="rbbancdgbs">BS</label>
-                            </div>
-                        </div>
-
-                        <div class="row clearfix">
-                            <div class="col-md-2">
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <p>
                                     <b>
                                         BODY REPAIR
                                     </b>
                                 </p>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" name="txtbodyrepair" id="txtbodyrepair" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeBody();" />
-                            </div>
-                            <div id="divBody">
-                                <div class="col-md-1">
-                                    <label>/Panel</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Rp.</label>
-                                    <label id="lblcbody"></label>
-                                </div>
-                                <div class="col-md-2" id="divttlcbody">
-                                    <label>Total Rp.</label>
-                                    <label id="lblttlChargeBody"></label>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Body Repair" id="txtbodyrepair" name="txtbodyrepair" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeBody();" />
                                 </div>
                             </div>
                         </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>
-                                        CLEANLINESS
-                                    </b>
-                                </p>
-                            </div>
-                            @*<div class="col-md-1">
-            <input type="text" class="form-control" maxlength="2" name="txtCleanliness" id="txtCleanliness" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeClean();" />
-        </div>*@
-                            <div class="col-md-1">
-                                <input name="rbclean" type="radio" id="rbcleany" value="Y" onchange="checkChargeClean();" />
-                                <label for="rbcleany">Yes</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbclean" type="radio" id="rbcleann" value="N" onchange="checkChargeClean();" />
-                                <label for="rbcleann">No</label>
-                            </div>
-                            <div id="divClean">
-                                <div class="col-md-1">
-                                    <label>/Panel</label>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>Rp.</label>
-                                    <label id="lblcclean"></label>
-                                </div>
-                                <div class="col-md-4" id="divttlcClean">
-                                    <label>Total Rp.</label>
-                                    <label id="lblttlChargeClean"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-md-2">
-                                <p>
-                                    <b>
-                                        SMOKE
-                                    </b>
-                                </p>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbsmoke" type="radio" id="rbsmokey" value="Y" onchange="checkSmoke();" />
-                                <label for="rbsmokey">Yes</label>
-                            </div>
-                            <div class="col-md-1">
-                                <input name="rbsmoke" type="radio" id="rbsmoken" value="N" onchange="checkSmoke();" />
-                                <label for="rbsmoken">No</label>
-                            </div>
-                            <div id="divsmoke">
-                                <div class="col-md-2">
-                                    <label>Rp.</label>
-                                    <label id="lblsmoke"></label>
-                                </div>
-                                <div class="col-md-2" id="divttlcSmoke">
-                                    <label>Total Rp.</label>
-                                    <label id="lblttlChargeSmoke"></label>
-                                </div>
-                                <div class="col-md-2" id="divttlcSmoke">
-                                    <label>= Charge Total Rp.</label>
-                                    <label id="lblttlChargeAll"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-md-6">
-                                <label id="ChechkInStatus" style="color: red;"></label>
-                            </div>
-                        </div>
-                        <div class="row clearfix">
-                            <div class="col-sm-1" id="divbtncheckout" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-teal waves-effect" id="btcheckout">CHECK-OUT</button>
-                            </div>
-                            <div class="col-sm-1" id="divbtnsave" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-teal waves-effect" id="btsave">SUBMIT</button>
-                            </div>
-                            <div class="col-sm-1" id="divapprove" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-blue-grey waves-effect" id="btapprove">APPROVE</button>
-                            </div>
-                            <div class="col-sm-1" id="divreturn" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-orange waves-effect" id="btreturn">RETURN</button>
-                            </div>
-                            <div class="col-sm-1" id="divapproveCheckOut" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-blue-grey waves-effect" id="btapproveCheckOut">APPROVE</button>
-                            </div>
-                            <div class="col-sm-1" id="divreturnCheckOut" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-orange waves-effect" id="btreturnCheckOut">RETURN</button>
-                            </div>
-                            <div class="col-sm-1" id="divreject" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-cyan waves-effect" id="btreject">REJECT</button>
-                            </div>
-                            <div class="col-sm-1" style=" width: 130px;padding-right: 0px;">
-                                <button type="button" class="btn bg-red waves-effect" id="btcancel">BACK</button>
-                            </div>
-                        </div>
+                        @*<div class="col-md-2">*@
 
-</form>
+                        @*<input type="text" class="form-control" name="txtbodyrepair" id="txtbodyrepair" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeBody();" />*@
+                        @*</div>*@
+                        <div id="divBody">
+                            <div class="col-md-1">
+                                <label>/Panel</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Rp.</label>
+                                <label id="lblcbody"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcbody">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeBody"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>
+                                    CLEANLINESS
+                                </b>
+                            </p>
+                        </div>
+                        @*<div class="col-md-1">
+                                <input type="text" class="form-control" maxlength="2" name="txtCleanliness" id="txtCleanliness" style="width:50px" oninput="this.value = this.value.replace(/\D+/g, '')" onchange="checkChargeClean();" />
+                            </div>*@
+                        <div class="col-md-1">
+                            <input name="rbclean" type="radio" id="rbcleany" value="Y" onchange="checkChargeClean();" />
+                            <label for="rbcleany">Yes</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbclean" type="radio" id="rbcleann" value="N" onchange="checkChargeClean();" />
+                            <label for="rbcleann">No</label>
+                        </div>
+                        <div id="divClean">
+                            <div class="col-md-1">
+                                <label>/Panel</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Rp.</label>
+                                <label id="lblcclean"></label>
+                            </div>
+                            <div class="col-md-4" id="divttlcClean">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeClean"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-2">
+                            <p>
+                                <b>
+                                    SMOKE
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbsmoke" type="radio" id="rbsmokey" value="Y" onchange="checkSmoke();" />
+                            <label for="rbsmokey">Yes</label>
+                        </div>
+                        <div class="col-md-1">
+                            <input name="rbsmoke" type="radio" id="rbsmoken" value="N" onchange="checkSmoke();" />
+                            <label for="rbsmoken">No</label>
+                        </div>
+                        <div id="divsmoke">
+                            <div class="col-md-3">
+                                <label>Rp.</label>
+                                <label id="lblsmoke"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcSmoke">
+                                <label>Total Rp.</label>
+                                <label id="lblttlChargeSmoke"></label>
+                            </div>
+                            <div class="col-md-2" id="divttlcSmoke">
+                                <label>= Total Rp.</label>
+                                <label id="lblttlChargeAll"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <label id="ChechkInStatus" style="color: red;"></label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-1" id="divbtncheckout" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-teal waves-effect" id="btcheckout">CHECK-OUT</button>
+                        </div>
+                        <div class="col-sm-1" id="divbtnsave" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-teal waves-effect" id="btsave">SUBMIT</button>
+                        </div>
+                        <div class="col-sm-1" id="divapprove" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-blue-grey waves-effect" id="btapprove">APPROVE</button>
+                        </div>
+                        <div class="col-sm-1" id="divreturn" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-orange waves-effect" id="btreturn">RETURN</button>
+                        </div>
+                        <div class="col-sm-1" id="divapproveCheckOut" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-blue-grey waves-effect" id="btapproveCheckOut">APPROVE</button>
+                        </div>
+                        <div class="col-sm-1" id="divreturnCheckOut" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-orange waves-effect" id="btreturnCheckOut">RETURN</button>
+                        </div>
+                        <div class="col-sm-1" id="divreject" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-cyan waves-effect" id="btreject">REJECT</button>
+                        </div>
+                        <div class="col-sm-1" style=" width: 130px;padding-right: 0px;">
+                            <button type="button" class="btn bg-red waves-effect" id="btcancel">BACK</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>

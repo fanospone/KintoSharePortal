@@ -331,12 +331,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap 4.0.0.min.css" />
+    <Content Include="Content\bootstrap 4.2.1.min.css" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Content\bootstrap-notify\bootstrap-notify.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.min.js" />
     <Content Include="Content\bsb\css\font-awesome.min.css" />
     <Content Include="Content\bsb\css\font.css" />
     <Content Include="Content\bsb\css\icon.css" />
@@ -3956,6 +3958,7 @@
     <Content Include="Content\global\plugins\ladda\ladda-themeless.min.css" />
     <Content Include="Content\global\plugins\ladda\ladda.min.js" />
     <Content Include="Content\global\plugins\ladda\spin.min.js" />
+    <Content Include="Content\jquery-3.3.1.slim.min.js" />
     <Content Include="Content\jquery-3.4.1.min.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.multidatespicker.css" />
@@ -3972,6 +3975,7 @@
     <Content Include="Content\node-waves\waves.min.css" />
     <Content Include="Content\node-waves\waves.min.js" />
     <Content Include="Content\pepper grinder jquery-ui.css" />
+    <Content Include="Content\popper.min.js" />
     <Content Include="Content\responsive.bootstrap.min.css" />
     <Content Include="Content\sweetalert\sweetalert-dev.js" />
     <Content Include="Content\sweetalert\sweetalert.css" />

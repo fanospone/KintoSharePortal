@@ -52,7 +52,7 @@ namespace KintoSharePortal.Domain.Repository
             return pListBookRepeat(car, startDate, endDate, con);
         }
 
-        public List<trxKintoSharePortalBookSubmit> ListAssetDate(string car, string startDate, string endDate)
+        public List<trxKintoSharePortalBookSubmit> ListAssetDate(string car, string startDate, string endDate, SqlConnection con)
         {
             return pListAssetDate(car, startDate, endDate, con);
         }

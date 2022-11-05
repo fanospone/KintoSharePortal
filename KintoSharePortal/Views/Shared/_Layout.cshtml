@@ -25,7 +25,9 @@
     @*<link href="~/Content/bsb/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Content/bsb/plugins/node-waves/waves.css" rel="stylesheet" />
     <link href="~/Content/bsb/plugins/animate-css/animate.css" rel="stylesheet" />
-    <link href="~/Content/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/jquery-ui.multidatespicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bsb/plugins/morrisjs/morris.css" rel="stylesheet" />
+    <link href="~/Content/bsb/css/themes/all-themes.css" rel="stylesheet" />
     @*<link href="~/Content/global/font-awesome.min.css" rel="stylesheet" type="text/css"/>*@
     @*<script src="~/Content/global/plugins/jquery-ui/jquery-ui.min.js"></script>*@
 
@@ -148,7 +150,7 @@
                             </a>
                         </li>
                     }
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "approver" || HttpContext.Current.Session["userRole"].ToString() == "admin")
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "approver")
                     {
                         <li>
                             <a href='@Url.Action("BookApproval", "Home")'>

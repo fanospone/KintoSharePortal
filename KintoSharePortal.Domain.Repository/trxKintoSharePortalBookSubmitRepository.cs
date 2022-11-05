@@ -24,7 +24,10 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pSubmitBook(data);
         }
-
+        public List<trxKintoSharePortalBookSubmit> SearchList(string WhereCond , SqlConnection con)
+        {
+            return pSearchList(WhereCond);
+        }
         private trxKintoSharePortalBookSubmit pSubmitBook(trxKintoSharePortalBookSubmit data)
         {
             using (var command = con)
@@ -40,6 +43,20 @@ namespace KintoSharePortal.Domain.Repository
                 cmd.ExecuteNonQuery();
     
                 return data;
+            }
+        }
+
+        private List<trxKintoSharePortalBookSubmit> pSearchList (string WhereCond)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_GETSEARCHLIST";
+
+                cmd.Parameters.Add(cmd.CreateParameter("@WhereCond", WhereCond));
+                return this.ReadTransaction(cmd).ToList();
             }
         }
     }

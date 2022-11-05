@@ -705,6 +705,31 @@ namespace KintoSharePortal.Controllers
             }
         }
 
+        [System.Web.Http.HttpGet]
+        public JsonResult SearchIndex (trxKintoSharePortalBookSubmit post)
+        {
+            try
+            {
+                if(post.Cartype == "ALL ASSET")
+                {
+                    post.Cartype = "";
+                }
+
+                if(post.PIC == "ALL USER")
+                {
+                    post.PIC = "";
+                }
+
+                var ksp = new KintoSharePortalService();
+                var ListSearch = new List<trxKintoSharePortalBookSubmit>();
+                ListSearch = ksp.GetListSearch(post);
+                return Json(ListSearch, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public class ErrorModel
         {
             public bool Success { get; set; }
