@@ -471,6 +471,24 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public ActionResult ResourcesAsset()
+        {
+            try
+            {
+                var ksp = new KintoSharePortalService();
+                var listResourcesAsset = new List<trxKintoSharePortalBookSubmit>();
+                var WhereCond = "";
+                listResourcesAsset = ksp.ResourceAssetList(WhereCond);
+
+                return Json(listResourcesAsset, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public ActionResult BookingListReport(mstKintoSharePortalReport post)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();

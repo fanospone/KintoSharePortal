@@ -557,6 +557,31 @@ namespace KintoSharePortal.Services
                 
         }
 
+        public List<trxKintoSharePortalBookSubmit> ResourceAssetList(string WhereCond)
+        {
+            using (con)
+            {
+                try
+                {
+                    var BookRepo = new mstKintoSharePortalGetBookListRepository(_context);
+                    var listResourcesAsset = new List<trxKintoSharePortalBookSubmit>();
+
+                    WhereCond = "";
+
+                    con.Open();
+                    listResourcesAsset = BookRepo.ListResourcesAsset(WhereCond, con);
+                    return listResourcesAsset;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+                finally
+                {
+                    con.Dispose();
+                }
+            }
+        }
         public List<trxKintoSharePortalBookSubmit> BookList(string WhereCond)
         {
             using (con)

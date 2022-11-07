@@ -45,7 +45,8 @@ namespace KintoSharePortal.Domain.Models
         public int? Ischeckout { get; set; }
         public string CheckInStatus { get; set; }
         public string CheckOutStatus { get; set; }
-
+        public string Status { get; set; }
+        public int? CarID { get; set; }
         public List<trxKintoSharePortalBookSubmit> ShowAllBook { get; set; }
     }
 }

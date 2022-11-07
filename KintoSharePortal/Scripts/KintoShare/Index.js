@@ -49,72 +49,138 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var calendarEl = document.getElementById('calendar');
 
-    //var JArObject = [
-    //    {
-    //        title: 'All Day Event',
-    //        start: '2020-09-01'
-    //    },
-    //    {
-    //        title: 'Long Event',
-    //        start: '2020-09-07',
-    //        end: '2020-09-10'
-    //    },
-    //    {
-    //        groupId: 999,
-    //        title: 'Repeating Event',
-    //        start: '2020-09-09T16:00:00'
-    //    },
-    //    {
-    //        groupId: 999,
-    //        title: 'Repeating Event',
-    //        start: '2020-09-16T16:00:00'
-    //    },
-    //    {
-    //        title: 'Conference',
-    //        start: '2020-09-11',
-    //        end: '2020-09-13'
-    //    },
-    //    {
-    //        title: 'Meeting',
-    //        start: '2020-09-12T10:30:00',
-    //        end: '2020-09-12T12:30:00'
-    //    },
-    //    {
-    //        title: 'Lunch',
-    //        start: '2020-09-12T12:00:00'
-    //    },
-    //    {
-    //        title: 'Meeting',
-    //        start: '2020-09-12T14:30:00'
-    //    },
-    //    {
-    //        title: 'Happy Hour',
-    //        start: '2020-09-12T17:30:00'
-    //    },
-    //    {
-    //        title: 'Dinner',
-    //        start: '2020-09-12T20:00:00'
-    //    },
-    //    {
-    //        title: 'Birthday Party',
-    //        start: '2020-09-13T07:00:00'
-    //    },
-    //    {
-    //        title: 'Click for Google',
-    //        url: 'http://google.com/',
-    //        start: '2020-09-28'
-    //    }
-    //];
-
-   // Request.CallApi();
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
-       //initialDate: '2020-09-12',
-        initialDate: today,
+        ///////////////////////////////////////////// VIEW CALENDAR BY MONTH /////////////////////////////////////////////
+        //initialDate: today, //'2020-09-12',
+        //editable: true,
+        //selectable: true,
+        //businessHours: true,
+        //dayMaxEvents: true, // allow "more" link when too many events
+        //events: function (fetchInfo, successCallback, failureCallback) {
+        //    $.ajax({
+        //        url: url + "/Home/IndexBooking",
+        //        type: "GET",
+        //        datatype: "json"
+        //    }).done(function (data, textStatus, jqXHR) {
+        //        var events = [];
+        //        /*if (data.ApprovalStatus == 'Waiting') {*/
+        //        $.each(data, function (key, value) {
+        //            var color = "";
+        //            if (value.ApprovalStatus == 'Waiting') {
+        //                color = '#FFFF00';
+        //            }
+        //            else if (value.ApprovalStatus == 'Cancel') {
+        //                color = '#FF4500';
+        //            }
+        //            else {
+        //                color = '#66CDAA';
+        //            }
+        //            events.push({
+        //                title: value.Cartype + " - " + value.BookingNo,
+        //                start: value.Startdate,
+        //                end: value.Enddate,
+        //                //description: value.BookingNo,
+        //                //start: '2022-09-22'
+        //                color: color
+        //            });
+        //            //console.log(value.BookingNo);
+        //        });
+        //        //}
+        //        successCallback(events);
+        //    }).fail(function (jqXHR, textStatus, errorThrown) {
+        //        console.log(jqXHR);
+        //        console.log(textStatus);
+        //        console.log(errorThrown);
+        //    });
+        //},
+        //eventClick: function (arg) {
+        //    console.log(arg.event.title);
+        //    const input = arg.event.title;
+        //    const [car, bookno] = input.split(' - ');
+
+        //    $.ajax({
+        //        url: url + "/Home/DateBookDetail",
+        //        type: "POST",
+        //        data: { BookingNo: bookno }
+        //    }).done(function (data, textStatus, jqXHR) {
+        //        $('#modalTitle').text(bookno);
+        //        //$('#modalBody').text(car);
+        //        document.getElementById('lblcar').innerHTML = car;
+        //        document.getElementById('lblplatno').innerHTML = data.PlatNo ;
+        //        document.getElementById('lblPIC').innerHTML = data.PIC ;
+        //        document.getElementById('lbldept').innerHTML = data.Department ;
+        //        $('#calendarModal').modal('show');
+        //        //console.log(car);
+        //        //console.log(bookno);
+        //    }).fail(function (xhr, msg) {
+        //        alert("Proses Error " + msg);
+        //    });
+        //},
+        //dateClick: function (info) {
+
+        //    //alert('clicked ' + info.dateStr);
+        //    var dateclicked = info.dateStr;
+        //    var todayDate = new Date();
+        //    var dd = String(todayDate.getDate()).padStart(2, '0');
+        //    var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+        //    var yyyy = todayDate.getFullYear();
+        //    Todayclick = yyyy + '-' + mm + '-' + dd;
+        //    if (Todayclick > dateclicked) {
+        //        $('#myModal').modal('show');
+        //        $('#modaltext').text("Cannot book past date.");
+        //    }
+        //    else {
+        //        window.location.href = url + "/Home/Mybook?date=" + dateclicked;
+        //        window.localStorage.setItem('click', true);
+        //    }
+        //},
+        ///////////////////////////////////////////// END VIEW CALENDAR BY MONTH /////////////////////////////////////////////
+
+        /////////////////////////////////////////////  CALENDAR BY WEEK /////////////////////////////////////////////
+        /*timeZone: 'UTC',*/
+        initialView: 'resourceTimelineWeek',
+        aspectRatio: 1.5,
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth' /*timeGridSixDays'*/
+        },
+        //views: {
+        //    timeGridSixDays: {
+        //        type: 'timeGrid',
+        //        duration: { days: 6 },
+        //        buttonText: '6 days'
+        //    }
+        //},
         editable: true,
-        selectable: true,
-        businessHours: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        resourceAreaHeaderContent: "CAR TYPE",
+        resources: function (fetchInfo, successCallback, failureCallback) {
+            $.ajax({
+                url: url + "/Home/ResourcesAsset",
+                method: "POST",
+                datatype: "json"
+            }).done(function (data, textStatus, jqXHR) {
+                var resources = [];
+                $.each(data, function (key, value) {
+                    resources.push({
+                        id: value.ID,
+                        title: value.Cartype
+                    });
+                });
+                successCallback(resources);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert("error get asset resources");
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            });
+        },
+        //    [
+        //    {id: "a", title: "Auditorium A"},
+        //    {id: "b", title: "Auditorium B"},
+        //    {id: "c", title: "Auditorium C"},
+        //    {id: "d", title: "Auditorium D"}
+        //],
         events: function (fetchInfo, successCallback, failureCallback) {
             $.ajax({
                 url: url + "/Home/IndexBooking",
@@ -138,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: value.Cartype + " - " + value.BookingNo,
                         start: value.Startdate,
                         end: value.Enddate,
+                        resourceId: value.CarID,
                         //description: value.BookingNo,
                         //start: '2022-09-22'
                         color: color
@@ -193,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.localStorage.setItem('click', true);
             }
         },
+        /////////////////////////////////////////////  ENDCALENDAR BY WEEK /////////////////////////////////////////////
     });
     calendar.render();
 });
@@ -347,71 +415,184 @@ var Request = {
             data: paramCalendar
         }).done(function (data, textStatus, jqXHR) {
             var calendarReload = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarReload, {
-                //initialDate: '2020-09-12',
-                initialDate: dateFormat($('#datebook').val(), 'yyyy-MM-dd'),
-                editable: true,
-                selectable: true,
-                businessHours: true,
-                dayMaxEvents: true, // allow "more" link when too many events
-                events: function (fetchInfo, successCallback, failureCallback) {
-                    var events = [];
-                    $.each(data, function (key, value) {
-                        var color = "";
-                        if (value.ApprovalStatus == 'Waiting') {
-                            color = '#FFFF00';
-                        }
-                        else if (value.ApprovalStatus == 'Cancel') {
-                            color = '#FF4500';
+            var calendar = new FullCalendar.Calendar(calendarReload,
+                //{
+                ////initialDate: '2020-09-12',
+                //initialDate: dateFormat($('#datebook').val(), 'yyyy-MM-dd'),
+                //editable: true,
+                //selectable: true,
+                //businessHours: true,
+                //dayMaxEvents: true, // allow "more" link when too many events
+                //events: function (fetchInfo, successCallback, failureCallback) {
+                //    var events = [];
+                //    $.each(data, function (key, value) {
+                //        var color = "";
+                //        if (value.ApprovalStatus == 'Waiting') {
+                //            color = '#FFFF00';
+                //        }
+                //        else if (value.ApprovalStatus == 'Cancel') {
+                //            color = '#FF4500';
+                //        }
+                //        else {
+                //            color = '#66CDAA';
+                //        }
+                //        events.push({
+                //            title: value.Cartype + " - " + value.BookingNo,
+                //            start: value.Startdate,
+                //            end: value.Enddate,
+                //            color: color
+                //        });
+                //    });
+                //    successCallback(events);
+                //},
+                //eventClick: function (arg) {
+                //    console.log(arg.event.title);
+                //    const input = arg.event.title;
+                //    const [car, bookno] = input.split(' - ');
+                //    $.ajax({
+                //        url: url + "/Home/DateBookDetail",
+                //        type: "POST",
+                //        data: { BookingNo: bookno }
+                //    }).done(function (data, textStatus, jqXHR) {
+                //        $('#modalTitle').text(bookno);
+                //        document.getElementById('lblcar').innerHTML = car;
+                //        document.getElementById('lblplatno').innerHTML = data.PlatNo;
+                //        document.getElementById('lblPIC').innerHTML = data.PIC;
+                //        document.getElementById('lbldept').innerHTML = data.Department;
+                //        $('#calendarModal').modal('show');
+                //    }).fail(function (xhr, msg) {
+                //        alert("Proses Error " + msg);
+                //    });
+                //},
+                //dateClick: function (info) {
+                //    var dateclicked = info.dateStr;
+                //    var todayDate = new Date();
+                //    var dd = String(todayDate.getDate()).padStart(2, '0');
+                //    var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                //    var yyyy = todayDate.getFullYear();
+                //    Todayclick = yyyy + '-' + mm + '-' + dd;
+                //    if (Todayclick > dateclicked) {
+                //        $('#myModal').modal('show');
+                //        $('#modaltext').text("Cannot book past date.");
+                //    }
+                //    else {
+                //        window.location.href = url + "/Home/Mybook?date=" + dateclicked;
+                //        window.localStorage.setItem('click', true);
+                //    }
+                //},
+                //}
+                {
+                    initialDate: dateFormat($('#datebook').val(), 'yyyy-MM-dd'),
+                    initialView: 'resourceTimelineWeek',
+                    aspectRatio: 1.5,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth' /*timeGridSixDays'*/
+                    },
+                    editable: true,
+                    resourceAreaHeaderContent: "CAR TYPE",
+                    resources: function (fetchInfo, successCallback, failureCallback) {
+                        $.ajax({
+                            url: url + "/Home/ResourcesAsset",
+                            method: "POST",
+                            datatype: "json"
+                        }).done(function (data, textStatus, jqXHR) {
+                            var resources = [];
+                            $.each(data, function (key, value) {
+                                resources.push({
+                                    id: value.ID,
+                                    title: value.Cartype
+                                });
+                            });
+                            successCallback(resources);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            alert("error get asset resources");
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        });
+                    },
+                    events: function (fetchInfo, successCallback, failureCallback) {
+                        $.ajax({
+                            url: url + "/Home/IndexBooking",
+                            type: "GET",
+                            datatype: "json"
+                        }).done(function (data, textStatus, jqXHR) {
+                            var events = [];
+                            /*if (data.ApprovalStatus == 'Waiting') {*/
+                            $.each(data, function (key, value) {
+                                var color = "";
+                                if (value.ApprovalStatus == 'Waiting') {
+                                    color = '#FFFF00';
+                                }
+                                else if (value.ApprovalStatus == 'Cancel') {
+                                    color = '#FF4500';
+                                }
+                                else {
+                                    color = '#66CDAA';
+                                }
+                                events.push({
+                                    title: value.Cartype + " - " + value.BookingNo,
+                                    start: value.Startdate,
+                                    end: value.Enddate,
+                                    resourceId: value.CarID,
+                                    //description: value.BookingNo,
+                                    //start: '2022-09-22'
+                                    color: color
+                                });
+                                //console.log(value.BookingNo);
+                            });
+                            //}
+                            successCallback(events);
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        });
+                    },
+                    eventClick: function (arg) {
+                        console.log(arg.event.title);
+                        const input = arg.event.title;
+                        const [car, bookno] = input.split(' - ');
+
+                        $.ajax({
+                            url: url + "/Home/DateBookDetail",
+                            type: "POST",
+                            data: { BookingNo: bookno }
+                        }).done(function (data, textStatus, jqXHR) {
+                            $('#modalTitle').text(bookno);
+                            //$('#modalBody').text(car);
+                            document.getElementById('lblcar').innerHTML = car;
+                            document.getElementById('lblplatno').innerHTML = data.PlatNo;
+                            document.getElementById('lblPIC').innerHTML = data.PIC;
+                            document.getElementById('lbldept').innerHTML = data.Department;
+                            $('#calendarModal').modal('show');
+                            //console.log(car);
+                            //console.log(bookno);
+                        }).fail(function (xhr, msg) {
+                            alert("Proses Error " + msg);
+                        });
+                    },
+                    dateClick: function (info) {
+
+                        //alert('clicked ' + info.dateStr);
+                        var dateclicked = info.dateStr;
+                        var todayDate = new Date();
+                        var dd = String(todayDate.getDate()).padStart(2, '0');
+                        var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+                        var yyyy = todayDate.getFullYear();
+                        Todayclick = yyyy + '-' + mm + '-' + dd;
+                        if (Todayclick > dateclicked) {
+                            $('#myModal').modal('show');
+                            $('#modaltext').text("Cannot book past date.");
                         }
                         else {
-                            color = '#66CDAA';
+                            window.location.href = url + "/Home/Mybook?date=" + dateclicked;
+                            window.localStorage.setItem('click', true);
                         }
-                        events.push({
-                            title: value.Cartype + " - " + value.BookingNo,
-                            start: value.Startdate,
-                            end: value.Enddate,
-                            color: color
-                        });
-                    });
-                    successCallback(events);
-                },
-                eventClick: function (arg) {
-                    console.log(arg.event.title);
-                    const input = arg.event.title;
-                    const [car, bookno] = input.split(' - ');
-                    $.ajax({
-                        url: url + "/Home/DateBookDetail",
-                        type: "POST",
-                        data: { BookingNo: bookno }
-                    }).done(function (data, textStatus, jqXHR) {
-                        $('#modalTitle').text(bookno);
-                        document.getElementById('lblcar').innerHTML = car;
-                        document.getElementById('lblplatno').innerHTML = data.PlatNo;
-                        document.getElementById('lblPIC').innerHTML = data.PIC;
-                        document.getElementById('lbldept').innerHTML = data.Department;
-                        $('#calendarModal').modal('show');
-                    }).fail(function (xhr, msg) {
-                        alert("Proses Error " + msg);
-                    });
-                },
-                dateClick: function (info) {
-                    var dateclicked = info.dateStr;
-                    var todayDate = new Date();
-                    var dd = String(todayDate.getDate()).padStart(2, '0');
-                    var mm = String(todayDate.getMonth() + 1).padStart(2, '0');
-                    var yyyy = todayDate.getFullYear();
-                    Todayclick = yyyy + '-' + mm + '-' + dd;
-                    if (Todayclick > dateclicked) {
-                        $('#myModal').modal('show');
-                        $('#modaltext').text("Cannot book past date.");
-                    }
-                    else {
-                        window.location.href = url + "/Home/Mybook?date=" + dateclicked;
-                        window.localStorage.setItem('click', true);
-                    }
-                },
-            });
+                    },
+                });
             calendar.render();
         }).fail(function (jqXHR, textStatus, errorThrown) {
             alert("Error search request!!!");

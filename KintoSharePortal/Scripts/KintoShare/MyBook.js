@@ -1282,9 +1282,10 @@ var Form = {
             let dollarUSLocale = Intl.NumberFormat('en-US');
             var chargebody = 300000;
             var chargeSmoke = 1000000;
-            var chargeFuel = 50000;
+            var chargeFuel = 120000 //50000;
+            var chargeclean = 150000;
             document.getElementById('lblcbody').innerHTML = dollarUSLocale.format(chargebody);
-            document.getElementById('lblcclean').innerHTML = dollarUSLocale.format(chargebody);
+            document.getElementById('lblcclean').innerHTML = dollarUSLocale.format(chargeclean);
             document.getElementById('lblsmoke').innerHTML = dollarUSLocale.format(chargeSmoke);
             document.getElementById('lblcFuel').innerHTML = dollarUSLocale.format(chargeFuel);
 

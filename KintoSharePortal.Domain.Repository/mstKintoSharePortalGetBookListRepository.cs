@@ -33,6 +33,10 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pLoadBookIndex(WhereCond, con);
         }
+        public List<trxKintoSharePortalBookSubmit> ListResourcesAsset(string WhereCond, SqlConnection con)
+        {
+            return pListResourcesAsset(WhereCond, con);
+        }
         public trxKintoSharePortalBookSubmit DeleteBook(int Bookid, string BookingNo, SqlConnection con)
         {
             return pDeleteBook(Bookid, BookingNo, con);
@@ -93,6 +97,18 @@ namespace KintoSharePortal.Domain.Repository
                 cmd.CommandText = "spKINTOSHARE_BOOKLISTINDEX";
 
                 cmd.Parameters.Add(cmd.CreateParameter("@UserID", WhereCond));
+
+                return this.ReadTransaction(cmd).ToList();
+            }
+
+        }
+        private List<trxKintoSharePortalBookSubmit> pListResourcesAsset(string WhereCond, SqlConnection con)
+        {
+            using (var command = con)
+            {
+                SqlCommand cmd = new SqlCommand("", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "spKINTOSHARE_GETRESOURCESASSET";
 
                 return this.ReadTransaction(cmd).ToList();
             }

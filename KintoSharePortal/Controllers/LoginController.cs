@@ -34,20 +34,75 @@ namespace KintoSharePortal.Controllers
 
                 if (checkAuth)
                 {
-                    Access access = new Access();
+                    //ORIGINAL
+                    //Access access = new Access();
+                    //bool abc = genOTP.GenOTP(ConfigurationManager.AppSettings["OTPGenLink"].ToString(), model.username, ConfigurationManager.AppSettings["appID"].ToString());
+                    //END ORIGINAL
 
-                    bool abc = genOTP.GenOTP(ConfigurationManager.AppSettings["OTPGenLink"].ToString(), model.username, ConfigurationManager.AppSettings["appID"].ToString());
+                    //fOR QUALIST
+                    FormsAuthenticationTicket authTicket;
+
+                    authTicket = new FormsAuthenticationTicket(1,
+                              username, DateTime.Now, DateTime.Now.AddMinutes(60), false, "admin");
+
+                    //Encrypt the ticket.
+                    string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+
+                    //Create a cookie, and then add the encrypted ticket to the cookie as data.
+                    HttpCookie authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+
+                    authCookie.Expires = authTicket.Expiration;
+
+                    //Add the cookie to the outgoing cookies collection.
+                    Response.Cookies.Add(authCookie);
+
+                    //check role
+                    KintoShare KS = new KintoShare();
+                    UserModel UM = new UserModel();
+                    Access Acc = new Access();
+
+                    UM.username = model.username;
+                    KS.ShowAllUser = Acc.ShowUser(UM);
+
+                    if (KS.ShowAllUser.Count > 0)
+                        Session.Add("userRole", KS.ShowAllUser[0].role);
+                    else
+                        HttpContext.Session["userRole"] = null;
+
+                    HttpContext.Session["userid"] = model.username;
+                    HttpContext.Session["username"] = KS.ShowAllUser[0].name;
+
+                    return (Json(true));
+                    //END QUALIST
                 }
                 else
                 {
-                    return PartialView("ErrorLogin");
+                    //ORIGINAL
+                    //return PartialView("ErrorLogin");
+                    //END ORIGINAL
+
+                    //FOR QUALIST   
+                    return (Json(false));
+                    //END FOR QUALIST
                 }
             }
             catch (Exception ex)
             {
-                return PartialView("ErrorLogin");
+                //ORIGINAL
+                //return PartialView("ErrorLogin");
+                //END ORIGINAL
+
+                //FOR QUALIST   
+                return (Json(false));
+                //END FOR QUALIST
             }
-            return PartialView("CheckUser");
+            //ORIGINAL
+            //return PartialView("CheckUser");
+            //END ORIGINAL
+
+            //fOR QUALIST
+            //return (Json(true));
+            //END QUALIST
         }
 
         [HttpPost]
@@ -110,7 +165,7 @@ namespace KintoSharePortal.Controllers
             {
                 return (Json(false));
             }
-        }
+        }   
 
         [HttpGet]
         public ActionResult Logout()
