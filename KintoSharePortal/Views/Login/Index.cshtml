@@ -143,26 +143,12 @@
                 success: function (response) {
                     /*console.log(response)*/
                     /*ORIGINAL*/
-                    //$("#partialModal").find(".modal-body").html(response);
-                    //$("#partialModal").modal({ backdrop: 'static', keyboard: false });
-                    //$("#partialModal").modal("show");
-                    //$("#btnSignIn").prop("disabled", false);
-                    //$("#btnSignIn").html('<button type="button" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect">SIGN IN</button>');
+                    $("#partialModal").find(".modal-body").html(response);
+                    $("#partialModal").modal({ backdrop: 'static', keyboard: false });
+                    $("#partialModal").modal("show");
+                    $("#btnSignIn").prop("disabled", false);
+                    $("#btnSignIn").html('<button type="button" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect">SIGN IN</button>');
                     /*END ORIGINAL*/
-
-                    /*FOR QUALIS*/
-                    if (response == "true") {
-                        window.location = url + '/Home';
-                    }
-                    else {
-                        $("#partialModal").find(".modal-body").html(response);
-                        $("#partialModal").modal({ backdrop: 'static', keyboard: false });
-                        $("#partialModal").modal("show");
-                        $('#otp-error').show();
-                        $("#btnSignIn").prop("disabled", false);
-                        $("#btnSignIn").html('<button type="button" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect">SIGN IN</button>');
-                    }
-                    /*END FOR QUALIS*/
                 },
                 failure: function (response) {
                     alert(response.responseText);

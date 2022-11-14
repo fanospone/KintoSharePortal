@@ -9,13 +9,17 @@ else
 
 var check = "";
 var Dateparam;
+var passCarid;
+var functionIsRunning = false;
 window.addEventListener('DOMContentLoaded', function () {
     if (window.localStorage.getItem('click')) {
         var url = new URL(window.location)
         var paramdate = url.searchParams.get("date");
         var date = moment(paramdate, 'YYYY-MM-DD')
 
-        console.log(date.format('MM/DD/YYYY'));
+        var paramcarid = url.searchParams.get("resid"); //urlParams.get('resid');
+        passCarid = paramcarid;
+
         $("#datebookstart").val(date.format('MM/DD/YYYY'));
 
         window.localStorage.removeItem('click');
@@ -25,7 +29,6 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 jQuery(document).ready(function () {
-
 
     $("#divttlcbody").hide();
     $("#divttlcClean").hide();
@@ -42,6 +45,7 @@ jQuery(document).ready(function () {
     Control.BindingDept();
     Control.CarList();
     Control.Button();
+    
 
     $('#txtbodyrepair').keypress(function () {
         if (this.value.length >= 2) // allowing you to enter only 10 chars.
@@ -103,7 +107,6 @@ jQuery(document).ready(function () {
     function Calculate() {
 
     };
-
 });
 
 function myDate(StartDate, EndDate) {
@@ -121,7 +124,7 @@ function myDate(StartDate, EndDate) {
     const firstDate = new Date(StartDate);
     const secondDate = new Date(EndDate);
 
-    if (ddStart > ddEnd) {
+    if (parseInt(ddStart) > parseInt(ddEnd)) {
         var t2 = String(new Date(EndDate).getTime());
         var t1 = String(new Date(StartDate).getTime());
         var RangeDate = Math.floor(((t2 - t1) / (24 * 3600 * 1000)) + 1);
@@ -131,8 +134,11 @@ function myDate(StartDate, EndDate) {
         if (RangeDate == 1) {
             ttl = ttl + parseInt(1)
         }
-        console.log(RangeDate);
+        //console.log(RangeDate);
     }
+    //if (parseInt(ddStart) == parseInt(ddEnd)) {
+    //    ttl = ttl + parseInt(1)
+    //}
 
     if (bookRpt == 'Y') {
         var StrDay = daysArray[day];
@@ -159,13 +165,15 @@ function myDate(StartDate, EndDate) {
 
             if (StrDay !== 'Saturday' && StrDay !== 'Sunday') {
                 ttl = parseInt(ttl) + parseInt(feeday);
+                ttl = parseInt(ttl) - 1
                 ttl++;
-                console.log(parseFloat(feeday));
+                //console.log(parseFloat(feeday));
             }
             else {
                 ttl = parseInt(ttl) + parseInt(feeend);
+                ttl = parseInt(ttl) - 1
                 ttl++;
-                console.log(parseFloat(feeend));
+                //console.log(parseFloat(feeend));
             }
 
             if (day == 6)
@@ -173,7 +181,7 @@ function myDate(StartDate, EndDate) {
             else
                 day++;
         }
-        ttl = parseInt(ttl) - 2;
+        //ttl = parseInt(ttl) - 2;
     }
     if (ttl == -2) {
         ttl = 0;
@@ -442,7 +450,7 @@ var Control = {
             $("#divmybooklist").hide();
             $("#divdetail").show();
             $("#pnlCheckList").hide();
-            $('#btsubmitReq').prop('disabled',false);
+            $('#btsubmitReq').prop('disabled', false);
         });
 
         $("#btapprove").unbind().click(function () {
@@ -483,7 +491,7 @@ var Control = {
                 $("#department").append("<option value='0'>--Select Department--</option>");
                 $.each(data, function (i, item) {
                     //console.log(item);
-                    $("#department").append("<option value='" + item.DeptId + "'>" + item.DeptId + " - " + item.DeptName + "</option>");
+                    $("#department").append("<option value='" + item.DeptId + "'>" + item.DeptName + "</option>");
                 })
                     //$("#department").select2({ placeholder: "Select Department", width: null });
                 //}
@@ -511,6 +519,13 @@ var Control = {
             })
                 //$("#cartype").select2({ placeholder: "Select Car", width: null });
             //}
+
+                var url = new URL(window.location)
+                var paramcarid = url.searchParams.get("resid");
+                if (paramcarid != null) {
+                    $('#cartype').val(paramcarid);
+                    Control.GetPlatNo(paramcarid);
+                }
         })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -518,15 +533,20 @@ var Control = {
                 console.log(errorThrown);
                 //Common.Alert.Error(errorThrown);
             });
+        
     },
 
     GetPlatNo: function (CarId) {
         let dollarUSLocale = Intl.NumberFormat('en-US');
+        /*var carIdGet = CarId.value.trim();*/
+        if (CarId.length > 3) {
+            CarId = CarId.value.trim();
+        }
 
         $.ajax({
             url: url + "/Home/PlatNo",
             type: "GET",
-            data: { CarId: CarId.value.trim() }
+            data: { CarId: CarId }
         })
             .done(function (data, textStatus, jqXHR) {
                 $("#licenseplat").val(data.PlatNo);
@@ -619,8 +639,10 @@ var Form = {
                     Form.LoadData();
                 }
                 else {
+                    $("#btsubmitReq").prop("disabled", false);
+                    $("#btsubmitReq").html('<button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>');
                     $('#myModal').modal('show');
-                    $('#modaltext').text("Proses Error " + msg.Reason);
+                    $('#modaltext').text(msg.Reason);
                 }
                 
             }, error: function (xhr, msg) {
@@ -628,7 +650,7 @@ var Form = {
                 $("#btsubmitReq").prop("disabled", false);
                 $("#btsubmitReq").html('<button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsubmitReq">SUBMIT</button>');
                 $('#myModal').modal('show');
-                $('#modaltext').text("Proses Error " + msg);
+                $('#modaltext').text(msg);
             }
             //, complete: function () {
             //    alert("Proses sudah selesai");

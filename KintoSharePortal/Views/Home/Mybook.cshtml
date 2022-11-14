@@ -10,7 +10,7 @@
 <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
 <link href="~/Content/bsb/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 <script src="~/Scripts/GlobalConfig.js"></script>
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 <meta charset="utf-8" />
 @model KintoSharePortal.Domain.Models.trxKintoSharePortalAsset
@@ -89,7 +89,7 @@
                             <p>
                                 <b>DEPARTMENT</b>
                             </p>
-                            <select class="form-control show-tick" name="department" id="department" onchange="Control.GetPIC(this)">
+                            <select class="form-control bootstrap-select show-tick" name="department" id="department" onchange="Control.GetPIC(this)">
                                 @*<option value="">Choose Department</option>*@
                             </select>
                         </div>
@@ -1055,7 +1055,7 @@
                             </div>
                             <div class="col-md-2" id="divttlcSmoke">
                                 <label>= Total Rp.</label>
-                                <label id="lblttlChargeAll"></label>
+                                <label id="lblttlChargeAll" style="font-family: fantasy;"></label>
                             </div>
                         </div>
                     </div>

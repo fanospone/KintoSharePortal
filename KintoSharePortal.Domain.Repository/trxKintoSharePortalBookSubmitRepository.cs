@@ -24,9 +24,9 @@ namespace KintoSharePortal.Domain.Repository
         {
             return pSubmitBook(data);
         }
-        public List<trxKintoSharePortalBookSubmit> SearchList(string WhereCond , SqlConnection con)
+        public List<trxKintoSharePortalBookSubmit> SearchList(string PIC, string cartype , SqlConnection con)
         {
-            return pSearchList(WhereCond);
+            return pSearchList(PIC, cartype);
         }
         private trxKintoSharePortalBookSubmit pSubmitBook(trxKintoSharePortalBookSubmit data)
         {
@@ -46,8 +46,9 @@ namespace KintoSharePortal.Domain.Repository
             }
         }
 
-        private List<trxKintoSharePortalBookSubmit> pSearchList (string WhereCond)
+        private List<trxKintoSharePortalBookSubmit> pSearchList (string pic, string cartype)
         {
+            
             using (var command = con)
             {
                 SqlCommand cmd = new SqlCommand("", con);
@@ -55,7 +56,8 @@ namespace KintoSharePortal.Domain.Repository
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "spKINTOSHARE_GETSEARCHLIST";
 
-                cmd.Parameters.Add(cmd.CreateParameter("@WhereCond", WhereCond));
+                cmd.Parameters.Add(cmd.CreateParameter("@PIC", pic));
+                cmd.Parameters.Add(cmd.CreateParameter("@CarType", cartype));
                 return this.ReadTransaction(cmd).ToList();
             }
         }

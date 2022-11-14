@@ -91,14 +91,14 @@ namespace KintoSharePortal.Services
                     using (con)
                     {
                         var car = data.Cartype;
-                        var startDate = data.Startdate;
-                        var endDate = data.Enddate;
+                        var startDate = DateTime.ParseExact(data.Startdate, "MM/dd/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+                        var endDate = DateTime.ParseExact(data.Enddate, "MM/dd/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
                         con.Open();
                         ListBook = CheckBook.ListBookRepeat(car, startDate, endDate, con);
                         if (ListBook.Count > 0)
                         {
                             con.Dispose();
-                            throw new InvalidOperationException("Process Error: Asset has been booked by another PIC.");
+                            throw new InvalidOperationException("Another PIC Has Booked The Asset");
                         //ValidationMessages.AddModelError("BookingNo", "Asset has booked with other PIC in same date. Please choise other Asset/date");
                         }
                     }
@@ -108,18 +108,19 @@ namespace KintoSharePortal.Services
                     using (con)
                     {
                         var car = data.Cartype;
-                        var startDate = data.Startdate;
-                        var endDate = data.Enddate;
+                        var startDate = DateTime.ParseExact(data.Startdate, "MM/dd/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+                        var endDate = DateTime.ParseExact(data.Enddate, "MM/dd/yyyy", CultureInfo.InvariantCulture).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+
                         con.Open();
                         ListBook = CheckBook.ListAssetDate(car, startDate, endDate,con);
                         if (ListBook.Count > 0)
                         {
                             con.Dispose();
-                            throw new InvalidOperationException("Process Error: Asset has been booked by another PIC.");
+                            throw new InvalidOperationException("Another PIC Has Booked The Asset");
                         }
                     }
                        
-                }
+                    }
                 
                 //using (con)
                 //{
@@ -377,33 +378,66 @@ namespace KintoSharePortal.Services
             {
                 try
                 {
-                    var WhereCond = "";
-                    if (data.PIC != null && data.PIC != "")
-                    {
-                        WhereCond = " b.PIC like '%" + data.PIC + "%' AND";
-
-                    }
-                    else if (data.Cartype != null && data.Cartype != "")
-                    {   
-                        if ( WhereCond != null && WhereCond != "")
-                        {
-                            WhereCond += " b.CAR_TYPE = '" + data.Cartype + "' AND";
-                        }
-                        else
-                        {
-                            WhereCond = " b.CAR_TYPE = '" + data.Cartype + "' AND";
-                        }
-                    }
-                    else
-                    {
-                        WhereCond = "";
-                    }
-                    WhereCond = !string.IsNullOrWhiteSpace(WhereCond) ? WhereCond.Substring(0, WhereCond.Length - 4) : "";
-
+                    string PIC = data.PIC;
+                    string cartype = data.Cartype;
                     var SearchRepo = new trxKintoSharePortalBookSubmitRepository(_context);
                     var ListSearch = new List<trxKintoSharePortalBookSubmit>();
                     con.Open();
-                    return SearchRepo.SearchList(WhereCond, con);
+                    ListSearch = SearchRepo.SearchList(PIC, cartype, con);
+
+                    var lbi = new trxKintoSharePortalBookSubmit();
+                    var dataGet = new List<trxKintoSharePortalBookSubmit>();
+                    foreach (var item in ListSearch.Where(i => i.BookRepeat == "Y"))
+                    {
+                        dataGet.Add(new trxKintoSharePortalBookSubmit
+                        {
+                            ID = item.ID,
+                            BookingNo = item.BookingNo,
+                            Cartype = item.Cartype,
+                            Department = item.Department,
+                            PlatNo = item.PlatNo,
+                            PIC = item.PIC,
+                            BookType = item.BookType,
+                            Purpose = item.Purpose,
+                            BookRepeat = item.BookRepeat,
+                            DateFreq = item.DateFreq,
+                            BookDate = item.BookDate,
+                            UserReq = item.UserReq,
+                            ApprovalStatus = item.ApprovalStatus,
+                            DateCrt = item.DateCrt,
+                            Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),/*(DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),*/
+                            Startdate = (DateTime.ParseExact(item.Startdate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
+                            Role = item.Role,
+                            CarID = item.CarID
+                            
+                        });
+                        //data.Add(lbi);
+                    }
+                    foreach (var item in dataGet)
+                    {
+                        ListSearch.Add(new trxKintoSharePortalBookSubmit
+                        {
+                            ID = item.ID,
+                            BookingNo = item.BookingNo,
+                            Cartype = item.Cartype,
+                            Department = item.Department,
+                            PlatNo = item.PlatNo,
+                            PIC = item.PIC,
+                            BookType = item.BookType,
+                            Purpose = item.Purpose,
+                            BookRepeat = item.BookRepeat,
+                            DateFreq = item.DateFreq,
+                            BookDate = item.BookDate,
+                            UserReq = item.UserReq,
+                            ApprovalStatus = item.ApprovalStatus,
+                            DateCrt = item.DateCrt,
+                            Startdate = item.Startdate,
+                            Enddate = item.Enddate,
+                            Role = item.Role,
+                            CarID = item.CarID
+                        });
+                    }
+                    return ListSearch;
                 }
                 catch (Exception ex)
                 {
@@ -492,57 +526,57 @@ namespace KintoSharePortal.Services
 
                     con.Open();
                     listBookingIndex = BookRepo.LoadBookIndex(WhereCond, con);
-                    var lbi = new trxKintoSharePortalBookSubmit();
-                    var data = new List<trxKintoSharePortalBookSubmit>();
-                    foreach (var item in listBookingIndex.Where(i => i.BookRepeat == "Y"))
-                    {
-                        data.Add(new trxKintoSharePortalBookSubmit
+                        var lbi = new trxKintoSharePortalBookSubmit();
+                        var data = new List<trxKintoSharePortalBookSubmit>();
+                        foreach (var item in listBookingIndex.Where(i => i.BookRepeat == "Y"))
                         {
-                            ID = item.ID,
-                            BookingNo = item.BookingNo,
-                            Cartype = item.Cartype,
-                            Department = item.Department,
-                            PlatNo = item.PlatNo,
-                            PIC = item.PIC,
-                            BookType = item.BookType,
-                            Purpose = item.Purpose,
-                            BookRepeat = item.BookRepeat,
-                            DateFreq = item.DateFreq,
-                            BookDate = item.BookDate,
-                            UserReq = item.UserReq,
-                            ApprovalStatus = item.ApprovalStatus,
-                            DateCrt = item.DateCrt,
-                            Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),/*(DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),*/
-                            Startdate = (DateTime.ParseExact(item.Startdate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
-                            Role = item.Role
-                        });
-                        //data.Add(lbi);
-                    }
-                    foreach(var item in data)
-                    {
-                        listBookingIndex.Add(new trxKintoSharePortalBookSubmit
+                            data.Add(new trxKintoSharePortalBookSubmit
+                            {
+                                ID = item.ID,
+                                BookingNo = item.BookingNo,
+                                Cartype = item.Cartype,
+                                Department = item.Department,
+                                PlatNo = item.PlatNo,
+                                PIC = item.PIC,
+                                BookType = item.BookType,
+                                Purpose = item.Purpose,
+                                BookRepeat = item.BookRepeat,
+                                DateFreq = item.DateFreq,
+                                BookDate = item.BookDate,
+                                UserReq = item.UserReq,
+                                ApprovalStatus = item.ApprovalStatus,
+                                DateCrt = item.DateCrt,
+                                Enddate = (DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),/*(DateTime.ParseExact(item.Enddate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),*/
+                                Startdate = (DateTime.ParseExact(item.Startdate, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(7)).ToString("yyyy-MM-dd"),
+                                Role = item.Role
+                            });
+                            //data.Add(lbi);
+                        }
+                        foreach(var item in data)
                         {
-                            ID = item.ID,
-                            BookingNo = item.BookingNo,
-                            Cartype = item.Cartype,
-                            Department = item.Department,
-                            PlatNo = item.PlatNo,
-                            PIC = item.PIC,
-                            BookType = item.BookType,
-                            Purpose = item.Purpose,
-                            BookRepeat = item.BookRepeat,
-                            DateFreq = item.DateFreq,
-                            BookDate = item.BookDate,
-                            UserReq = item.UserReq,
-                            ApprovalStatus = item.ApprovalStatus,
-                            DateCrt = item.DateCrt,
-                            Startdate = item.Startdate,
-                            Enddate = item.Enddate,
-                            Role = item.Role
-                        });
-                    }
+                            listBookingIndex.Add(new trxKintoSharePortalBookSubmit
+                            {
+                                ID = item.ID,
+                                BookingNo = item.BookingNo,
+                                Cartype = item.Cartype,
+                                Department = item.Department,
+                                PlatNo = item.PlatNo,
+                                PIC = item.PIC,
+                                BookType = item.BookType,
+                                Purpose = item.Purpose,
+                                BookRepeat = item.BookRepeat,
+                                DateFreq = item.DateFreq,
+                                BookDate = item.BookDate,
+                                UserReq = item.UserReq,
+                                ApprovalStatus = item.ApprovalStatus,
+                                DateCrt = item.DateCrt,
+                                Startdate = item.Startdate,
+                                Enddate = item.Enddate,
+                                Role = item.Role
+                            });
+                        }
 
-                    con.Close();
+                        con.Close();
                     return listBookingIndex;
                 }
                 catch (Exception ex)
