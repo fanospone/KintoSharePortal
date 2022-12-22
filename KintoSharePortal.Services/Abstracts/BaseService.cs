@@ -13,12 +13,6 @@ namespace KintoSharePortal.Services
             _contexts = new List<DbContext>();
         }
 
-        public DbContext SetContext(string connection = "connectionString")
-        {
-            DbContext context = new DbContext(Helper.GetConnection(connection));
-            _contexts.Add(context);
-            return context;
-        }
 
         public void Dispose()
         {

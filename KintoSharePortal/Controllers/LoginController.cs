@@ -38,13 +38,35 @@ namespace KintoSharePortal.Controllers
                     Access access = new Access();
                     bool abc = genOTP.GenOTP(ConfigurationManager.AppSettings["OTPGenLink"].ToString(), model.username, ConfigurationManager.AppSettings["appID"].ToString());
                     //END ORIGINAL
+
+                    //VERACODE
+                    //check role
+                    //KintoShare KS = new KintoShare();
+                    //UserModel UM = new UserModel();
+                    //Access Acc = new Access();
+
+                    //UM.username = model.username;
+                    //KS.ShowAllUser = Acc.ShowUser(UM);
+
+                    //if (KS.ShowAllUser.Count > 0)
+                    //    Session.Add("userRole", KS.ShowAllUser[0].role);
+                    //else
+                    //    HttpContext.Session["userRole"] = null;
+
+                    //HttpContext.Session["userid"] = model.username;
+                    //HttpContext.Session["username"] = KS.ShowAllUser[0].name;
+
+                    //return (Json(true));
+                    //END VERACODE
                 }
                 else
                 {
                     //ORIGINAL
                     return PartialView("ErrorLogin");
                     //END ORIGINAL
-
+                    //VERACODE
+                    //return (Json(false));
+                    //END VERACODE
                 }
             }
             catch (Exception ex)
@@ -53,6 +75,9 @@ namespace KintoSharePortal.Controllers
                 return PartialView("ErrorLogin");
                 //END ORIGINAL
 
+                //VERACODE
+                //return (Json(false));
+                //END VERACODE
             }
             //ORIGINAL
             return PartialView("CheckUser");
@@ -101,12 +126,12 @@ namespace KintoSharePortal.Controllers
                 if (KS.ShowAllUser.Count > 0)
                     //HttpContext.Session["userRole"] = "admin";
                     Session.Add("userRole", KS.ShowAllUser[0].role);
-                    //if (HttpContext.Sesssion["userRole"] == null)
-                    //{
-                       
+                //if (HttpContext.Sesssion["userRole"] == null)
+                //{
 
-                    ////}
-                    //HttpContext.Session["userRole"] = KS.ShowAllUser[0].role;
+
+                ////}
+                //HttpContext.Session["userRole"] = KS.ShowAllUser[0].role;
 
                 else
                     HttpContext.Session["userRole"] = null;
@@ -120,7 +145,7 @@ namespace KintoSharePortal.Controllers
             {
                 return (Json(false));
             }
-        }   
+        }
 
         [HttpGet]
         public ActionResult Logout()

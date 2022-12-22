@@ -14,6 +14,8 @@ using System.Web.UI;
 using System.Data;
 using KintoSharePortal.Helper;
 using System.Globalization;
+using System.Web.Helpers;
+using System.Threading.Tasks;
 
 namespace KintoSharePortal.Controllers
 {           
@@ -67,11 +69,12 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult AddAsset(trxKintoSharePortalAddAsset data)
+        ////[ValidateAntiForgeryToken]
+        public JsonResult AddAsset([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalAddAsset data)
         {
             try
             {
-                KintoSharePortalService kins = new KintoSharePortalService();
+                var kins = new KintoSharePortalService();
                 kins.AddAsset(data);
 
                 return Json("Data saved Successfully!");
@@ -84,7 +87,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult SaveEdit(trxKintoSharePortalAddAsset data)
+        ////[ValidateAntiForgeryToken]
+        public JsonResult SaveEdit([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalAddAsset data)
         {
             try
             {
@@ -100,7 +104,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult ListAsset(trxKintoSharePortalAsset post )
+        ////[ValidateAntiForgeryToken]
+        public ActionResult ListAsset([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalAsset post )
         {
 
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
@@ -135,7 +140,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult ListDept(mstKintoSharePortalDepartmentList post)
+        ////[ValidateAntiForgeryToken]
+        public JsonResult ListDept([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalDepartmentList post)
         {
             try 
             {
@@ -153,7 +159,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult ListCar(mstKintoSharePortalGetList post)
+        ////[ValidateAntiForgeryToken]
+        public JsonResult ListCar(string token)
         {
             try
             {
@@ -170,7 +177,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult ListPIC(string DeptID)
+        //[ValidateAntiForgeryToken]
+        public JsonResult ListPIC([Bind(Include = "UserName,Password,Location")] string DeptID)
         {
             try
             {
@@ -186,7 +194,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult SubmitBook (trxKintoSharePortalBookSubmit post)
+        //[ValidateAntiForgeryToken]
+        public JsonResult SubmitBook ([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalBookSubmit post)
         {
             var model = new ErrorModel { Success = false };
             try
@@ -217,7 +226,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult DateBookDetail (string BookingNo)
+        //[ValidateAntiForgeryToken]
+        public JsonResult DateBookDetail ([Bind(Include = "UserName,Password,Location")] string BookingNo)
         {
             try
             {
@@ -233,7 +243,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult PlatNo(int CarId)
+        //[ValidateAntiForgeryToken]
+        public JsonResult PlatNo([Bind(Include = "UserName,Password,Location")] int CarId)
         {
             try
             {
@@ -249,7 +260,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult BookingList(trxKintoSharePortalBookSubmit post)
+        //[ValidateAntiForgeryToken]
+        public ActionResult BookingList([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalBookSubmit post)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -280,7 +292,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult CheckListDetail(int Bookid, string BookingNo)
+        //[ValidateAntiForgeryToken]
+        public JsonResult CheckListDetail([Bind(Include = "UserName,Password,Location")] int Bookid, string BookingNo)
         {
             try
             {
@@ -296,7 +309,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult CheckOutDetail(int Bookid, string BookingNo)
+        //[ValidateAntiForgeryToken]
+        public JsonResult CheckOutDetail([Bind(Include = "UserName,Password,Location")] int Bookid, string BookingNo)
         {
             try
             {
@@ -312,7 +326,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult DeleteBook(int Bookid, string BookingNo)
+        //[ValidateAntiForgeryToken]
+        public JsonResult DeleteBook([Bind(Include = "UserName,Password,Location")] int Bookid, string BookingNo)
         {
             try
             {
@@ -329,7 +344,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult DeleteAsset(int AssetID)
+        //[ValidateAntiForgeryToken]
+        public JsonResult DeleteAsset([Bind(Include = "UserName,Password,Location")] int AssetID)
         {
             try
             {
@@ -345,7 +361,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult SubmitChecklist(mstKintoSharePortalChecklist data)
+        //[ValidateAntiForgeryToken]
+        public JsonResult SubmitChecklist([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalChecklist data)
         {
             try
             {
@@ -360,7 +377,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult SubmitCheckOut(mstKintoSharePortalChecklist data)
+        //[ValidateAntiForgeryToken]
+        public JsonResult SubmitCheckOut([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalChecklist data)
         {
             try
             {
@@ -375,7 +393,8 @@ namespace KintoSharePortal.Controllers
         }
         
         [System.Web.Http.HttpPost]
-        public ActionResult ApprovalList(mstKintoSharePortalApproval post)
+        //[ValidateAntiForgeryToken]
+        public ActionResult ApprovalList([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalApproval post)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -406,7 +425,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult ApprovalSubmit(mstKintoSharePortalApproval post)
+        //[ValidateAntiForgeryToken]
+        public ActionResult ApprovalSubmit([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalApproval post)
         {
             try
             {
@@ -421,7 +441,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult ApprovalCheckIn(string BookNumber, string StatusCheckIn)
+        //[ValidateAntiForgeryToken]
+        public ActionResult ApprovalCheckIn([Bind(Include = "UserName,Password,Location")] string BookNumber, string StatusCheckIn)
         {
             try
             {
@@ -437,7 +458,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult ApprovalCheckOut(string BookNumber, string StatusCheckOut)
+        //[ValidateAntiForgeryToken]
+        public ActionResult ApprovalCheckOut([Bind(Include = "UserName,Password,Location")] string BookNumber, string StatusCheckOut)
         {
             try
             {
@@ -453,6 +475,7 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult IndexBooking()
         {
             try
@@ -471,6 +494,7 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult ResourcesAsset()
         {
             try
@@ -489,7 +513,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult BookingListReport(mstKintoSharePortalReport post)
+        //[ValidateAntiForgeryToken]
+        public ActionResult BookingListReport([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalReport post)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -537,7 +562,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult UserListReport(mstKintoSharePortalReport post)
+        //[ValidateAntiForgeryToken]
+        public ActionResult UserListReport([Bind(Include = "UserName,Password,Location")] mstKintoSharePortalReport post)
         {
             var draw = Request.Form.GetValues("draw").FirstOrDefault();
             var start = Request.Form.GetValues("start").FirstOrDefault();
@@ -577,6 +603,7 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        //[ValidateAntiForgeryToken]
         public JsonResult ExportExcel()
         {
             string strWhereCond = "";
@@ -628,6 +655,7 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        //[ValidateAntiForgeryToken]
         public void ExportToExcelKinto()
         {
             DataTable table = new DataTable();
@@ -708,7 +736,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public JsonResult CheckAsset(int AssetID)
+        //[ValidateAntiForgeryToken]
+        public JsonResult CheckAsset([Bind(Include = "UserName,Password,Location")] int AssetID)
         {
             try
             {
@@ -724,7 +753,8 @@ namespace KintoSharePortal.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public JsonResult SearchIndex (trxKintoSharePortalBookSubmit post)
+        //[ValidateAntiForgeryToken]
+        public JsonResult SearchIndex ([Bind(Include = "UserName,Password,Location")] trxKintoSharePortalBookSubmit post)
         {
             try
             {

@@ -283,7 +283,24 @@ document.addEventListener('DOMContentLoaded', function () {
 var Control = {
     Button: function () {
         $("#btsearch").unbind().click(function () {
-            Request.Search();
+            //Request.Search();
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                } else {
+                    swal("Cancelled", "Your imaginary file is safe :)", "error");
+                }
+            });
         });
     }
 }
@@ -356,9 +373,13 @@ var Table = {
 
 var Form = {
     CarList: function () {
+        console.log(url);
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
         $.ajax({
             url: url + "/Home/ListCar",
-            type: "GET"
+            type: "GET",
+            data: { __RequestVerificationToken: token}
         })
             .done(function (data, textStatus, jqXHR) {
                 $("#ddasset").append("<option value='0'>ALL ASSET</option>");

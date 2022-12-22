@@ -149,6 +149,15 @@
                     $("#btnSignIn").prop("disabled", false);
                     $("#btnSignIn").html('<button type="button" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect">SIGN IN</button>');
                     /*END ORIGINAL*/
+
+                    /*VERACODE*/
+                    //if (response == "true") {
+                    //    window.location = url + '/Home';
+                    //}
+                    //else {
+                    //    $('#otp-error').show();
+                    //}
+                    /*END VERACODE*/
                 },
                 failure: function (response) {
                     alert(response.responseText);

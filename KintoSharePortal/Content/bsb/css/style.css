@@ -2402,11 +2402,13 @@ a {
   animation: none !important; }
 
 section.content {
-  margin: 100px 15px 0 315px;
-  -moz-transition: 0.5s;
-  -o-transition: 0.5s;
-  -webkit-transition: 0.5s;
-  transition: 0.5s; }
+    /*margin: 100px 15px 0 315px;*/
+    margin: 40px;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
 
 /* Dashboard =================================== */
 .dashboard-flot-chart {
@@ -7609,7 +7611,7 @@ fieldset[disabled] .form-control {
         color: #fff; }
   .sidebar .menu {
     position: relative;
-    overflow-y: auto;
+    overflow-y: hidden;
     height: 90vh; }
     .sidebar .menu .list {
       list-style: none;

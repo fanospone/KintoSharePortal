@@ -35,9 +35,73 @@
         <script type="text/javascript" src="~/Content/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="~/Content/bsb/js/datatables.min.js"></script>*@
     @*<script type="text/javascript" src="~/Content/jquery.dataTables.min.js"></script>*@
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            }
+        
+        .sidebar {
+          height: 100%;
+          width: 0;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: white;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 60px;
+        }
+
+        .sidebar a {
+          padding: 8px 8px 8px 0px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #818181;
+          display: block;
+          transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #345378eb;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            color: white;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4e343412;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+          background-color: #444;
+        }
+
+        #main {
+          transition: margin-left .5s;
+          padding: 16px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @*@media screen and (max-height: 450px) {
+          .sidebar {padding-top: 15px;}
+          .sidebar a {font-size: 18px;}
+        }*@
+    </style>
 </head>
 
-<body class="theme-red">
+<body class="theme-red" id="main" style="margin-left: 0px;margin-right: 0px;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -71,11 +135,14 @@
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
-        <div class="container-fluid">
+        <div class="container-fluid" style="overflow-y: scroll;">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand">Kinto Share Portal</a>
+                <div style="display: flex;">
+                    <button class="openbtn navbar-brand" onclick="openNav()" style=" width: 56px; margin-left: 0px;">☰</button>
+                    <a class="navbar-brand">Kinto Share Portal</a>
+                </div>
             </div>
             @*<div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -93,6 +160,7 @@
                 <div class="image">
                     <img src="~/Content/bsb/images/KINTO.jpeg" width="48" height="48" alt="User" />
                 </div>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@HttpContext.Current.Session["userid"].ToString()</div>
                     <div class="name"><strong>@HttpContext.Current.Session["username"].ToString()</strong></div>
@@ -107,78 +175,80 @@
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
-                <ul class="list">
-                    @*@if (Context.Session["userRole"] == "admin")
+                <div class="slimScrollDiv" style="position: relative;overflow: hidden;width: auto;height: 161px;font-size: 21px;overflow-y: scroll;top: 0;bottom: 0;">
+                    <ul class="list">
+                        @*@if (Context.Session["userRole"] == "admin")
+                {
+                    <li>
+                        <a href='@Url.Action("User", "Home")'>
+                            <i class="material-icons">person</i>
+                            <span>User</span>
+                        </a>
+                    </li>
+                }
+                @if (Context.Session["userRole"] == "admin")
+                {
+                    <li>
+                        <a href='@Url.Action("Signature","Home")'>
+                            <i class="material-icons">border_color</i>
+                            <span>Signature</span>
+                        </a>
+                    </li>
+                }*@
+                        <li>
+                            <a href='@Url.Action("index","Home")'>
+                                <i class="material-icons">home</i>
+                                <span>HOME</span>
+                            </a>
+                        </li>
+                        @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requestor")
                         {
                             <li>
-                                <a href='@Url.Action("User", "Home")'>
-                                    <i class="material-icons">person</i>
-                                    <span>User</span>
+                                <a href='@Url.Action("myBook", "Home")'>
+                                    <i class="material-icons">book</i>
+                                    <span>MYBOOKING</span>
                                 </a>
                             </li>
                         }
-                        @if (Context.Session["userRole"] == "admin")
+                        @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
                         {
                             <li>
-                                <a href='@Url.Action("Signature","Home")'>
-                                    <i class="material-icons">border_color</i>
-                                    <span>Signature</span>
+                                <a href='@Url.Action("Facilities", "Home")'>
+                                    <i class="material-icons">directions_car</i>
+                                    <span>FACILITIES</span>
                                 </a>
                             </li>
-                        }*@
-                    <li>
-                        <a href='@Url.Action("index","Home")'>
-                            <i class="material-icons">home</i>
-                            <span>HOME</span>
-                        </a>
-                    </li>
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requestor")
-                    {
-                        <li>
-                            <a href='@Url.Action("myBook", "Home")'>
-                                <i class="material-icons">book</i>
-                                <span>MYBOOKING</span>
-                            </a>
-                        </li>
-                    }
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
-                    {
-                        <li>
-                            <a href='@Url.Action("Facilities", "Home")'>
-                                <i class="material-icons">directions_car</i>
-                                <span>FACILITIES</span>
-                            </a>
-                        </li>
-                    }
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "approver")
-                    {
-                        <li>
-                            <a href='@Url.Action("BookApproval", "Home")'>
-                                <i class="material-icons">done_all</i>
-                                <span>BOOKING APPROVAL</span>
-                            </a>
-                        </li>
-                    }
-                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
-                    {
-                        <li>
-                            <a href='@Url.Action("Report", "Home")'>
-                                <i class="material-icons">insert_drive_file</i>
-                                <span>REPORT</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <!-- #Menu -->
-            <!-- Footer -->
-            <div class="legal">
-                <div class="copyright">
-                    <a href="javascript:void(0);">Kinto Share Portal - Toyota Astra Financial Services</a>
+                        }
+                        @if (HttpContext.Current.Session["userRole"].ToString() == "approver")
+                        {
+                            <li>
+                                <a href='@Url.Action("BookApproval", "Home")'>
+                                    <i class="material-icons">done_all</i>
+                                    <span>BOOKING APPROVAL</span>
+                                </a>
+                            </li>
+                        }
+                        @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
+                        {
+                            <li>
+                                <a href='@Url.Action("Report", "Home")'>
+                                    <i class="material-icons">insert_drive_file</i>
+                                    <span>REPORT</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </div>
-            </div>
-            <!-- #Footer -->
-        </aside>
+                </div>
+                <!-- #Menu -->
+                <!-- Footer -->
+                <div class="legal">
+                    <div class="copyright">
+                        <a href="javascript:void(0);" style="font-size: small;">Kinto Share Portal - Toyota Astra Financial Services</a>
+                    </div>
+                </div>
+                <!-- #Footer -->
+</aside>
         <!-- #END# Left Sidebar -->
         <!-- Right Sidebar -->
         @*<aside id="rightsidebar" class="right-sidebar">
@@ -186,7 +256,7 @@
         <!-- #END# Right Sidebar -->
     </section>
 
-    <section class="content">
+    <section class="content" style="margin-right: 0px;margin-left: 0px;">
         <div class="container-fluid">
             @RenderBody()
         </div>
@@ -224,4 +294,15 @@
     $('#btnLogout').click(function () {
         HttpContext.Session["userId"] == null;
     })
+</script>
+<script>
+    function openNav() {
+        document.getElementById("leftsidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("leftsidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
 </script>

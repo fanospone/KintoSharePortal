@@ -4,6 +4,10 @@
 @{
     ViewBag.Title = "DASHBOARD";
 }
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
 <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="~/Content/responsive.bootstrap.min.css" rel="stylesheet" />
@@ -29,6 +33,7 @@
         font-weight: normal;
         color: #454545;
     }
+
     body {
         margin: 40px 10px;
         padding: 0;
@@ -48,7 +53,7 @@
 
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
+        <div class="card" style="overflow-y: hidden;">
             <div class="header">
                 <h2>
                     ASSET READY
@@ -87,7 +92,7 @@
 
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
+        <div class="card" style="overflow-y: hidden;">
             <div class="header">
                 <h2>
                     BOOKING CALENDAR
