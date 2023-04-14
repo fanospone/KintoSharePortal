@@ -1,0 +1,309 @@
+﻿@using KintoSharePortal.Helper
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "FACILITIES";
+}
+<link href="~/Content/bsb/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<meta charset="utf-8" />
+@model KintoSharePortal.Domain.Models.trxKintoSharePortalAsset
+
+<div class="row clearfix" id="divheaderasset">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    FACILITIES
+                </h2>
+            </div>
+            <div class="body">
+                <form class="row g-3">
+                    @Html.AntiForgeryToken()
+                    <div id="content">
+                        <div style="height: auto;width: 100%;margin: 0px auto">
+                            <table class="table table-bordered table-hover text-nowrap" style="width:100%" id="tblAsset" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">CAR TYPE</th>
+                                        <th class="text-center">LICENCE PLAT NO.</th>
+                                        <th class="text-center">CAPACITY</th>
+                                        <th class="text-center">ACCESSORIES</th>
+                                        <th class="text-center">STATUS</th>
+                                        <th class="text-center">CHASISNO</th>
+                                        <th class="text-center">ENGINENO</th>
+                                        <th class="text-center">FEEWEEKDAY</th>
+                                        <th class="text-center">FEEWEEKEND</th>
+                                        <th class="text-center">EDIT</th>
+                                        <th class="text-center">DELETE</th>
+                                        @*<th class="text-center" style="vertical-align:middle; width: 10%;">DELETE</th>*@
+                                    </tr>
+                                </thead>
+                            </table>
+                            @*<div class="col-md-12 loadHeader">
+                                    <div class="text-center">
+                                        <button id="loadHeader" class="btn blue NeedRounding btn-large"></button>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a onClick="showpnladdasset(); return false;" href="#" id="btaddasset">
+                                <i class="material-icons">control_point</i> Add Asset
+                            </a>
+                        </li>
+                    </ol>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row clearfix" id="divassetaction">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <label id="lblAddasset">Add Asset</label>
+                    <label id="lblEditasset">Edit Asset</label>
+                </h2>
+            </div>
+            <div class="body">
+                <form class="row g-3">
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Car Type
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Car Type" id="cartype" name="cartype" required />
+                                    <input type="text" class="form-control" placeholder="ID" id="AssetID" name="AssetID" />
+                                </div>
+                                <span id="validateCarType" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <p>
+                                <b>Status<span class="required" aria-required="true"> * </span></b>
+                            </p>
+                            <input name="carstat" type="radio" id="rbavailable" value="available" />
+                            <label for="rbavailable">Available</label>
+                            <input name="carstat" type="radio" id="rbnotavailable" value="notavailable" />
+                            <label for="rbnotavailable">Not Available</label>
+                            <input name="carstat" type="radio" id="rbdispose" value="dispose" />
+                            <label for="rbdispose">Dispose</label><br />
+                            <span id="validatestatus" style="font-size:smaller; color:red"></span>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        License Plat No.
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="License Plat No." id="platno" name="platno" />
+                                </div>
+                                <span id="validatePlat" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Accessories
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Accessories" id="accessories" name="accessories" />
+                                </div>
+                                <span id="validateaccesories" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Capacity
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Capacity" id="capacity" name="capacity" />
+                                </div>
+                                <span id="validatecapacity" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Chasis No.
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Chasis No." id="chasisno" name="chasisno" />
+                                </div>
+                                <span id="validatechasisno" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Engine No.
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Engine No." id="engineno" name="engineno" />
+                                </div>
+                                <span id="validateEngineNo" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Kinto Share Fee Weekday
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Kinto Share Fee Weekday" id="feeweekday" name="feeweekday" />
+                                </div>
+                                <span id="validatefeeweekday" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <p>
+                                    <b>
+                                        Kinto Share Fee weekend
+                                    </b>
+                                </p>
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Kinto Share Fee weekend" id="feeweekend" name="feeweekend" />
+                                </div>
+                                <span id="validatefeeweekend" style="font-size:smaller; color:red"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" id="DivBtnSaveEdit">
+                            <button type="button" class="btn bg-blue-grey btn-block btn-lg waves-effect" id="btSaveEdit">Save</button>
+                        </div>
+                        <div class="col-lg-3">
+                            @*<div class="form-actions text-right">*@
+                            @*<button type="button" id="btcancel" class="btn btn-danger" data-style="zoom-in"> CANCEL</button>*@
+                            <button type="button" class="btn bg-red btn-block btn-lg waves-effect" id="btcancel">BACK</button>
+                            @*</div>*@
+                        </div>
+                        <div class="col-lg-3">
+                            @*<button type="button" id="btsave" class="btn btn-primary" data-style="zoom-in"> SAVE</button>*@
+                            <button type="button" class="btn bg-teal btn-block btn-lg waves-effect" id="btsave">Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="color: orangered;">Attention!!</h4>
+            </div>
+            <div class="modal-body">
+                @*<p>Some text in the modal.</p>*@
+                <label id="modaltext"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalDelete" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="color: orangered;">Attention!!</h4>
+            </div>
+            <div class="modal-body">
+                <label id="modaltext"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+@section scripts
+    {
+    <script src="@Url.ContentVersion("~/Scripts/KintoShare/Facilities.js")" type="text/javascript"></script>
+    <script src="~/Content/bsb/plugins/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $('#capacity').keypress(function () {
+            if (this.value.length >= 2) // allowing you to enter only 10 chars.
+                return false;
+        });
+
+        var feeweekday = document.getElementById("feeweekday");
+        feeweekday.addEventListener("keyup", function (e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            //rupiah.value = formatRupiah(this.value, "Rp. ");
+            feeweekday.value = formatRupiah(this.value);
+        });
+
+        var feeweekend = document.getElementById("feeweekend");
+        feeweekend.addEventListener("keyup", function (e) {
+            feeweekend.value = formatRupiah(this.value);
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            //function formatRupiah(angka) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+        }
+    </script>
+}
+

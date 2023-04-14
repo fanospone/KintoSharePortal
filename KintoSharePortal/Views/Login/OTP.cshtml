@@ -1,0 +1,58 @@
+﻿@model KintoSharePortal.Models.UserModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Kinto Share Portal</title>
+    @Styles.Render("~/bundles/bsb")
+</head>
+
+<body class="login-page" width: auto; background-repeat: no-repeat; background-size: cover;>
+    <div class="login-box">
+        <div class="card" style="opacity: 0.95">
+            <div class="body">
+                @using (Html.BeginForm("OTPAction", "Login", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="logo" style="margin-bottom: 10px; text-align: center">
+                        <img src="@Url.Content("~/Content/bsb/images/KINTO.jpeg")" style="width: 200px;" />
+                    </div>
+                    <div class="msg" style="margin-bottom: 15px"><strong>Please input OTP Number</strong></div>
+                    <div class="input-group" style="margin-bottom: 15px">
+                        <span class="input-group-addon">
+                            <i class="material-icons">dialpad</i>
+                        </span>
+                        <div class="form-line">
+                            @Html.HiddenFor(model => model.username)
+                            @Html.EditorFor(model => model.OTP, new { htmlAttributes = new { @class = "form-control", @placeholder = "OTP", @autocomplete = "off" } })
+                        </div>
+                        <label id="username-error" class="error" for="username" style="display: none;">This field is required.</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 pull-right" style="margin-bottom: 10px">
+
+                            <button type="submit" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect">Submit</button>
+                            <button type="button" id="btnCancel" class="btn btn-lg btn-danger waves-effect" onclick="location.href='@Url.Action("Index", "Login")'">Cancel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@Scripts.Render("~/bundles/js")
+<script type="text/javascript">
+    $('#btnSignIn').click(function () {
+        $.LoadingOverlay("show");
+    });
+</script>

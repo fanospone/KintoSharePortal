@@ -1,0 +1,52 @@
+﻿<label>Please Check your Email to Get OTP Authentication</label>
+<input type="text" id="txtUserOTP" class="form-control" placeholder="OTP " />
+<label id="otp-error" class="error" for="username" style="color: red; display: none;">Wrong OTP!!</label>
+<br />
+
+<div class="col-12 text-right">
+    @*<button type="button" class="btn btn-danger" data-dismiss="modal">Resend OTP</button>*@
+    <button type="submit" id="btnSubmitOTP" class="btn btn-primary">Submit</button>
+</div>
+
+<script src="~/Scripts/GlobalConfig.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmitOTP").click(function () {
+            $(this).prop("disabled", true);
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+            submitOTP();
+        });
+
+        function submitOTP() {
+            var username = $("#txtUsername").val();
+            var userOTP = $("#txtUserOTP").val();
+
+            var data = {
+                username: username,
+                OTP: userOTP
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckOTP", "Login")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                dataType: "html",
+                success: function (response) {
+                    if (response == "true") {
+                        window.location = '@Url.Action("Index","Home")';
+                    }
+                    else {
+                        $('#otp-error').show();
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Kinto Share Portal</title>
+    <!-- Favicon-->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+
+
+    @Styles.Render("~/bundles/bsb")
+
+    <style>
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidebar a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    color: #334266;
+                }
+
+            .sidebar .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #1110;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+            .openbtn:hover {
+                background-color: #35428fcf;
+            }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+    </style>
+</head>
+
+<body class="theme-red">
+   <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <button class="openbtn" onclick="HideShowLeftBar()" style="position: fixed;">☰</button>
+                <a class="navbar-brand" style="padding-left: 70px;">Kinto Share Portal</a>
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info" style="background-image: url('@Url.Content("~/Content/bsb/images/blue-background.jpg")');">
+                <div class="image">
+                    <img src="~/Content/bsb/images/KINTO.jpeg" width="48" height="48" alt="User" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@HttpContext.Current.Session["userId"].ToString()</div>
+                    <div class="name"><strong>@HttpContext.Current.Session["userName"].ToString()</strong></div>
+
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+
+                    <li>
+                        <a href='@Url.Action("index","Home")'>
+                            <i class="material-icons">home</i>
+                            <span>HOME</span>
+                        </a>
+                    </li>
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin" || HttpContext.Current.Session["userRole"].ToString() == "requestor")
+                    {
+                        <li>
+                            <a href='@Url.Action("myBook", "Home")'>
+                                <i class="material-icons">book</i>
+                                <span>MYBOOKING</span>
+                            </a>
+                        </li>
+                    }
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
+                    {
+                        <li>
+                            <a href='@Url.Action("Facilities", "Home")'>
+                                <i class="material-icons">directions_car</i>
+                                <span>FACILITIES</span>
+                            </a>
+                        </li>
+                    }
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "approver")
+                    {
+                        <li>
+                            <a href='@Url.Action("BookApproval", "Home")'>
+                                <i class="material-icons">done_all</i>
+                                <span>BOOKING APPROVAL</span>
+                            </a>
+                        </li>
+                    }
+                    @if (HttpContext.Current.Session["userRole"].ToString() == "admin")
+                    {
+                        <li>
+                            <a href='@Url.Action("Report", "Home")'>
+                                <i class="material-icons">insert_drive_file</i>
+                                <span>REPORT</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a href='@Url.Action("Logout", "Login")'>
+                            <i class="material-icons"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    <a href="javascript:void(0);" style="font-size: x-small; padding-left: 0px;">Kinto Share Portal - Toyota Astra Financial Services</a>
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+    </section>
+
+    <section class="content" style="margin-left: 15px;">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </section>
+
+    @Scripts.Render("~/bundles/js")
+    
+    <script type="text/javascript">
+        var BaseUrl = '@Url.Content("~")';
+
+        if (BaseUrl == "/")
+            BaseUrl = "";
+
+    </script>
+
+    @RenderSection("scripts", false)
+</body>
+
+</html>
+<script type="text/javascript">
+    function disableBackButton() {
+        window.history.forward();
+    }
+    disableBackButton();
+    window.onload = disableBackButton;
+    window.onpageshow = function (evt) { if (evt.persisted) disableBackButton }
+    window.onload = function () { void (0) }
+
+    function HideShowLeftBar() {
+        var width = $('#leftsidebar').width();
+
+        if (width == 0) {
+            $('.content').css("margin-left", "250px");
+            $('#leftsidebar').css("width", "250px");
+        } else {
+            $('.content').css("margin-left", "15px");
+            $('#leftsidebar').css("width", "0px");
+        }
+            
+    }
+    $("a").click(function (e) {
+        $.LoadingOverlay("show",
+            {
+                "css": {
+                    "border": "4px dashed gold",
+                    "font-size": "40px",
+                    "text-align": "center",
+                    "padding": "10px",
+                    "color":"Blue"
+                },
+            });
+    });
+</script>

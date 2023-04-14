@@ -1,0 +1,67 @@
+﻿@model KintoSharePortal.Models.UserModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Kinto Share Portal</title>
+    @Styles.Render("~/bundles/bsb")
+</head>
+
+<body class="login-page" width: auto; background-repeat: no-repeat; background-size: cover;>
+
+    <div class="login-box">
+        <div class="card" style="opacity: 0.95">
+            <div class="body">
+                @using (Html.BeginForm("Authentication", "Login", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="logo" style="margin-bottom: 10px; text-align: center">
+                        <img src="@Url.Content("~/Content/bsb/images/KINTO.jpeg")" style="width: 200px;" />
+                    </div>
+                    <div class="msg" style="margin-bottom: 15px">Welcome to <strong>Kinto Share Portal</strong></div>
+                    <div class="input-group" style="margin-bottom: 15px">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            @*<input type="text" id="txtUsername" class="form-control" placeholder="Username" autocomplete="off" />*@
+                            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username", @autocomplete = "off" } })
+                        </div>
+                        <label id="username-error" class="error" for="username" style="display: none;">This field is required.</label>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 15px">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            @*<input type="password" id="txtPassword" class="form-control" placeholder="Password" required="" autocomplete="off" />*@
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password", @autocomplete = "off" } })
+                        </div>
+                        <label id="password-error" class="error" for="password" style="display: none;">This field is required.</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4" style="margin-bottom: 10px">
+
+                            <button type="submit" id="btnSignIn" class="btn btn-lg bg-cyan waves-effect" onclick="disableBackButton()">SIGN IN</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@Scripts.Render("~/bundles/js")
+<script type="text/javascript">
+    $('#btnSignIn').click(function () {
+        $.LoadingOverlay("show");
+    });
+</script>

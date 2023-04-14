@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6866970B-4882-45C3-A728-24E6028A05F3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KintoSharePortal</RootNamespace>
+    <AssemblyName>KintoSharePortal</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44346</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.96.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.96.0\lib\net40\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="corlib, Version=0.0.2.0, Culture=neutral, PublicKeyToken=0f8dda843a1d6dc9, processorArchitecture=MSIL">
+      <HintPath>..\packages\CorLib.0.0.2.5\lib\net40\corlib.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.16.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.16.0\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=5.0.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.0.3\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
+    </Reference>
+    <Reference Include="FastMember.Signed, Version=1.5.0.0, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.Signed.1.5.0\lib\net461\FastMember.Signed.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cors, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cors.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=1.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.1.0.5\lib\net451\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=1.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.1.0.5\lib\net451\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=1.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.1.0.5\lib\net451\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=1.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.1.0.5\lib\net451\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=1.0.5.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.1.0.5\lib\net451\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=1.0.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.1.0.4\lib\net451\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=1.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.1.0.1\lib\net451\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq, Version=2.10.21623.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.10.0\lib\net40\MoreLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OfficeOpenXml.Core.ExcelPackage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OfficeOpenXml.Core.ExcelPackage.1.0.0\lib\net46\OfficeOpenXml.Core.ExcelPackage.dll</HintPath>
+    </Reference>
+    <Reference Include="OfficeOpenXml.Extends, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OfficeOpenXml.Extends.1.0.6.0\lib\net40\OfficeOpenXml.Extends.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RestSharp, Version=104.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.104.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.8\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.10.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.10\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Main.1.0.11226\lib\Net4\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.9\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.9\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Base\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="ControllerApis\KintoSharePortalAsset.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ResponseController.cs" />
+    <Compile Include="DataAccess\Access.cs" />
+    <Compile Include="DataAccess\LdapAuthentication.cs" />
+    <Compile Include="DataAccess\OTP.cs" />
+    <Compile Include="DataAccess\OTPAuth.cs" />
+    <Compile Include="DataAccess\OTPAuthBase.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ExportToExcelHelper.cs" />
+    <Compile Include="Helper\UrlHelperExtensions.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Datatable\DatatableAjaxModel.cs" />
+    <Compile Include="Models\Datatable\DatatableColumn.cs" />
+    <Compile Include="Models\Datatable\Datatableorder.cs" />
+    <Compile Include="Models\Datatable\DatatableSearch.cs" />
+    <Compile Include="Models\KaCab.cs" />
+    <Compile Include="Models\PostKintoShare.cs" />
+    <Compile Include="Models\KintoShare.cs" />
+    <Compile Include="Models\KintoShareReportEnt.cs" />
+    <Compile Include="Models\PostKintoSharePortalAsset.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bsb\css\font-awesome.min.css" />
+    <Content Include="Content\bsb\css\font.css" />
+    <Content Include="Content\bsb\css\icon.css" />
+    <Content Include="Content\bsb\css\materialize.css" />
+    <Content Include="Content\bsb\css\style_new.css" />
+    <Content Include="Content\bsb\css\style.css" />
+    <Content Include="Content\bsb\css\style.min.css" />
+    <Content Include="Content\bsb\css\themes\all-themes.css" />
+    <Content Include="Content\bsb\css\themes\all-themes.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-amber.css" />
+    <Content Include="Content\bsb\css\themes\theme-amber.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-black.css" />
+    <Content Include="Content\bsb\css\themes\theme-black.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-blue-grey.css" />
+    <Content Include="Content\bsb\css\themes\theme-blue-grey.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-blue.css" />
+    <Content Include="Content\bsb\css\themes\theme-blue.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-brown.css" />
+    <Content Include="Content\bsb\css\themes\theme-brown.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-cyan.css" />
+    <Content Include="Content\bsb\css\themes\theme-cyan.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-deep-orange.css" />
+    <Content Include="Content\bsb\css\themes\theme-deep-orange.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-deep-purple.css" />
+    <Content Include="Content\bsb\css\themes\theme-deep-purple.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-green.css" />
+    <Content Include="Content\bsb\css\themes\theme-green.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-grey.css" />
+    <Content Include="Content\bsb\css\themes\theme-grey.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-indigo.css" />
+    <Content Include="Content\bsb\css\themes\theme-indigo.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-light-blue.css" />
+    <Content Include="Content\bsb\css\themes\theme-light-blue.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-lime.css" />
+    <Content Include="Content\bsb\css\themes\theme-lime.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-orange.css" />
+    <Content Include="Content\bsb\css\themes\theme-orange.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-pink.css" />
+    <Content Include="Content\bsb\css\themes\theme-pink.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-purple.css" />
+    <Content Include="Content\bsb\css\themes\theme-purple.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-red.css" />
+    <Content Include="Content\bsb\css\themes\theme-red.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-teal.css" />
+    <Content Include="Content\bsb\css\themes\theme-teal.min.css" />
+    <Content Include="Content\bsb\css\themes\theme-yellow.css" />
+    <Content Include="Content\bsb\css\themes\theme-yellow.min.css" />
+    <Content Include="Content\bsb\documentation\css\documentation.css" />
+    <Content Include="Content\bsb\documentation\index.html" />
+    <Content Include="Content\bsb\documentation\js\angular-route.min.js" />
+    <Content Include="Content\bsb\documentation\js\angular.min.js" />
+    <Content Include="Content\bsb\documentation\js\app.js" />
+    <Content Include="Content\bsb\documentation\templates\browser-support.html" />
+    <Content Include="Content\bsb\documentation\templates\colors.html" />
+    <Content Include="Content\bsb\documentation\templates\component-card.html" />
+    <Content Include="Content\bsb\documentation\templates\component-infobox.html" />
+    <Content Include="Content\bsb\documentation\templates\dependencies.html" />
+    <Content Include="Content\bsb\documentation\templates\download.html" />
+    <Content Include="Content\bsb\documentation\templates\faq.html" />
+    <Content Include="Content\bsb\documentation\templates\file-structure.html" />
+    <Content Include="Content\bsb\documentation\templates\helper-classes.html" />
+    <Content Include="Content\bsb\documentation\templates\introduction.html" />
+    <Content Include="Content\bsb\documentation\templates\javascript-options.html" />
+    <Content Include="Content\bsb\documentation\templates\license.html" />
+    <Content Include="Content\bsb\documentation\templates\plugins.html" />
+    <Content Include="Content\bsb\images\animation-bg.jpg" />
+    <Content Include="Content\bsb\images\bg-1.jpg" />
+    <Content Include="Content\bsb\images\blue-background.jpg" />
+    <Content Include="Content\bsb\images\bluercoral.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\1.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\10.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\11.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\12.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\13.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\14.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\15.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\16.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\17.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\18.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\19.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\2.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\20.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\3.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\4.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\5.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\6.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\7.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\8.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\9.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-1.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-10.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-11.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-12.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-13.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-14.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-15.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-16.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-17.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-18.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-19.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-2.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-20.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-3.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-4.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-5.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-6.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-7.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-8.jpg" />
+    <Content Include="Content\bsb\images\image-gallery\thumb\thumb-9.jpg" />
+    <Content Include="Content\bsb\images\KINTO.jpeg" />
+    <Content Include="Content\bsb\images\logo.png" />
+    <Content Include="Content\bsb\images\profile-post-image.jpg" />
+    <Content Include="Content\bsb\images\redabstract.jpg" />
+    <Content Include="Content\bsb\images\redinshadow.jpg" />
+    <Content Include="Content\bsb\images\redtexture.jpg" />
+    <Content Include="Content\bsb\images\screenshot.png" />
+    <Content Include="Content\bsb\images\taf.png" />
+    <Content Include="Content\bsb\images\thumbs-up.png" />
+    <Content Include="Content\bsb\images\user-img-background.jpg" />
+    <Content Include="Content\bsb\images\user-lg.jpg" />
+    <Content Include="Content\bsb\images\user.jpg" />
+    <Content Include="Content\bsb\images\user.png" />
+    <Content Include="Content\bsb\js\admin.js" />
+    <Content Include="Content\bsb\js\bootstrap.min.js" />
+    <Content Include="Content\bsb\js\datatables.min.js" />
+    <Content Include="Content\bsb\js\demo.js" />
+    <Content Include="Content\bsb\js\helpers.js" />
+    <Content Include="Content\bsb\js\jquery.min.js" />
+    <Content Include="Content\bsb\js\main.js" />
+    <Content Include="Content\bsb\js\pages\cards\basic.js" />
+    <Content Include="Content\bsb\js\pages\cards\colored.js" />
+    <Content Include="Content\bsb\js\pages\charts\chartjs.js" />
+    <Content Include="Content\bsb\js\pages\charts\flot.js" />
+    <Content Include="Content\bsb\js\pages\charts\jquery-knob.js" />
+    <Content Include="Content\bsb\js\pages\charts\morris.js" />
+    <Content Include="Content\bsb\js\pages\charts\sparkline.js" />
+    <Content Include="Content\bsb\js\pages\examples\forgot-password.js" />
+    <Content Include="Content\bsb\js\pages\examples\profile.js" />
+    <Content Include="Content\bsb\js\pages\examples\sign-in.js" />
+    <Content Include="Content\bsb\js\pages\examples\sign-up.js" />
+    <Content Include="Content\bsb\js\pages\forms\advanced-form-elements.js" />
+    <Content Include="Content\bsb\js\pages\forms\basic-form-elements.js" />
+    <Content Include="Content\bsb\js\pages\forms\editors.js" />
+    <Content Include="Content\bsb\js\pages\forms\form-validation.js" />
+    <Content Include="Content\bsb\js\pages\forms\form-wizard.js" />
+    <Content Include="Content\bsb\js\pages\index.js" />
+    <Content Include="Content\bsb\js\pages\maps\google.js" />
+    <Content Include="Content\bsb\js\pages\maps\jvectormap.js" />
+    <Content Include="Content\bsb\js\pages\medias\image-gallery.js" />
+    <Content Include="Content\bsb\js\pages\tables\editable-table.js" />
+    <Content Include="Content\bsb\js\pages\tables\jquery-datatable.js" />
+    <Content Include="Content\bsb\js\pages\ui\animations.js" />
+    <Content Include="Content\bsb\js\pages\ui\dialogs.js" />
+    <Content Include="Content\bsb\js\pages\ui\modals.js" />
+    <Content Include="Content\bsb\js\pages\ui\notifications.js" />
+    <Content Include="Content\bsb\js\pages\ui\range-sliders.js" />
+    <Content Include="Content\bsb\js\pages\ui\sortable-nestable.js" />
+    <Content Include="Content\bsb\js\pages\ui\tooltips-popovers.js" />
+    <Content Include="Content\bsb\js\pages\widgets\infobox\infobox-1.js" />
+    <Content Include="Content\bsb\js\pages\widgets\infobox\infobox-2.js" />
+    <Content Include="Content\bsb\js\pages\widgets\infobox\infobox-3.js" />
+    <Content Include="Content\bsb\js\pages\widgets\infobox\infobox-4.js" />
+    <Content Include="Content\bsb\js\pages\widgets\infobox\infobox-5.js" />
+    <Content Include="Content\bsb\js\popper.js" />
+    <Content Include="Content\bsb\js\script.js" />
+    <Content Include="Content\bsb\pages\changelogs.html" />
+    <Content Include="Content\bsb\pages\charts\chartjs.html" />
+    <Content Include="Content\bsb\pages\charts\flot.html" />
+    <Content Include="Content\bsb\pages\charts\jquery-knob.html" />
+    <Content Include="Content\bsb\pages\charts\morris.html" />
+    <Content Include="Content\bsb\pages\charts\sparkline.html" />
+    <Content Include="Content\bsb\pages\examples\404.html" />
+    <Content Include="Content\bsb\pages\examples\500.html" />
+    <Content Include="Content\bsb\pages\examples\blank.html" />
+    <Content Include="Content\bsb\pages\examples\forgot-password.html" />
+    <Content Include="Content\bsb\pages\examples\profile.html" />
+    <Content Include="Content\bsb\pages\examples\sign-in.html" />
+    <Content Include="Content\bsb\pages\examples\sign-up.html" />
+    <Content Include="Content\bsb\pages\forms\advanced-form-elements.html" />
+    <Content Include="Content\bsb\pages\forms\basic-form-elements.html" />
+    <Content Include="Content\bsb\pages\forms\editors.html" />
+    <Content Include="Content\bsb\pages\forms\form-examples.html" />
+    <Content Include="Content\bsb\pages\forms\form-validation.html" />
+    <Content Include="Content\bsb\pages\forms\form-wizard.html" />
+    <Content Include="Content\bsb\pages\helper-classes.html" />
+    <Content Include="Content\bsb\pages\maps\google.html" />
+    <Content Include="Content\bsb\pages\maps\jvectormap.html" />
+    <Content Include="Content\bsb\pages\maps\yandex.html" />
+    <Content Include="Content\bsb\pages\medias\carousel.html" />
+    <Content Include="Content\bsb\pages\medias\image-gallery.html" />
+    <Content Include="Content\bsb\pages\tables\editable-table.html" />
+    <Content Include="Content\bsb\pages\tables\jquery-datatable.html" />
+    <Content Include="Content\bsb\pages\tables\normal-tables.html" />
+    <Content Include="Content\bsb\pages\typography.html" />
+    <Content Include="Content\bsb\pages\ui\alerts.html" />
+    <Content Include="Content\bsb\pages\ui\animations.html" />
+    <Content Include="Content\bsb\pages\ui\badges.html" />
+    <Content Include="Content\bsb\pages\ui\breadcrumbs.html" />
+    <Content Include="Content\bsb\pages\ui\buttons.html" />
+    <Content Include="Content\bsb\pages\ui\collapse.html" />
+    <Content Include="Content\bsb\pages\ui\colors.html" />
+    <Content Include="Content\bsb\pages\ui\dialogs.html" />
+    <Content Include="Content\bsb\pages\ui\icons.html" />
+    <Content Include="Content\bsb\pages\ui\labels.html" />
+    <Content Include="Content\bsb\pages\ui\list-group.html" />
+    <Content Include="Content\bsb\pages\ui\media-object.html" />
+    <Content Include="Content\bsb\pages\ui\modals.html" />
+    <Content Include="Content\bsb\pages\ui\notifications.html" />
+    <Content Include="Content\bsb\pages\ui\pagination.html" />
+    <Content Include="Content\bsb\pages\ui\preloaders.html" />
+    <Content Include="Content\bsb\pages\ui\progressbars.html" />
+    <Content Include="Content\bsb\pages\ui\range-sliders.html" />
+    <Content Include="Content\bsb\pages\ui\sortable-nestable.html" />
+    <Content Include="Content\bsb\pages\ui\tabs.html" />
+    <Content Include="Content\bsb\pages\ui\thumbnails.html" />
+    <Content Include="Content\bsb\pages\ui\tooltips-popovers.html" />
+    <Content Include="Content\bsb\pages\ui\waves.html" />
+    <Content Include="Content\bsb\pages\widgets\cards\basic.html" />
+    <Content Include="Content\bsb\pages\widgets\cards\colored.html" />
+    <Content Include="Content\bsb\pages\widgets\cards\no-header.html" />
+    <Content Include="Content\bsb\pages\widgets\infobox\infobox-1.html" />
+    <Content Include="Content\bsb\pages\widgets\infobox\infobox-2.html" />
+    <Content Include="Content\bsb\pages\widgets\infobox\infobox-3.html" />
+    <Content Include="Content\bsb\pages\widgets\infobox\infobox-4.html" />
+    <Content Include="Content\bsb\pages\widgets\infobox\infobox-5.html" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker-en-CA.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ar-tn.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ar.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.az.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.bg.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.bn.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.br.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.bs.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ca.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.cs.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.cy.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.da.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.de.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.el.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-AU.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-CA.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-GB.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-IE.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-NZ.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-ZA.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.eo.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.et.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.eu.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fi.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fo.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.gl.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.he.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hi.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hr.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hu.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hy.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.is.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.it-CH.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.it.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ja.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ka.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kh.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kk.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.km.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ko.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kr.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.lt.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.lv.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.me.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.mk.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.mn.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ms.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.no.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.oc.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pl.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pt.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ro.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.rs.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ru.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.si.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sk.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sl.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sq.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sr.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sw.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ta.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.tg.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.th.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.tk.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.tr.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.uk.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.uz-cyrl.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.uz-latn.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.vi.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\font\Material-Design-Icons.svg" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-notify\bootstrap-notify.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-notify\bootstrap-notify.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\css\bootstrap-select.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\css\bootstrap-select.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\bootstrap-select.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\bootstrap-select.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ar_AR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ar_AR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-bg_BG.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-bg_BG.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-cro_CRO.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-cro_CRO.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-cs_CZ.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-cs_CZ.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-da_DK.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-da_DK.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-de_DE.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-de_DE.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-en_US.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-en_US.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-es_CL.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-es_CL.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-eu.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-eu.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fa_IR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fa_IR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fi_FI.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fi_FI.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fr_FR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-fr_FR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-hu_HU.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-hu_HU.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-id_ID.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-id_ID.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-it_IT.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-it_IT.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ko_KR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ko_KR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-lt_LT.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-lt_LT.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-nb_NO.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-nb_NO.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-nl_NL.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-nl_NL.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pl_PL.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pl_PL.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pt_BR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pt_BR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pt_PT.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-pt_PT.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ro_RO.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ro_RO.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ru_RU.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ru_RU.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sk_SK.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sk_SK.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sl_SI.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sv_SE.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-tr_TR.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-tr_TR.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ua_UA.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-ua_UA.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-zh_CN.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-zh_CN.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-zh_TW.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-angular.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-angular.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput-typeahead.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.css" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="Content\bsb\plugins\bootstrap-tagsinput\bootstrap-tagsinput.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\bsb\plugins\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bsb\plugins\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bsb\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bsb\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bsb\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bsb\plugins\bootstrap\js\npm.js" />
+    <Content Include="Content\bsb\plugins\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\bsb\plugins\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales-all.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales-all.min.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\af.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-dz.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-kw.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-ly.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-ma.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-sa.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar-tn.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ar.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\az.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\bg.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\bn.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\bs.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ca.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\cs.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\cy.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\da.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\de-at.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\de.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\el.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\en-au.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\en-gb.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\en-nz.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\eo.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\es-us.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\es.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\et.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\eu.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\fa.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\fi.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\fr-ca.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\fr-ch.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\fr.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\gl.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\he.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\hi.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\hr.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\hu.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\hy-am.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\id.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\is.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\it.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ja.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ka.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\kk.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\km.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ko.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ku.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\lb.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\lt.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\lv.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\mk.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ms.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\nb.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ne.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\nl.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\nn.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\pl.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\pt-br.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\pt.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ro.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ru.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\si-lk.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sk.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sl.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sm.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sq.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sr-cyrl.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sr.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\sv.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ta-in.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\th.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\tr.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\ug.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\uk.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\uz.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\vi.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\zh-cn.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\locales\zh-tw.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\main.css" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\main.js" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\main.min.css" />
+    <Content Include="Content\bsb\plugins\fullcalendar\lib\main.min.js" />
+    <Content Include="Content\bsb\plugins\jquery-slimscroll\jquery.slimscroll.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\jquery.sparkline.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\base.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-bar.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-box.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-bullet.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-discrete.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-line.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-pie.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\chart-tristate.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\defaults.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\footer.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\header.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\interact.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\jquery.sparkline.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\rangemap.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\simpledraw.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\utils.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\vcanvas-base.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\vcanvas-canvas.js" />
+    <Content Include="Content\bsb\plugins\jquery-sparkline\src\vcanvas-vml.js" />
+    <Content Include="Content\bsb\plugins\jquery-spinner\css\bootstrap-spinner.css" />
+    <Content Include="Content\bsb\plugins\jquery-spinner\css\bootstrap-spinner.min.css" />
+    <Content Include="Content\bsb\plugins\jquery-spinner\js\jquery.spinner.js" />
+    <Content Include="Content\bsb\plugins\jquery-spinner\js\jquery.spinner.min.js" />
+    <Content Include="Content\bsb\plugins\jquery-ui\jquery-ui.css" />
+    <Content Include="Content\bsb\plugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\additional-methods.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\jquery.validate.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ar.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_bg.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_bn_BD.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ca.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_cs.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_da.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_de.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_el.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_es.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_es_AR.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_es_PE.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_et.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_eu.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_fa.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_fi.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_fr.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ge.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_gl.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_he.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_hr.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_hu.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_hy_AM.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_id.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_is.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_it.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ja.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ka.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_kk.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ko.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_lt.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_lv.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_mk.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_my.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_nl.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_no.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_pl.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_pt_BR.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_pt_PT.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ro.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_ru.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_si.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_sk.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_sl.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_sr.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_sr_lat.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_sv.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_th.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_tj.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_tr.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_uk.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_vi.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_zh.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_zh_TW.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\methods_de.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\methods_es_CL.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\methods_fi.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\methods_nl.js" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\methods_pt.js" />
+    <Content Include="Content\bsb\plugins\jquery\jquery.js" />
+    <Content Include="Content\bsb\plugins\jquery\jquery.min.js" />
+    <Content Include="Content\bsb\plugins\loadingoverlay\loadingoverlay.min.js" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\css\material-design-iconic-font.css" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\css\material-design-iconic-font.min.css" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="Content\bsb\plugins\materialize-css\css\materialize.css" />
+    <Content Include="Content\bsb\plugins\materialize-css\css\materialize.min.css" />
+    <Content Include="Content\bsb\plugins\materialize-css\js\materialize.js" />
+    <Content Include="Content\bsb\plugins\materialize-css\js\materialize.min.js" />
+    <Content Include="Content\bsb\plugins\momentjs\ender.js" />
+    <Content Include="Content\bsb\plugins\momentjs\moment.js" />
+    <Content Include="Content\bsb\plugins\momentjs\package.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\.gitignore" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\area-as-line.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\area.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\bar-colors.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\bar-no-axes.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\bar.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\days.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\decimal-custom-hover.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\diagonal-xlabels-bar.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\diagonal-xlabels.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\donut-colors.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\donut-formatter.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\donut.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\dst.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\events.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\goals.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\lib\example.css" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\lib\example.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\months-no-smooth.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\negative.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\no-grid.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\non-continuous.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\non-date.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\quarters.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\resize.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\stacked_bars.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\timestamps.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\updating.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\weeks.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\years.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\examples\_template.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\Gruntfile.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\morris.css" />
+    <Content Include="Content\bsb\plugins\morrisjs\morris.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\morris.min.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\specs.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\examples.js" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\exemplary\area0.png" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\exemplary\bar0.png" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\exemplary\line0.png" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\exemplary\stacked_bar0.png" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\test.html" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\visual_specs.js" />
+    <Content Include="Content\bsb\plugins\multi-select\css\multi-select.css" />
+    <Content Include="Content\bsb\plugins\multi-select\img\switch.png" />
+    <Content Include="Content\bsb\plugins\multi-select\js\jquery.multi-select.js" />
+    <Content Include="Content\bsb\plugins\node-waves\waves.css" />
+    <Content Include="Content\bsb\plugins\node-waves\waves.js" />
+    <Content Include="Content\bsb\plugins\node-waves\waves.min.css" />
+    <Content Include="Content\bsb\plugins\node-waves\waves.min.js" />
+    <Content Include="Content\bsb\plugins\popper\popper.min.js" />
+    <Content Include="Content\bsb\plugins\raphael\Gruntfile.js" />
+    <Content Include="Content\bsb\plugins\raphael\raphael.js" />
+    <Content Include="Content\bsb\plugins\raphael\raphael.min.js" />
+    <Content Include="Content\bsb\plugins\raphael\raphael.no-deps.js" />
+    <Content Include="Content\bsb\plugins\raphael\raphael.no-deps.min.js" />
+    <Content Include="Content\bsb\plugins\raphael\webpack.config.js" />
+    <Content Include="Content\bsb\plugins\sweetalert\sweetalert-dev.js" />
+    <Content Include="Content\bsb\plugins\sweetalert\sweetalert.css" />
+    <Content Include="Content\bsb\plugins\sweetalert\sweetalert.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\changelog.txt" />
+    <Content Include="Content\bsb\plugins\tinymce\jquery.tinymce.js" />
+    <Content Include="Content\bsb\plugins\tinymce\jquery.tinymce.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\license.txt" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\advlist\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\anchor\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autolink\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autoresize\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autosave\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\bbcode\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\charmap\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\codesample\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\code\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\colorpicker\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\contextmenu\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\directionality\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\fullpage\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\fullscreen\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\hr\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\imagetools\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\image\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\importcss\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\insertdatetime\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\layer\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\legacyoutput\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\link\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\lists\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\media\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\nonbreaking\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\noneditable\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\pagebreak\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\paste\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\preview\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\print\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\save\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\searchreplace\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\spellchecker\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\tabfocus\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\table\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\template\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\textcolor\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\textpattern\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\visualblocks\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\visualchars\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\wordcount\plugin.js" />
+    <Content Include="Content\bsb\plugins\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Content\bsb\plugins\tinymce\themes\inlite\theme.js" />
+    <Content Include="Content\bsb\plugins\tinymce\themes\inlite\theme.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\themes\modern\theme.js" />
+    <Content Include="Content\bsb\plugins\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\tinymce.jquery.js" />
+    <Content Include="Content\bsb\plugins\tinymce\tinymce.jquery.min.js" />
+    <Content Include="Content\bsb\plugins\tinymce\tinymce.js" />
+    <Content Include="Content\bsb\plugins\tinymce\tinymce.min.js" />
+    <Content Include="Content\bsb\plugins\ladda\ladda-themeless.min.css" />
+    <Content Include="Content\bsb\plugins\ladda\ladda.min.js" />
+    <Content Include="Content\bsb\plugins\ladda\spin.min.js" />
+    <Content Include="Content\bsb\plugins\jquery-ui.multidatespicker\jquery-ui.multidatespicker.css" />
+    <Content Include="Content\bsb\plugins\jquery-ui.multidatespicker\jquery-ui.multidatespicker.js" />
+    <Content Include="Content\bsb\plugins\jquery-dataTables\jquery.dataTables.min.css" />
+    <Content Include="Content\bsb\plugins\jquery-dataTables\jquery.dataTables.min.js" />
+    <Content Include="Content\bsb\plugins\waves\waves.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css.map" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\bsb\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\font\Material-Design-Icons.eot" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\font\Material-Design-Icons.ttf" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\font\Material-Design-Icons.woff" />
+    <Content Include="Content\bsb\plugins\bootstrap-material-datetimepicker\font\Material-Design-Icons.woff2" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\css\bootstrap-select.css.map" />
+    <Content Include="Content\bsb\plugins\bootstrap-select\js\bootstrap-select.js.map" />
+    <Content Include="Content\bsb\plugins\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bsb\plugins\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bsb\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bsb\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bsb\plugins\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\bsb\plugins\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\bsb\plugins\jquery-spinner\css\bootstrap-spinner.css.map" />
+    <Content Include="Content\bsb\plugins\jquery-validation\localization\messages_az" />
+    <Content Include="Content\bsb\plugins\jquery\jquery.min.map" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\bsb\plugins\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Bold.eot" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Light.eot" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Medium.eot" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Regular.eot" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Thin.eot" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="Content\bsb\plugins\materialize-css\fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="Content\bsb\plugins\morrisjs\.travis.yml" />
+    <Content Include="Content\bsb\plugins\morrisjs\bower.json" />
+    <Content Include="Content\bsb\plugins\morrisjs\bower.travis.json" />
+    <Content Include="Content\bsb\plugins\morrisjs\less\morris.core.less" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.area.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.bar.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.donut.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.grid.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.hover.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\lib\morris.line.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\package.json" />
+    <Content Include="Content\bsb\plugins\morrisjs\README.md" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\area\area_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\bar\bar_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\bar\colours.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\commas_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\donut\donut_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\grid\auto_grid_lines_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\grid\set_data_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\grid\y_label_format_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\hover_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\label_series_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\line\line_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\pad_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\lib\parse_time_spec.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\support\placeholder.coffee" />
+    <Content Include="Content\bsb\plugins\morrisjs\spec\viz\run.sh" />
+    <Content Include="Content\bsb\plugins\node-waves\waves.min.js.map" />
+    <Content Include="Content\bsb\plugins\tinymce\bower.json" />
+    <Content Include="Content\bsb\plugins\tinymce\composer.json" />
+    <Content Include="Content\bsb\plugins\tinymce\package.json" />
+    <Content Include="Content\bsb\plugins\tinymce\readme.md" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Content\bsb\plugins\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Content\bsb\scss\browser-support\_ie10.scss" />
+    <Content Include="Content\bsb\scss\browser-support\_ie11.scss" />
+    <Content Include="Content\bsb\scss\pages\_404.scss" />
+    <Content Include="Content\bsb\scss\pages\_500.scss" />
+    <Content Include="Content\bsb\scss\pages\_forgotpasswordpage.scss" />
+    <Content Include="Content\bsb\scss\pages\_loginpage.scss" />
+    <Content Include="Content\bsb\scss\pages\_profile.scss" />
+    <Content Include="Content\bsb\scss\pages\_signuppage.scss" />
+    <Content Include="Content\bsb\scss\style.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-amber.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-black.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-blue-grey.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-blue.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-brown.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-cyan.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-deep-orange.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-deep-purple.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-green.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-grey.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-indigo.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-light-blue.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-light-green.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-lime.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-orange.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-pink.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-purple.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-red.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-teal.scss" />
+    <Content Include="Content\bsb\scss\themes\theme-yellow.scss" />
+    <Content Include="Content\bsb\scss\themes\_all-themes.scss" />
+    <Content Include="Content\bsb\scss\themes\_theme-color-variables.scss" />
+    <Content Include="Content\bsb\scss\_alerts.scss" />
+    <Content Include="Content\bsb\scss\_badgelistgroupitem.scss" />
+    <Content Include="Content\bsb\scss\_bootstrapnotify.scss" />
+    <Content Include="Content\bsb\scss\_bootstrapselect.scss" />
+    <Content Include="Content\bsb\scss\_breadcrumbs.scss" />
+    <Content Include="Content\bsb\scss\_buttons.scss" />
+    <Content Include="Content\bsb\scss\_card.scss" />
+    <Content Include="Content\bsb\scss\_charts.scss" />
+    <Content Include="Content\bsb\scss\_checkboxradio.scss" />
+    <Content Include="Content\bsb\scss\_collapse.scss" />
+    <Content Include="Content\bsb\scss\_colorpicker.scss" />
+    <Content Include="Content\bsb\scss\_customanimate.scss" />
+    <Content Include="Content\bsb\scss\_dashboard.scss" />
+    <Content Include="Content\bsb\scss\_datetimepicker.scss" />
+    <Content Include="Content\bsb\scss\_demo.scss" />
+    <Content Include="Content\bsb\scss\_dialogs.scss" />
+    <Content Include="Content\bsb\scss\_dropdownmenu.scss" />
+    <Content Include="Content\bsb\scss\_dropzone.scss" />
+    <Content Include="Content\bsb\scss\_formwizard.scss" />
+    <Content Include="Content\bsb\scss\_general.scss" />
+    <Content Include="Content\bsb\scss\_helpers.scss" />
+    <Content Include="Content\bsb\scss\_infobox.scss" />
+    <Content Include="Content\bsb\scss\_inputformgroup.scss" />
+    <Content Include="Content\bsb\scss\_ionrangeslider.scss" />
+    <Content Include="Content\bsb\scss\_jquerydatatable.scss" />
+    <Content Include="Content\bsb\scss\_jquerynestable.scss" />
+    <Content Include="Content\bsb\scss\_labels.scss" />
+    <Content Include="Content\bsb\scss\_leftsidebaroverlay.scss" />
+    <Content Include="Content\bsb\scss\_lightgallery.scss" />
+    <Content Include="Content\bsb\scss\_maps.scss" />
+    <Content Include="Content\bsb\scss\_materialicons.scss" />
+    <Content Include="Content\bsb\scss\_media.scss" />
+    <Content Include="Content\bsb\scss\_mediaobject.scss" />
+    <Content Include="Content\bsb\scss\_mixins.scss" />
+    <Content Include="Content\bsb\scss\_modals.scss" />
+    <Content Include="Content\bsb\scss\_multiselect.scss" />
+    <Content Include="Content\bsb\scss\_navbar.scss" />
+    <Content Include="Content\bsb\scss\_navtabs.scss" />
+    <Content Include="Content\bsb\scss\_noUISlider.scss" />
+    <Content Include="Content\bsb\scss\_pageloader.scss" />
+    <Content Include="Content\bsb\scss\_pagination.scss" />
+    <Content Include="Content\bsb\scss\_panels.scss" />
+    <Content Include="Content\bsb\scss\_preloaders.scss" />
+    <Content Include="Content\bsb\scss\_progressbars.scss" />
+    <Content Include="Content\bsb\scss\_searchbar.scss" />
+    <Content Include="Content\bsb\scss\_switch.scss" />
+    <Content Include="Content\bsb\scss\_tables.scss" />
+    <Content Include="Content\bsb\scss\_tagsinput.scss" />
+    <Content Include="Content\bsb\scss\_thumbnails.scss" />
+    <Content Include="Content\bsb\scss\_tooltippopovers.scss" />
+    <Content Include="Content\bsb\scss\_variables.scss" />
+    <Content Include="Content\bsb\scss\_waveseffect.scss" />
+    <Content Include="Scripts\KintoShare\BookApproval.js" />
+    <Content Include="Scripts\KintoShare\Index.js" />
+    <Content Include="Scripts\KintoShare\MyBook.js" />
+    <Content Include="Scripts\KintoShare\Facilities.js" />
+    <Content Include="Scripts\KintoShare\Report.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\CheckUser.cshtml" />
+    <Content Include="Views\Login\ErrorLogin.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Home\Mybook.cshtml" />
+    <Content Include="Views\Home\Report.cshtml" />
+    <Content Include="Views\Home\Bookapproval.cshtml" />
+    <Content Include="Views\Home\Facilities.cshtml" />
+    <Content Include="Views\Response\Error401.cshtml" />
+    <Content Include="Views\Response\Error403.cshtml" />
+    <Content Include="Views\Response\Error404.cshtml" />
+    <Content Include="Views\Response\Error500.cshtml" />
+    <Content Include="Views\Login\OTP.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KintoSharePortal.Domain.DA\KintoSharePortal.Domain.DA.csproj">
+      <Project>{13e9d71b-ea16-48ee-bd47-8f7ab6447bce}</Project>
+      <Name>KintoSharePortal.Domain.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KintoSharePortal.Domain.Models\KintoSharePortal.Domain.Models.csproj">
+      <Project>{371421c8-0542-4f25-9377-f203b29ee37f}</Project>
+      <Name>KintoSharePortal.Domain.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KintoSharePortal.Domain.Repository\KintoSharePortal.Domain.Repository.csproj">
+      <Project>{85cf189b-5716-4579-9dcb-6ccd74fa45ff}</Project>
+      <Name>KintoSharePortal.Domain.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KintoSharePortal.Services\KintoSharePortal.Services.csproj">
+      <Project>{198a5a17-87c9-4f8a-bc51-db4bbd0d32a6}</Project>
+      <Name>KintoSharePortal.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52818</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44346/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

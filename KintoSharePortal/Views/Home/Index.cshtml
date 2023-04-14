@@ -1,0 +1,229 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "DASHBOARD";
+}
+<link href="~/Content/bsb/plugins/fullcalendar/lib/main.css" rel="stylesheet" />
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+<meta charset="utf-8" />
+@model KintoSharePortal.Domain.Models.trxKintoSharePortalAsset
+<style>
+    .ui-state-highlight,
+    .ui-widget-content .ui-state-highlight,
+    .ui-widget-header .ui-state-highlight {
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+    }
+
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .toggleBgColor {
+        background-color: #b5d314;
+    }
+</style>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    BOOKING CALENDAR
+                </h2>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-3">
+                    @*<div class="pickup">
+                            <input id="datebook" class="form-control datepicker-inline" placeholder="Please choose a date..." type="text">
+                        </div>*@
+                    <input type="text" id="datebook" class="form-control datepicker-inline" placeholder="Please choose a date...">
+                    @*<div class="input-group date" id="bs_datepicker_component_container">
+                            <div class="form-line">
+                                <input type="text" class="form-control" placeholder="Please choose a date...">
+                            </div>
+                            <span class="input-group-addon">
+                                <i class="material-icons">date_range</i>
+                            </span>
+                        </div>*@
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control bootstrap-select show-tick" name="dduser" id="dduser">
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control bootstrap-select show-tick" name="ddasset" id="ddasset">
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn bg-teal waves-effect btn-block" id="btsearch">SEARCH</button>
+                </div>
+            </div>
+
+            <div class="body">
+                <div id='calendar'></div>
+            </div>
+
+            <div class="footer">
+                <div class="row clearfix">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="box" style="width: 100px; height: 30px; background-color: rgb(102, 205, 170); display: inline-block; ">
+                            </div>
+                            <label style="vertical-align: text-bottom;">    APPROVE</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="box" style="width: 100px; height: 30px; background-color: rgb(255, 255, 0); display: inline-block; ">
+                            </div>
+                            <label style="vertical-align: text-bottom;">    WAITING</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        @*<div class="form-group">
+                                <div class="box" style="width: 100px; height: 30px; background-color: rgb(255, 69, 0); display: inline-block; ">
+                                </div>
+                                <label style="vertical-align: text-bottom;">  :  CANCEL</label>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    ASSET READY
+                </h2>
+            </div>
+            <div class="body">
+                <form class="row g-3">
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                    {
+                    <div id="content">
+                        <div style="height: auto;width: 100%;margin: 0px auto">
+                            @*<table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%" id="tblAsset" cellspacing="0">*@
+                            <table class="table table-bordered table-hover text-nowrap" style="width: 100%" id="tblAsset" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">CAR TYPE</th>
+                                        <th class="text-center">LICENCE PLAT NO.</th>
+                                        <th class="text-center">CAPACITY</th>
+                                        <th class="text-center">ACCESSORIES</th>
+                                        <th class="text-center">STATUS</th>
+                                        <th class="text-center">CHASISNO</th>
+                                        <th class="text-center">ENGINENO</th>
+                                        <th class="text-center">FEEWEEKDAY</th>
+                                        <th class="text-center">FEEWEEKEND</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="calendarModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">close</span>
+                </button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <div class="row clearfix">
+                    <div class="col-lg-3">
+                        <p>
+                            <b>CAR</b>
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <label id="lblcar"></label>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-3">
+                        <p>
+                            <b>PLAT NO</b>
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <label id="lblplatno"></label>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-3">
+                        <p>
+                            <b>PIC</b>
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <label id="lblPIC"></label>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-3">
+                        <p>
+                            <b>DEPARTMENT</b>
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <label id="lbldept"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="color: orangered;">Attention!!</h4>
+            </div>
+            <div class="modal-body">
+                @*<p>Some text in the modal.</p>*@
+                <label id="modaltext"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/KintoShare/Index.js"></script>
+    <script src="~/Content/bsb/plugins/fullcalendar/lib/main.js"></script>
+}

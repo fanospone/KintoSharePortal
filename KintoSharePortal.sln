@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KintoSharePortal", "KintoSharePortal\KintoSharePortal.csproj", "{6866970B-4882-45C3-A728-24E6028A05F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KintoSharePortal.Domain.Models", "KintoSharePortal.Domain.Models\KintoSharePortal.Domain.Models.csproj", "{371421C8-0542-4F25-9377-F203B29EE37F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KintoSharePortal.Domain.DA", "KintoSharePortal.Domain.DA\KintoSharePortal.Domain.DA.csproj", "{13E9D71B-EA16-48EE-BD47-8F7AB6447BCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KintoSharePortal.Services", "KintoSharePortal.Services\KintoSharePortal.Services.csproj", "{198A5A17-87C9-4F8A-BC51-DB4BBD0D32A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KintoSharePortal.Domain.Repository", "KintoSharePortal.Domain.Repository\KintoSharePortal.Domain.Repository.csproj", "{85CF189B-5716-4579-9DCB-6CCD74FA45FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6866970B-4882-45C3-A728-24E6028A05F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6866970B-4882-45C3-A728-24E6028A05F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6866970B-4882-45C3-A728-24E6028A05F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6866970B-4882-45C3-A728-24E6028A05F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{371421C8-0542-4F25-9377-F203B29EE37F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{371421C8-0542-4F25-9377-F203B29EE37F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{371421C8-0542-4F25-9377-F203B29EE37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{371421C8-0542-4F25-9377-F203B29EE37F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13E9D71B-EA16-48EE-BD47-8F7AB6447BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E9D71B-EA16-48EE-BD47-8F7AB6447BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E9D71B-EA16-48EE-BD47-8F7AB6447BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E9D71B-EA16-48EE-BD47-8F7AB6447BCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198A5A17-87C9-4F8A-BC51-DB4BBD0D32A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198A5A17-87C9-4F8A-BC51-DB4BBD0D32A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198A5A17-87C9-4F8A-BC51-DB4BBD0D32A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198A5A17-87C9-4F8A-BC51-DB4BBD0D32A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85CF189B-5716-4579-9DCB-6CCD74FA45FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85CF189B-5716-4579-9DCB-6CCD74FA45FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85CF189B-5716-4579-9DCB-6CCD74FA45FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85CF189B-5716-4579-9DCB-6CCD74FA45FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {642FF3C0-7DDC-4047-867D-01D86FAC5A5F}
+	EndGlobalSection
+EndGlobal
